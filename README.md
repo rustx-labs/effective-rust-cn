@@ -7,17 +7,8 @@
 近期，我邂逅了一本名为《Effective Rust》的佳作，它不仅深入浅出地揭示了 Rust 的精髓，还提供了大量实用的编程技巧。
 
 * 原书链接：https://www.lurklurk.org/effective-rust/cover.html
+* 中文翻译链接：https://rustx-labs.github.io/effective-rust-cn
   
 我计划抽出时间将其翻译成中文，以便让更多的开发者能够从中受益。这些翻译内容将同步更新至我的公众号，敬请各位关注，一同探索 Rust 的魅力所在。
 
 * [《Effective Rust》解读：探寻 Rust 编程的艺术与科学](https://mp.weixin.qq.com/s/5YLS0XP6LRweWoJYvBcVrw)
-
-
-## 目录
-### [0. Introduction](./intro.md)
-### [1. Types]
-### [2. Concepts]
-### [3. Dependencies]
-### [4. Dependencies]
-### [5. Tooling]
-### [6. Beyond Standard Rust]

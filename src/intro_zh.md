@@ -1,7 +1,5 @@
 # 译著
 
-> [原文链接](https://www.lurklurk.org/effective-rust/intro.html)
-
 > “代码更像是指南，而不是实际的规则。” —— Hector Barbossa
 
 在编程语言的江湖中，Rust 如同一颗新星，以其独树一帜的安全特性和严谨的类型系统，赢得了开发者的青睐。
