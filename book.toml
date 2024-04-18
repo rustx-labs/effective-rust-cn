@@ -1,0 +1,6 @@
+[book]
+authors = ["lispking"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Effective Rust 中文版"

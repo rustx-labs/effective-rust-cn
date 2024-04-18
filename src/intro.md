@@ -1,4 +1,4 @@
-> 原文链接: https://www.lurklurk.org/effective-rust/intro.html
+> [原文链接](https://www.lurklurk.org/effective-rust/intro.html)
 
 > “代码更像是指南，而不是实际的规则。” —— Hector Barbossa
 
