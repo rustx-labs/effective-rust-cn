@@ -1,6 +1,7 @@
 # Summary
 
 - [封面](./cover.md)
+- [译著](./intro_zh.md)
 - [介绍](./intro.md)
 - [类型](./chapter_1.md)
     - [用户类型](./chapter_1/user_type.md)
