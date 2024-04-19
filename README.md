@@ -12,3 +12,4 @@
 我计划抽出时间将其翻译成中文，以便让更多的开发者能够从中受益。这些翻译内容将同步更新至我的公众号，敬请各位关注，一同探索 Rust 的魅力所在。
 
 * [《Effective Rust》解读：探寻 Rust 编程的艺术与科学](https://mp.weixin.qq.com/s/5YLS0XP6LRweWoJYvBcVrw)
+* [《Effective Rust》方法 1：使用类型系统表达你的数据结构](https://mp.weixin.qq.com/s/Lhf7kAK-VraMzJRaK9Zr-Q)
