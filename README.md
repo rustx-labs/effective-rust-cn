@@ -13,3 +13,8 @@
 
 * [《Effective Rust》解读：探寻 Rust 编程的艺术与科学](https://mp.weixin.qq.com/s/5YLS0XP6LRweWoJYvBcVrw)
 * [《Effective Rust》方法 1：使用类型系统表达你的数据结构](https://mp.weixin.qq.com/s/Lhf7kAK-VraMzJRaK9Zr-Q)
+
+
+> 如果喜欢这本中文版，欢迎关注、点赞、转发和赞赏我的微信公众号。每一位读者的认可都是我持续创作的动力。
+
+![微信公众号](./src/images/wechat-blog.png)
