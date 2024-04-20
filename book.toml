@@ -4,3 +4,7 @@ language = "en"
 multilingual = false
 src = "src"
 title = "Effective Rust 中文版"
+
+[output.html]
+default-theme = "rust"
+additional-css = [ "src/css/ferris.css" ]

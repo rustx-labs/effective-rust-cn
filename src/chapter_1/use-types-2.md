@@ -59,13 +59,13 @@ println!("op = {:p}", op);
 // Example output: "op = 0x101e9aeb0"
 ```
 
-<div style="border: 1px solid black; padding: 0 1em; border-radius: 5px;">
+<div class="ferris-border">
 
 > 一个需要注意的技术细节：需要显式地将函数强制转换为 `fn` 类型，因为仅仅使用函数的名称并不能得到 `fn` 类型的值；
 
 这段代码无法编译！
 
-<div style="right: 30%; z-index: 99; position: absolute;"><img src="../images/does_not_compile.svg" style="zoom:5%;" /></div>
+<div class="ferris"><img src="../images/does_not_compile.svg" style="zoom:5%;" /></div>
 
 ```rust
 let op1 = sum;
@@ -130,7 +130,7 @@ assert_eq!(data, vec![3, 4, 5,]);
 
 这段代码无法编译！
 
-<div style="right: 30%; z-index: 99; position: absolute;"><img src="../images/does_not_compile.svg" style="zoom:5%;" /></div>
+<div class="ferris"><img src="../images/does_not_compile.svg" style="zoom:5%;" /></div>
 
 ```rust
 let amount_to_add = 3;
