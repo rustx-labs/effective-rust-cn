@@ -2,7 +2,7 @@
 
 > 35 Specific Ways to Improve Your Rust Code
 
-> _35种提升Rust编程水平的方法_
+> _编写高质量 Rust 代码的 35 个有效方法_
 
 原著：**David Drysdale**
 
