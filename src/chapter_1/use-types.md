@@ -254,7 +254,7 @@ struct DisplayProperties {
 
 原文[点这里](https://www.lurklurk.org/effective-rust/use-types.html)查看
 
-[方法 3]: https://www.lurklurk.org/effective-rust/transform.html
+[方法 3]: transform.md
 [方法 4]: https://www.lurklurk.org/effective-rust/errors.html
 [方法 6]: https://www.lurklurk.org/effective-rust/casts.html
 [方法 7]: https://www.lurklurk.org/effective-rust/newtype.html

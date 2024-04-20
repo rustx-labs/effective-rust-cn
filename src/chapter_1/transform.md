@@ -177,6 +177,8 @@ pub fn encrypted(&self) -> Vec<u8> {
 
 <a id="footnote-1">1</a>: 注意，这个方法与 `AsRef` 特征是分开的，尽管方法名称相同。
 
+原文[点这里](https://www.lurklurk.org/effective-rust/transform.html)查看
+
 <!-- 参考链接 -->
 
 [方法 1]: use-types.md
@@ -185,4 +187,3 @@ pub fn encrypted(&self) -> Vec<u8> {
 [方法 18]: https://www.lurklurk.org/effective-rust/panic.html
 
 [在线版本]: https://tinyurl.com/rust-transform
-
