@@ -308,7 +308,66 @@ where
 
 类似的问题意味着用作特征对象的特征不能有返回 `Self` 类型的方法，因为预先编译的代码使用特征对象时将无法知道 `Self` 可能有多大。
 
-具有泛型方法 `fn method<T>(t:T)` 的特征允许存在无限数量的实现方法，适用于所有可能存在的不同类型 `T`。这对于用作特征约束的特征来说是可行的，因为无限集合的可能的泛型方法在编译时变为有限的实际调用的泛型方法集合。对于特征对象来说，情况并非如此：编译时可用的代码必须应对运行时可能出现的所有可能的 `Ts`。
+具有泛型方法 `fn method<T>(t:T)` 的特征允许存在无限数量的实现方法，适用于所有可能存在的不同类型 `T`。这对于用作特征约束的特征来说是可行的，因为无限集合的可能的泛型方法在编译时变为有限的实际调用的泛型方法集合。对于特征对象来说，情况并非如此：编译时可用的代码必须应对运行时可能出现的所有可能的 `Ts`。（因此trait中不能添加泛型方法，尽管有约束，可以满足约束的类型永远会是无数个）
+
+```rust
+trait foo {
+    fn method<T>(&self, t: T);
+}
+
+struct Bar;
+
+impl Bar {
+    fn new() -> Self {
+        Self {}
+    }
+}
+
+impl foo for Bar {
+    fn method<T>(&self, t: T) {
+        println!("Bar impl trait foo!");
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::collections::hash_map::VacantEntry;
+
+    #[test]
+    fn as_trait_bound() {
+        let bar = Bar::new();
+        bar.method(0u8);
+    }
+
+    #[test]
+    fn as_trait_obj() {
+        let bar = Bar::new();
+        let mut v: Vec<&dyn foo> = vec![];
+        v.push(&bar);
+    }
+}
+```
+
+fn as_trait_bound() 测试可以通过，没有错误。但是as_trait_obj()会报错：
+
+```rust
+error[E0038]: the trait `foo` cannot be made into an object
+  --> src/lib.rs:33:20
+   |
+33 |         let mut v: Vec<&dyn foo> = vec![];
+   |                    ^^^^^^^^^^^^^ `foo` cannot be made into an object
+   |
+note: for a trait to be "object safe" it needs to allow building a vtable to allow the call to be resolvable dynamically; for more information visit <https://doc.rust-lang.org/reference/items/traits.html#object-safety>
+  --> src/lib.rs:2:8
+   |
+1  | trait foo {
+   |       --- this trait cannot be made into an object...
+2  |     fn method<T>(&self, t: T);
+   |        ^^^^^^ ...because method `method` has generic type parameters
+   = help: consider moving `method` to another trait
+   = help: only type `Bar` implements the trait, consider using it directly instead
+```
 
 这两个限制 —— 不能返回 `Self` 和不能有泛型方法 —— 结合成了对象安全的概念。只有对象安全的特征才能用作特征对象。
 
