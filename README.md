@@ -14,6 +14,7 @@
 * [《Effective Rust》解读：探寻 Rust 编程的艺术与科学](https://mp.weixin.qq.com/s/5YLS0XP6LRweWoJYvBcVrw)
 * [《Effective Rust》方法 1：使用类型系统表达你的数据结构](https://mp.weixin.qq.com/s/Lhf7kAK-VraMzJRaK9Zr-Q)
 * [《Effective Rust》方法 2：使用类型系统表达常见行为](https://mp.weixin.qq.com/s/a3eUvXc-vruL2YEwUiPMTQ)
+* [《Effective Rust》方法 3：避免匹配 Option 和 Result](https://mp.weixin.qq.com/s/EKlaUcJMn-h1AaqMqMMZ4g)
 
 
 > 如果喜欢这本中文版，欢迎扫码关注、点赞、转发和赞赏我的微信公众号。
