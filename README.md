@@ -16,6 +16,23 @@
 * [《Effective Rust》方法 2：使用类型系统表达常见行为](https://mp.weixin.qq.com/s/a3eUvXc-vruL2YEwUiPMTQ)
 * [《Effective Rust》方法 3：避免匹配 Option 和 Result](https://mp.weixin.qq.com/s/EKlaUcJMn-h1AaqMqMMZ4g)
 
+## 如何参与？
+
+> 近期，许多朋友通过公众号后台私信我，表示想要加入翻译工作，这让我深受感动。为了让这个过程更为直接高效，我们将尽量模仿官方的格式来进行（尽管我们没有获取到源文件，但可以参考前面几章进行自主排版）。
+具体操作步骤如下：
+
+1. 提交 issue：为了降低工作负担，请参考[这个链接](https://github.com/rustx-labs/effective-rust-cn/issues/4)撰写标题并附上原文链接。
+2. 点击“Assign to Your Self”（分配给自己）。
+3. 将该仓库克隆至您的个人仓库。
+4. 完成翻译后，提交一个 PR（Pull Request）。
+通过这样的方式，我们可以有序且高效地推进翻译工作，共同为技术社区贡献力量。
+
+
+## 环境准备
+
+* 中文版翻译使用 [mdBook](https://rust-lang.github.io/mdBook/guide/installation.html) 工具，请参考指南自行安装即可
+
+## 翻译工作，携手同行 —— 感恩您的支持与参与
 
 > 如果喜欢这本中文版，欢迎扫码关注、点赞、转发和赞赏我的微信公众号。
 
