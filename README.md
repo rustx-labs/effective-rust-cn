@@ -24,7 +24,9 @@
 1. 提交 issue：为了降低工作负担，请参考[这个链接](https://github.com/rustx-labs/effective-rust-cn/issues/4)撰写标题并附上原文链接。
 2. 点击“Assign to Your Self”（分配给自己）。
 3. 将该仓库克隆至您的个人仓库。
-4. 完成翻译后，提交一个 PR（Pull Request）。
+4. 开始翻译，注意 .md 文件名尽量与英文后缀保持一致，请参考前三章。
+5. 完成翻译后，提交一个 PR（Pull Request）。
+
 通过这样的方式，我们可以有序且高效地推进翻译工作，共同为技术社区贡献力量。
 
 
