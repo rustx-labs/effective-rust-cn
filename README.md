@@ -1,4 +1,5 @@
 # 《Effective Rust 中文版》
+> —— 编写高质量 Rust 代码的 35 个有效方法
 
 ## 前言
 
@@ -12,9 +13,9 @@
 我计划抽出时间将其翻译成中文，以便让更多的开发者能够从中受益。这些翻译内容将同步更新至我的公众号，敬请各位关注，一同探索 Rust 的魅力所在。
 
 * [《Effective Rust》解读：探寻 Rust 编程的艺术与科学](https://mp.weixin.qq.com/s/5YLS0XP6LRweWoJYvBcVrw)
-* [《Effective Rust》方法 1：使用类型系统表达你的数据结构](https://mp.weixin.qq.com/s/Lhf7kAK-VraMzJRaK9Zr-Q)
-* [《Effective Rust》方法 2：使用类型系统表达常见行为](https://mp.weixin.qq.com/s/a3eUvXc-vruL2YEwUiPMTQ)
-* [《Effective Rust》方法 3：避免匹配 Option 和 Result](https://mp.weixin.qq.com/s/EKlaUcJMn-h1AaqMqMMZ4g)
+* [《Effective Rust》第1条：使用类型系统表达你的数据结构](https://mp.weixin.qq.com/s/Lhf7kAK-VraMzJRaK9Zr-Q)
+* [《Effective Rust》第2条：使用类型系统表达常见行为](https://mp.weixin.qq.com/s/a3eUvXc-vruL2YEwUiPMTQ)
+* [《Effective Rust》第3条：避免匹配 Option 和 Result](https://mp.weixin.qq.com/s/EKlaUcJMn-h1AaqMqMMZ4g)
 
 ## 如何参与？
 

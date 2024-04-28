@@ -1,4 +1,4 @@
-# 方法 1：使用类型系统表达你的数据结构
+# 第1条：使用类型系统表达你的数据结构
 
 > “谁叫他们是程序员，而不是打字员” —— [@thingskatedid](https://twitter.com/thingskatedid/status/1400213496785108997)
 
@@ -30,7 +30,7 @@ help: you can convert an `i32` to an `i16` and panic if the converted value does
 
 这让人感到安心：当程序员进行有风险的操作时，Rust 不会安静地坐视不管。这也早早地表明，尽管 Rust 有更严格的规则，但它也有助于编译器消息指向如何遵守规则的方法。
 
-建议的解决方案是抛出一个问题，即如何处理转换会改变值的情况，关于`错误处理`（[方法 4]）和使用 `panic!`（[方法 18]）我们将在后面有更多的讨论。
+建议的解决方案是抛出一个问题，即如何处理转换会改变值的情况，关于`错误处理`（[第4条]）和使用 `panic!`（[第18条]）我们将在后面有更多的讨论。
 
 Rust 也不允许一些可能看起来“安全”的操作：
 
@@ -54,7 +54,7 @@ help: you can convert an `i32` to an `i64`
    |                       +++++++
 ```
 
-在这里，建议的解决方案并没有提出错误处理的方法，但转换仍然需要是显式的。我们将在后面章节更详细地讨论类型转换（[方法 6]）。
+在这里，建议的解决方案并没有提出错误处理的方法，但转换仍然需要是显式的。我们将在后面章节更详细地讨论类型转换（[第6条]）。
 
 现在继续探讨不出乎意料的原始类型，Rust 有布尔类型（`bool`）、浮点类型（`f32`, `f64`）和单元类型 `()`（类似于 `C` 的 `void`）。
 
@@ -65,7 +65,7 @@ help: you can convert an `i32` to an `i64`
 当然，有一些辅助方法允许你在这不同的类型之间进行转换，但它们的签名迫使你处理（或明确忽略）失败的可能性。例如，一个 `Unicode` 代码点[2](#footnote-2) 总是可以用 `32 位`表示，所以 `'a' as u32` 是允许的，但反向转换就比较复杂了（因为有些 u32 值不是有效的 Unicode 代码点），例如：
 
 * [char::from_u32] 返回一个 `Option<char>`，迫使调用者处理失败的情况
-* [char::from_u32_unchecked] 假设有效性，但由于结果是未定义的，因此被标记为`unsafe`，迫使调用者也使用`unsafe`（[方法 16]）。
+* [char::from_u32_unchecked] 假设有效性，但由于结果是未定义的，因此被标记为`unsafe`，迫使调用者也使用`unsafe`（[第16条]）。
 
 ## 聚合类型
 
@@ -142,7 +142,7 @@ error[E0308]: mismatched types
    |                                           ^^^^^^^^^^^^^ expected enum `enums::Output`, found enum `enums::Sides`
 ```
 
-> 使用新类型模式（[方法 7]）来包装一个 `bool` 也可以实现类型安全和可维护性；如果语义始终是布尔型的，通常最好使用这种方式，如果将来可能会出现新的选择（例如 `Sides::BothAlternateOrientation`），则应使用`枚举`。
+> 使用新类型模式（[第7条]）来包装一个 `bool` 也可以实现类型安全和可维护性；如果语义始终是布尔型的，通常最好使用这种方式，如果将来可能会出现新的选择（例如 `Sides::BothAlternateOrientation`），则应使用`枚举`。
 
 Rust 枚举的类型安全性在 `match` 表达式中继续体现出以下这段代码无法编译：
 
@@ -239,7 +239,7 @@ struct DisplayProperties {
 
 第二个常见的概念源于`错误处理`：如果一个函数失败，应该如何报告这个失败？历史上，使用了特殊的哨兵值（例如，`Linux 系统调用` 的 `-errno` 返回值）或全局变量（`POSIX 系统`的`errno`）。近年来，支持函数返回多个或元组返回值的语言（如Go）可能有一个约定，即返回一个`(result, error)`对，假设在错误非“零”时，结果存在合适的“零”值。
 
-在Rust中，始终将可能失败的操作的 结果编码为 `Result<T, E>`。`T 类型`保存成功的结果（在`Ok`变体中），`E 类型`在失败时保存错误详情（在`Err`变体中）。使用标准类型使得设计意图清晰，并且允许使用标准转换（[方法 3]）和错误处理（[方法 4]）；它还使得使用 `?` 运算符来简化错误处理成为可能。
+在Rust中，始终将可能失败的操作的 结果编码为 `Result<T, E>`。`T 类型`保存成功的结果（在`Ok`变体中），`E 类型`在失败时保存错误详情（在`Err`变体中）。使用标准类型使得设计意图清晰，并且允许使用标准转换（[第3条]）和错误处理（[第4条]）；它还使得使用 `?` 运算符来简化错误处理成为可能。
 
 ---
 
@@ -249,18 +249,18 @@ struct DisplayProperties {
 
 <a id="footnote-2">2</a>: 技术上，是一个 Unicode 标量值，而不是代码点。
 
-<a id="footnote-3">3</a>: 这也意味着在库中为一个现有枚举添加一个新的变体是一个破坏性的更改（[方法 21]）：库的客户需要更改他们的代码以适应新的变体。如果一个枚举实际上只是一个旧式的值列表，可以通过将其标记为 non_exhaustive 枚举来避免这种行为；请参阅[方法 21]。
+<a id="footnote-3">3</a>: 这也意味着在库中为一个现有枚举添加一个新的变体是一个破坏性的更改（[第21条]）：库的客户需要更改他们的代码以适应新的变体。如果一个枚举实际上只是一个旧式的值列表，可以通过将其标记为 non_exhaustive 枚举来避免这种行为；请参阅[第21条]。
 
 
 原文[点这里](https://www.lurklurk.org/effective-rust/use-types.html)查看
 
-[方法 3]: transform.md
-[方法 4]: https://www.lurklurk.org/effective-rust/errors.html
-[方法 6]: https://www.lurklurk.org/effective-rust/casts.html
-[方法 7]: https://www.lurklurk.org/effective-rust/newtype.html
-[方法 16]: https://www.lurklurk.org/effective-rust/unsafe.html
-[方法 18]: https://www.lurklurk.org/effective-rust/panic.html
-[方法 21]: https://www.lurklurk.org/effective-rust/semver.html
+[第3条]: transform.md
+[第4条]: https://www.lurklurk.org/effective-rust/errors.html
+[第6条]: https://www.lurklurk.org/effective-rust/casts.html
+[第7条]: https://www.lurklurk.org/effective-rust/newtype.html
+[第16条]: https://www.lurklurk.org/effective-rust/unsafe.html
+[第18条]: https://www.lurklurk.org/effective-rust/panic.html
+[第21条]: https://www.lurklurk.org/effective-rust/semver.html
 
 
 [char::from_u32]: https://doc.rust-lang.org/std/primitive.char.html#method.from_u32
