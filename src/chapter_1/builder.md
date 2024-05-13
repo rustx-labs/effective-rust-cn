@@ -151,6 +151,8 @@ pub fn build(self) -> Details {
 
 总而言之，这让构造器的使用者拥有了更符合工程学的体验：
 
+<div class="ferris"><img src="../images/does_not_compile.svg" width="80" height="80" /></div>
+
 ```rust
 let also_bob = DetailsBuilder::new(
     "Robert",
@@ -219,6 +221,8 @@ let bob = builder.build();
 
 构造器的性质带来的另一个问题是你只能构造一个最终对象，对同一个构造器重复调用 `build()` 函数来创建多个实例会违反编译器的检查规则，如同你能想到的那样：
 
+<div class="ferris"><img src="../images/does_not_compile.svg" width="80" height="80" /></div>
+
 ```rust
 let smithy = DetailsBuilder::new(
     "Agent",
@@ -269,6 +273,8 @@ let bob = builder.build();
 ```
 
 然而，这个版本的实现使得构造器的构造方法和它的 `setter` 函数无法被链式调用：
+
+<div class="ferris"><img src="../images/does_not_compile.svg" width="80" height="80" /></div>
 
 ```rust
 let builder = DetailsBuilder::new(
@@ -334,6 +340,9 @@ pub fn build(&self) -> Details {
 不管是哪种构造器模式的实现，样板代码都集中在一个地方——构造器本身——而不是每个需要操作底层类型的地方。
 
 剩下的样板代码或许还可以通过宏（[第 28 条]）进一步减少，但如果你打算在这条路上走下去，你应该看看是否有现成的包（尤其是 [derive_builder]）已经提供了你需要的功能——如果你愿意添加一个依赖的话（[第 25 条]）。
+
+
+原文[点这里](https://www.lurklurk.org/effective-rust/builders.html)查看
 
 <!-- 参考链接 -->
 
