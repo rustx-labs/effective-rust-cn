@@ -47,7 +47,7 @@ let dizzy = Details {
 
 还有一个更普遍的问题：仅当所有的字段类型都实现了 `Default` trait 的时候，结构体才能使用自动派生的 `Default` 实现。如果有任何一个字段不满足，那么 `derive` 就会失败了：
 
-<div class="ferris"><img src="../images/does_not_compile.svg" width="80" height="80" /></div>
+<div class="ferris"><img src="../images/does_not_compile.svg" width="75" height="75" /></div>
 
 ```rust
 #[derive(Debug, Default)]
@@ -151,7 +151,7 @@ pub fn build(self) -> Details {
 
 总而言之，这让构造器的使用者拥有了更符合工程学的体验：
 
-<div class="ferris"><img src="../images/does_not_compile.svg" width="80" height="80" /></div>
+<div class="ferris"><img src="../images/does_not_compile.svg" width="75" height="75" /></div>
 
 ```rust
 let also_bob = DetailsBuilder::new(
@@ -221,7 +221,7 @@ let bob = builder.build();
 
 构造器的性质带来的另一个问题是你只能构造一个最终对象，对同一个构造器重复调用 `build()` 函数来创建多个实例会违反编译器的检查规则，如同你能想到的那样：
 
-<div class="ferris"><img src="../images/does_not_compile.svg" width="80" height="80" /></div>
+<div class="ferris"><img src="../images/does_not_compile.svg" width="75" height="75" /></div>
 
 ```rust
 let smithy = DetailsBuilder::new(
@@ -274,7 +274,7 @@ let bob = builder.build();
 
 然而，这个版本的实现使得构造器的构造方法和它的 `setter` 函数无法被链式调用：
 
-<div class="ferris"><img src="../images/does_not_compile.svg" width="80" height="80" /></div>
+<div class="ferris"><img src="../images/does_not_compile.svg" width="75" height="75" /></div>
 
 ```rust
 let builder = DetailsBuilder::new(
