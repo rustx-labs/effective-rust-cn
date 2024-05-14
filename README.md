@@ -16,6 +16,7 @@
 * [《Effective Rust》第1条：使用类型系统表达你的数据结构](https://mp.weixin.qq.com/s/Lhf7kAK-VraMzJRaK9Zr-Q)
 * [《Effective Rust》第2条：使用类型系统表达常见行为](https://mp.weixin.qq.com/s/a3eUvXc-vruL2YEwUiPMTQ)
 * [《Effective Rust》第3条：避免匹配 Option 和 Result](https://mp.weixin.qq.com/s/EKlaUcJMn-h1AaqMqMMZ4g)
+* [《Effective Rust》第4条：优先使用惯用的错误类型](https://mp.weixin.qq.com/s/ZLxXV289CGpkdZgyDeE5Jw)
 
 ## 如何参与？
 
