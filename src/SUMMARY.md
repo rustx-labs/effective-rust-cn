@@ -10,6 +10,7 @@
     - [第 4 条：优先使用惯用的错误类型](./chapter_1/errors.md)
     - [第 7 条：对于复杂的类型，使用构造器](./chapter_1/builder.md)
 - [概念](./chapter_2.md)
+    - [第 11 条：为RAII模式实现Drop trait](./chapter_2/impl-drop-for-RAII.md)
 - [依赖](./chapter_3.md)
 - [工具](./chapter_4.md)
 - [超出Rust标准](./chapter_5.md)
