@@ -7,6 +7,7 @@
     - [第 1 条：使用类型系统表达数据结构](./chapter_1/use-types.md)
     - [第 2 条：使用类型系统表达常见行为](./chapter_1/use-types-2.md)
     - [第 3 条：避免匹配 Option 和 Result](./chapter_1/transform.md)
+    - [第 4 条：优先使用惯用的错误类型](./chapter_1/errors.md)
     - [第 7 条：对于复杂的类型，使用构造器](./chapter_1/builder.md)
 - [概念](./chapter_2.md)
 - [依赖](./chapter_3.md)

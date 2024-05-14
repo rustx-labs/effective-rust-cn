@@ -35,9 +35,7 @@ Rust 的安全性也导致完全没有标题为“绝不…”的条目。如果
 | Ferris                                                       | 含义                         |
 | ------------------------------------------------------------ | ---------------------------- |
 | <img src="./images/does_not_compile.svg" style="zoom:5%;" /> | 这段代码无法编译！           |
-| <img src="./images/panics.svg" style="zoom:5%;" />           | 这段代码会引发恐慌！         |
-| <img src="./images/unsafe.svg" style="zoom:5%;" /> | 这个代码块包含不安全代码。   |
-| <img src="./images/not_desired_behaviour.svg" style="zoom:5%;" /> | 这段代码没有产生期望的行为。 |
+| <img src="./images/not_desired_behavior.svg" style="zoom:5%;" /> | 这段代码没有产生期望的行为。 |
 
 ## 致谢
 

@@ -113,7 +113,7 @@ pub fn find_user(username: &str) -> Result<UserId, String> {
 }
 ```
 
-更好的是，甚至这可能也不必要——如果外部错误类型可以通过实现标准特征 `From`（[第5条]）从内部错误类型创建，那么编译器将自动执行转换，无需调用 `.map_err()`。
+更好的是，甚至这可能也不必要 —— 如果外部错误类型可以通过实现标准特征 `From`（[第5条]）从内部错误类型创建，那么编译器将自动执行转换，无需调用 `.map_err()`。
 
 这类转换具有更广泛的通用性。问号运算符是一个强大的工具；使用 `Option` 和 `Result` 类型上的转换方法将它们调整到可以顺利处理的形态。
 
@@ -133,7 +133,7 @@ struct InputData {
 
 这个结构上的一个方法尝试将有效载荷传递给一个加密函数，该函数的签名是 `(&[u8]) -> Vec<u8>`，如果简单地尝试获取一个引用，则会失败：
 
-<div class="ferris"><img src="../images/does_not_compile.svg" style="zoom:5%;" /></div>
+<div class="ferris"><img src="../images/does_not_compile.svg" width="75" height="75" /></div>
 
 ```rust
 impl InputData {

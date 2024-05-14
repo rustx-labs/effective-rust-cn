@@ -146,6 +146,8 @@ error[E0308]: mismatched types
 
 Rust 枚举的类型安全性在 `match` 表达式中继续体现出以下这段代码无法编译：
 
+<div class="ferris"><img src="../images/does_not_compile.svg" width="75" height="75" /></div>
+
 ```rust
 let msg = match code {
    HttpResultCode::Ok => "Ok",
@@ -197,6 +199,8 @@ pub enum SchedulerState {
 
 当一个字段或参数何时有效需要通过注释来解释时，这就是一个明显的迹象表明这种情况没有发生：
 
+<div class="ferris"><img src="../images/not_desired_behavior.svg" width="75" height="75" /></div>
+
 ```rust
 struct DisplayProps {
     x: u32,
@@ -235,7 +239,7 @@ struct DisplayProperties {
 
 然而，确实存在其他罕见的情况，需要用 `Option<Vec<Thing>>` 来区分这两种情况 —— 例如，加密系统可能需要区分“负载单独传输”和“提供空负载”。（这与 `SQL` 中 `NULL` 标记列的争论有关。）
 
-一个常见的边缘情况是 `String` 可能缺失——是用 `""` 还是 `None` 来表示值的缺失更有意义？无论哪种方式都可以，但 `Option<String>` 清楚地传达了可能缺失该值的可能性。
+一个常见的边缘情况是 `String` 可能缺失 —— 是用 `""` 还是 `None` 来表示值的缺失更有意义？无论哪种方式都可以，但 `Option<String>` 清楚地传达了可能缺失该值的可能性。
 
 第二个常见的概念源于`错误处理`：如果一个函数失败，应该如何报告这个失败？历史上，使用了特殊的哨兵值（例如，`Linux 系统调用` 的 `-errno` 返回值）或全局变量（`POSIX 系统`的`errno`）。近年来，支持函数返回多个或元组返回值的语言（如Go）可能有一个约定，即返回一个`(result, error)`对，假设在错误非“零”时，结果存在合适的“零”值。
 
@@ -253,6 +257,8 @@ struct DisplayProperties {
 
 
 原文[点这里](https://www.lurklurk.org/effective-rust/use-types.html)查看
+
+<!-- 参考链接 -->
 
 [第3条]: transform.md
 [第4条]: https://www.lurklurk.org/effective-rust/errors.html
