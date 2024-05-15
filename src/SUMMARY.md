@@ -9,6 +9,7 @@
     - [第 3 条：避免匹配 Option 和 Result](./chapter_1/transform.md)
     - [第 4 条：优先使用惯用的错误类型](./chapter_1/errors.md)
     - [第 7 条：对于复杂的类型，使用构造器](./chapter_1/builder.md)
+    - [第 8 条：熟悉引用和指针类型](./chapter_1/item8-references&pointer.md)
 - [概念](./chapter_2.md)
     - [第 11 条：为RAII模式实现Drop trait](./chapter_2/impl-drop-for-RAII.md)
 - [依赖](./chapter_3.md)
