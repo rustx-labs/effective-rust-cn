@@ -45,18 +45,15 @@ Rust 的引用`&T`允许只读访问底层元素（大致相当于 C++ 的`const
 
 例如，一对局部变量以及对它们的引用：
 ```rust
-#![allow(unused)]
-fn main() {
-    pub struct Point {
-        pub x: u32,
-        pub y: u32,
-    }
-
-    let pt = Point { x: 1, y: 2 };
-    let x = 0u64;
-    let ref_x = &x;
-    let ref_pt = &pt;
+pub struct Point {
+    pub x: u32,
+    pub y: u32,
 }
+
+let pt = Point { x: 1, y: 2 };
+let x = 0u64;
+let ref_x = &x;
+let ref_pt = &pt;
 ```
 可能最终在栈上布局如图1-2所示。
 
@@ -77,7 +74,7 @@ let box_pt = Box::new(Point { x: 10, y: 20 });
 图1-3.栈上的`Box`指针指向堆上的`struct`
 ### 指针特征
 期望一个引用参数，如`&Point`的方法也可以接受一个`&Box<Point>`：
-```rust
+```rust,ignore
 fn show(pt: &Point) {
     println!("({}, {})", pt.x, pt.y);
 }
@@ -110,11 +107,8 @@ Rust有两个内置的**胖指针**类型：切片（`Slice`）和特征（`Trai
 
 一个有5个值的数组将始终有5个值。因此，切片可以引用数组的一个子集（如图1-4所示）：
 ```rust
-#![allow(unused)]
-fn main() {
-    let array: [u64; 5] = [0, 1, 2, 3, 4];
-    let slice = &array[1..3];
-}
+let array: [u64; 5] = [0, 1, 2, 3, 4];
+let slice = &array[1..3];
 ```
 ![img](../images/item8/arrayslice.svg)
 图1-4.指向栈数组的栈切片
@@ -122,14 +116,11 @@ fn main() {
 连续值的另一种常见容器是`Vec<T>`。这像数组一样持有连续的值集合，但与数组不同，`Vec`中的值的数量可以增长（例如，用[`push(value)`]）或缩小（例如，用[`pop()`]）。
 `Vec`的内容保存在堆上（这允许其大小发生变化），并且总是连续的，因此切片可以引用`Vec`的子集，如图 1-5 所示：
 ```rust
-#![allow(unused)]
-fn main() {
-    let mut vector = Vec::<u64>::with_capacity(8);
-    for i in 0..5 {
-        vector.push(i);
-    }
-    let vslice = &vector[1..3];
+let mut vector = Vec::<u64>::with_capacity(8);
+for i in 0..5 {
+    vector.push(i);
 }
+let vslice = &vector[1..3];
 ```
 ![img](../images/item8/vecslice.svg)
 图1-5.指向堆上的Vec内容的栈切片
@@ -146,16 +137,13 @@ fn main() {
 
 例如，定义一个简单的特征：
 ```rust
-#![allow(unused)]
-fn main() {
-    trait Calculate {
-        fn add(&self, l: u64, r: u64) -> u64;
-        fn mul(&self, l: u64, r: u64) -> u64;
-    }
+trait Calculate {
+    fn add(&self, l: u64, r: u64) -> u64;
+    fn mul(&self, l: u64, r: u64) -> u64;
 }
 ```
 以及一个实现该特征的结构体：
-```rust
+```rust,ignore
 struct Modulo(pub u64);
 
 impl Calculate for Modulo {
@@ -166,9 +154,11 @@ impl Calculate for Modulo {
         (l * r) % self.0
     }
 }
+
+let mod3 = Modulo(3);
 ```
 我们可以将`Modulo`转换为特征对象[`&dyn`] Calculate。`dyn`关键字强调了涉及动态分配的事实：
-```rust
+```rust,ignore
 // Need an explicit type to force dynamic dispatch.
 let tobj: &dyn Calculate = &mod3;
 let result = tobj.add(2, 2);
@@ -191,14 +181,11 @@ assert_eq!(result, 1);
 
 然而，`Borrow`还有一个针对（非引用）类型的泛型实现：`impl<T> Borrow<T> for T`。这意味着，一个接受`Borrow`特征的方法可以同样处理`T`的实例以及对`T`的引用：
 ```rust
-#![allow(unused)]
-fn main() {
-    fn add_four<T: std::borrow::Borrow<i32>>(v: T) -> i32 {
-        v.borrow() + 4
-    }
-    assert_eq!(add_four(&2), 6);
-    assert_eq!(add_four(2), 6);
+fn add_four<T: std::borrow::Borrow<i32>>(v: T) -> i32 {
+    v.borrow() + 4
 }
+assert_eq!(add_four(&2), 6);
+assert_eq!(add_four(2), 6);
 ```
 
 标准库的容器类型有更贴合实际的`Borrow`用法。例如，[`HashMap::get`]使用`Borrow`以便无论通过值还是引用作为键，都可以方便地检索条目。
@@ -222,13 +209,10 @@ Rust 标准库包含多种在某种程度上类似于指针的类型，这些类
 
 在底层，`Rc`（目前）实现为一对引用计数和被引用的项，所有这些都存储在堆上（如图 1-7 所示）：
 ```rust
-#![allow(unused)]
-fn main() {
-    use std::rc::Rc;
-    let rc1: Rc<u64> = Rc::new(42);
-    let rc2 = rc1.clone();
-    let wk = Rc::downgrade(&rc1);
-}
+use std::rc::Rc;
+let rc1: Rc<u64> = Rc::new(42);
+let rc2 = rc1.clone();
+let wk = Rc::downgrade(&rc1);
 ```
 ![img](../images/item8/rc.svg)
 图1-7. Rc和Weak指针都指向堆上同一个项
@@ -239,13 +223,10 @@ Rc<T>本身允许你以不同的方式访问一个项，但是当你访问该项
 
 下一个智能指针类型是[`RefCell<T>`]，它放宽了只能由所有者或持有唯一可变引用的代码修改数据的规则（参考[第15条]）。这种内部可变性带来了更大的灵活性，例如允许特征实现修改内部，即使方法签名只允许 `&self`。然而，这也带来了代价：除了额外的存储开销（需要一个额外的`isize`用于跟踪当前的借用，如图 1-8 所示），正常的借用检查也从编译时转移到了运行时：
 ```rust
-#![allow(unused)]
-fn main() {
-    use std::cell::RefCell;
-    let rc: RefCell<u64> = RefCell::new(42);
-    let b1 = rc.borrow();
-    let b2 = rc.borrow();
-}
+use std::cell::RefCell;
+let rc: RefCell<u64> = RefCell::new(42);
+let b1 = rc.borrow();
+let b2 = rc.borrow(); 
 ```
 ![img](../images/item8/refcell.svg)
 图1-8. 引用了 RefCell 容器的 Ref 借用
