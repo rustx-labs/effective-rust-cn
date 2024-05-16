@@ -146,7 +146,7 @@ error[E0308]: mismatched types
 
 Rust 枚举的类型安全性在 `match` 表达式中继续体现出以下这段代码无法编译：
 
-<div class="ferris"><img src="../images/does_not_compile.svg" width="75" height="75" /></div>
+<div class="ferris"><img src="../images/ferris/does_not_compile.svg" width="75" height="75" /></div>
 
 ```rust
 let msg = match code {
@@ -199,7 +199,7 @@ pub enum SchedulerState {
 
 当一个字段或参数何时有效需要通过注释来解释时，这就是一个明显的迹象表明这种情况没有发生：
 
-<div class="ferris"><img src="../images/not_desired_behavior.svg" width="75" height="75" /></div>
+<div class="ferris"><img src="../images/ferris/not_desired_behavior.svg" width="75" height="75" /></div>
 
 ```rust
 struct DisplayProps {

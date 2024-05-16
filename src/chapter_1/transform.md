@@ -133,7 +133,7 @@ struct InputData {
 
 这个结构上的一个方法尝试将有效载荷传递给一个加密函数，该函数的签名是 `(&[u8]) -> Vec<u8>`，如果简单地尝试获取一个引用，则会失败：
 
-<div class="ferris"><img src="../images/does_not_compile.svg" width="75" height="75" /></div>
+<div class="ferris"><img src="../images/ferris/does_not_compile.svg" width="75" height="75" /></div>
 
 ```rust
 impl InputData {

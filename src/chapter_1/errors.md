@@ -245,8 +245,7 @@ pub fn first_line(filename: &str) -> Result<String, MyError> {
 
 将子错误信息编码为 [trait 对象]避免了为每种可能性都有一个`枚举`变体的需要，但擦除了特定基础错误类型的细节。接收此类对象的调用者将能够访问 `Error` 特征及其特征约束的方法 —— `source()`、`Display::fmt()` 和 `Debug::fmt()`，依次类推 —— 但不会知道子错误原始的静态类型：
 
-
-<div class="ferris"><img src="../images/not_desired_behavior.svg" width="75" height="75" /></div>
+<div class="ferris"><img src="../images/ferris/not_desired_behavior.svg" width="75" height="75" /></div>
 
 ```rust
 #[derive(Debug)]
@@ -273,8 +272,7 @@ impl std::fmt::Display for WrappedError {
 
 这意味着可以从一个内部的 `WrappedError` 创建一个 `WrappedError`，因为 `WrappedError` 实现了 `Error`，并且这与 `From` 的泛反射实现冲突：
 
-
-<div class="ferris"><img src="../images/does_not_compile.svg" width="75" height="75" /></div>
+<div class="ferris"><img src="../images/ferris/does_not_compile.svg" width="75" height="75" /></div>
 
 ```rust
 impl Error for WrappedError {}

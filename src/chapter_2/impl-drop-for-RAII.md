@@ -30,8 +30,7 @@ class ThreadSafeInt {
 
 如果修改程序以在错误发生时提前退出函数，将会导致互斥锁保持锁定状态：
 
-<div class="ferris"><img src="../images/not_desired_behavior.svg" width="75" height="75" /></div>
-
+<div class="ferris"><img src="../images/ferris/not_desired_behavior.svg" width="75" height="75" /></div>
 
 ```C++
 // C++ code
@@ -156,7 +155,7 @@ error[E0040]: explicit use of destructor method
 
 在这里，我们需要了解一些技术细节。请注意， `Drop::drop` 方法的签名是 `drop(&mut self)` 而不是 `drop(self)` ：它接收的是对象的可变引用，而不是将对象移动到方法中。如果 `Drop::drop` 像普通方法那样运行，就意味着对象在方法执行后仍然可用——尽管它的所有内部状态已经被清理完毕，资源也已释放！
 
-<div class="ferris"><img src="../images/does_not_compile.svg" width="75" height="75" /></div>
+<div class="ferris"><img src="../images/ferris/does_not_compile.svg" width="75" height="75" /></div>
 
 ```rust
 {
