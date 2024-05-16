@@ -7,5 +7,5 @@ title = "Effective Rust 中文版"
 
 [output.html]
 default-theme = "rust"
-additional-css = [ "style/css/ferris.css" ]
-additional-js = [ "style/js/tongji.js" ]
+additional-css = ["style/css/ferris.css"]
+additional-js = ["style/js/tongji.js","style/js/ferris.js"]
