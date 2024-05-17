@@ -12,6 +12,7 @@
     - [第 8 条：熟悉引用和指针类型](./chapter_1/item8-references&pointer.md)
 - [概念](./chapter_2.md)
     - [第 11 条：为RAII模式实现Drop trait](./chapter_2/impl-drop-for-RAII.md)
+    - [第 13 条：使用默认实现来减少必需实现的 trait 方法](./chapter_2/use-default-impl.md)
 - [依赖](./chapter_3.md)
 - [工具](./chapter_4.md)
 - [超出Rust标准](./chapter_5.md)
