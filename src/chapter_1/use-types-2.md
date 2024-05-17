@@ -65,7 +65,7 @@ println!("op = {:p}", op);
 
 这段代码无法编译！
 
-<div class="ferris"><img src="../images/does_not_compile.svg" width="75" height="75" /></div>
+<div class="ferris"><img src="../images/ferris/does_not_compile.svg" width="75" height="75" /></div>
 
 ```rust
 let op1 = sum;
@@ -130,7 +130,7 @@ assert_eq!(data, vec![3, 4, 5,]);
 
 这段代码无法编译！
 
-<div class="ferris"><img src="../images/does_not_compile.svg" width="75" height="75" /></div>
+<div class="ferris"><img src="../images/ferris/does_not_compile.svg" width="75" height="75" /></div>
 
 ```rust
 let amount_to_add = 3;
