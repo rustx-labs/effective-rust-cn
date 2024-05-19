@@ -16,8 +16,8 @@
 
 换句话说，应该能够将错误类型显示给用户和程序员。
 
-特征中唯一的方法是 `source()`，[1](#footnote-1) 它允许错误类型公开一个内部的、嵌套的错误。此方法是可选的 —— 它带有一个返回 `None` 的默认实现（[第 13 条]），表示内部错误信息不可用。
-最后要注意的一点是：如果您正在为 `no_std` 环境（[第 33 条]）编写代码，可能无法实现 `Error` —— `Error` 特征目前在 `std` 中实现，而不是 `core`，因此不可用。[2](#footnote-2)
+特征中唯一的方法是 `source()`，[^1] 它允许错误类型公开一个内部的、嵌套的错误。此方法是可选的 —— 它带有一个返回 `None` 的默认实现（[第 13 条]），表示内部错误信息不可用。
+最后要注意的一点是：如果您正在为 `no_std` 环境（[第 33 条]）编写代码，可能无法实现 `Error` —— `Error` 特征目前在 `std` 中实现，而不是 `core`，因此不可用。[^2]
 
 ## 最小错误（Minimal Errors）
 
@@ -301,7 +301,7 @@ error[E0119]: conflicting implementations of trait `From<WrappedError>` for
 
 ## 库与应用程序
 
-上一节的最后建议中包含了这样的限定：“……用于应用程序中的错误处理”。这是因为库中编写的代码和构成顶级应用程序的代码之间通常有一个区别。[3](#footnote-3)
+上一节的最后建议中包含了这样的限定：“……用于应用程序中的错误处理”。这是因为库中编写的代码和构成顶级应用程序的代码之间通常有一个区别。[^3]
 
 为库编写的代码无法预测代码使用的环境，因此最好发出具体、详细的错误信息，让调用者去弄清楚如何使用这些信息。这倾向于前面描述的枚举风格的嵌套错误（并且在库的公共 `API` 中避免了依赖 `anyhow`，参见[第 24 条]）。
 
@@ -319,11 +319,11 @@ error[E0119]: conflicting implementations of trait `From<WrappedError>` for
 
 #### 注释
 
-<a id="footnote-1">1</a>: 或者至少是唯一一个非废弃的、稳定的方法。
+[^1]: 或者至少是唯一一个非废弃的、稳定的方法。
 
-<a id="footnote-2">2</a>: 在撰写本文时，`Error` 已经[被移动到 `core`](https://github.com/rust-lang/rust/issues/103765)，但在稳定版的 `Rust` 中尚不可用。
+[^2]: 在撰写本文时，`Error` 已经[被移动到 `core`](https://github.com/rust-lang/rust/issues/103765)，但在稳定版的 `Rust` 中尚不可用。
 
-<a id="footnote-3">3</a>: 本节灵感来源于 `Nick Groenen` 的文章[《Rust: 2020年在错误处理和结构化》](https://nick.groenen.me/posts/rust-error-handling/)。
+[^3]: 本节灵感来源于 `Nick Groenen` 的文章[《Rust: 2020年在错误处理和结构化》](https://nick.groenen.me/posts/rust-error-handling/)。
 
 原文[点这里](https://www.lurklurk.org/effective-rust/errors.html)查看
 

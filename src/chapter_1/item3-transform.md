@@ -156,7 +156,7 @@ help: consider borrowing the `Option`'s content
    |                                  +++++++++
 ```
 
-错误消息准确地描述了使代码工作所需的内容，即 `Option` 上的 `as_ref()` 方法[1](#fontnote-1)。这个方法将一个对 `Option` 的引用转换为对引用的 `Option`：
+错误消息准确地描述了使代码工作所需的内容，即 `Option` 上的 `as_ref()` 方法[^1]。这个方法将一个对 `Option` 的引用转换为对引用的 `Option`：
 
 ```rust
 pub fn encrypted(&self) -> Vec<u8> {
@@ -175,7 +175,7 @@ pub fn encrypted(&self) -> Vec<u8> {
 
 #### 注释
 
-<a id="footnote-1">1</a>: 注意，这个方法与 `AsRef` 特征是分开的，尽管方法名称相同。
+[^1]: 注意，这个方法与 `AsRef` 特征是分开的，尽管方法名称相同。
 
 原文[点这里](https://www.lurklurk.org/effective-rust/transform.html)查看
 
