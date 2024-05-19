@@ -13,6 +13,8 @@
 
 尝试将你的代码与这些概念的后果对齐是一个好主意。在 `Rust` 中重现（部分）`C/C++` 的行为是可能的，但如果你这样做，为什么还要麻烦使用 `Rust` 呢？
 
+<!-- 参考链接 -->
+
 [第 16 条]: https://www.lurklurk.org/effective-rust/unsafe.html
 [第 17 条]: https://www.lurklurk.org/effective-rust/deadlock.html
 [第 18 条]: https://www.lurklurk.org/effective-rust/panic.html

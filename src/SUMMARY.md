@@ -1,8 +1,9 @@
 # Summary
 
-- [封面](./cover.md)
-- [译著](./intro_zh.md)
-- [介绍](./intro.md)
+[封面](./cover.md)
+[译著](./intro_zh.md)
+[介绍](./intro.md)
+
 - [类型](./chapter_1.md)
     - [第 1 条：使用类型系统表达数据结构](./chapter_1/item1-use-types.md)
     - [第 2 条：使用类型系统表达常见行为](./chapter_1/item2-use-types-2.md)
@@ -17,3 +18,5 @@
 - [依赖](./chapter_4.md)
 - [工具](./chapter_5.md)
 - [超出 Rust 标准](./chapter_6.md)
+
+[后记](./afterword.md)
