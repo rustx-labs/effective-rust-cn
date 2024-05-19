@@ -181,8 +181,8 @@ pub fn encrypted(&self) -> Vec<u8> {
 
 <!-- 参考链接 -->
 
-[第1条]: use-types.md
-[第4条]: https://www.lurklurk.org/effective-rust/errors.html
+[第1条]: item1-use-types.md
+[第4条]: item4-errors.md
 [第5条]: https://www.lurklurk.org/effective-rust/std-traits.html
 [第18条]: https://www.lurklurk.org/effective-rust/panic.html
 

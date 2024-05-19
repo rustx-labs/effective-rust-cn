@@ -260,10 +260,10 @@ struct DisplayProperties {
 
 <!-- 参考链接 -->
 
-[第3条]: transform.md
-[第4条]: https://www.lurklurk.org/effective-rust/errors.html
+[第3条]: item3-transform.md
+[第4条]: item4-errors.md
 [第6条]: https://www.lurklurk.org/effective-rust/casts.html
-[第7条]: https://www.lurklurk.org/effective-rust/newtype.html
+[第7条]: item7-builder.md
 [第16条]: https://www.lurklurk.org/effective-rust/unsafe.html
 [第18条]: https://www.lurklurk.org/effective-rust/panic.html
 [第21条]: https://www.lurklurk.org/effective-rust/semver.html

@@ -385,11 +385,11 @@ note: for a trait to be "object safe" it needs to allow building a vtable to all
 
 <!-- 参考链接 -->
 
-[第1条]: use-types.md
+[第1条]: item1-use-types.md
 [第6条]: https://www.lurklurk.org/effective-rust/casts.html
 [第9条]: https://www.lurklurk.org/effective-rust/references.html
 [第12条]: https://www.lurklurk.org/effective-rust/generics.html
-[第13条]: https://www.lurklurk.org/effective-rust/default-impl.html
+[第13条]: /chapter_2/item13-use-default-impl.md
 
 [函数指针]: https://doc.rust-lang.org/std/primitive.fn.html
 [鸭子类型]: https://en.wikipedia.org/wiki/Duck_typing
