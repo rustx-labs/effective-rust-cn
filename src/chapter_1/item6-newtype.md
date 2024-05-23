@@ -3,7 +3,7 @@
 [第 1 条]描述了*元组结构体*，它的字段没有名字，而是通过数字（`self.0`）来引用。本条着重介绍的是，只包含一个类型的元组结构体。它是一个新的类型，可以包含和内置类型一样的值。在 Rust 中，这个模式非常普遍，它叫做：*newtype* 模式。
 
 
-newtype 模式的最简单用法，是在类型原有行为的基础上，提供[额外的语义]。想象有一个将卫星送往火星的项目。这是一个大项目，不同的团队已经构建了项目的不同部分。其中一个小组负责火箭引擎的代码：
+newtype 模式的最简单用法，是在类型原有行为的基础上，提供[额外的语义]。想象有一个将卫星送往火星的项目。[^1]这是一个大项目，不同的团队已经构建了项目的不同部分。其中一个小组负责火箭引擎的代码：
 
 ```rust
 /// 点燃推进器。返回产生的脉冲，单位为磅/秒。
@@ -29,7 +29,7 @@ let thruster_force: f64 = thruster_impulse(direction);
 let new_direction = update_trajectory(thruster_force);
 ```
 
-糟糕。
+糟糕。[^2]
 
 Rust 有类型别名的特性，让不同的团队能够更清楚地表达他们的意图：
 
@@ -157,6 +157,8 @@ print_page(DoubleSided(true), ColorOutput(false));
 
 我们来尝试为一个外部类型实现一个外部特性：
 
+<div class="ferris"><img src="../images/ferris/does_not_compile.svg" width="75" height="75" /></div>
+
 ```rust
 use std::fmt;
 
@@ -185,7 +187,7 @@ error[E0117]: only traits defined in the current crate can be implemented for
 
 这种限制的原因是可能发生歧义：如果依赖关系图中的两个不同的包（[第 25 条]）都要实现 `impl std::fmt::Display for rand::rngs::StdRng`，那么编译器/链接器不知道选择哪个。
 
-这经常会带来挫败：例如，如果你试图序列化包含来自其他包的类型的数据，孤儿规则会阻止你写 `impl serde::Serialize for somecrate::SomeType`。
+这经常会带来挫败：例如，如果你试图序列化包含来自其他包的类型的数据，孤儿规则会阻止你写 `impl serde::Serialize for somecrate::SomeType`。[^3]
 
 但是 newtype 模式意味着你定义了一个*新*类型，这是当前包的一部分，所以就满足了孤儿规则的第二点。现在就能够实现一个外部特性：
 
@@ -225,6 +227,15 @@ impl fmt::Display for NewType {
     }
 }
 ```
+
+#### 注释
+
+[^1]: 具体来说，是火星气候轨道器。
+[^2]: 参见维基百科上的“火星气候轨道器”条目，了解更多关于失败原因的信息。
+[^3]: 对于serde来说，这是一个足够常见的问题，因此它包含了一种帮助机制。
+
+
+原文[点这里](https://www.lurklurk.org/effective-rust/newtype.html)查看
 
 <!-- 参考链接 -->
 
