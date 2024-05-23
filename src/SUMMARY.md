@@ -9,6 +9,7 @@
     - [第 2 条：使用类型系统表达常见行为](./chapter_1/item2-use-types-2.md)
     - [第 3 条：避免匹配 Option 和 Result](./chapter_1/item3-transform.md)
     - [第 4 条：优先使用惯用的错误类型](./chapter_1/item4-errors.md)
+    - [第 6 条：拥抱 newtype 模式](./chapter_1/item6-newtype.md)
     - [第 7 条：对于复杂的类型，使用构造器](./chapter_1/item7-builder.md)
     - [第 8 条：熟悉引用和指针类型](./chapter_1/item8-references&pointer.md)
 - [特征（Traits）](./chapter_2.md)
