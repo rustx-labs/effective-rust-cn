@@ -3,7 +3,7 @@
 [第 1 条]描述了*元组结构体*，它的字段没有名字，而是通过数字（`self.0`）来引用。本条着重介绍的是，只包含一个类型的元组结构体。它是一个新的类型，可以包含和内置类型一样的值。在 Rust 中，这个模式非常普遍，它叫做：*newtype* 模式。
 
 
-newtype 模式的最简单用法，是在类型原有行为的基础上，提供[额外的语义](https://doc.rust-lang.org/book/ch19-04-advanced-types.html#using-the-newtype-pattern-for-type-safety-and-abstraction)。想象有一个将卫星送往火星的项目。这是一个大项目，不同的团队已经构建了项目的不同部分。其中一个小组负责火箭引擎的代码：
+newtype 模式的最简单用法，是在类型原有行为的基础上，提供[额外的语义]。想象有一个将卫星送往火星的项目。这是一个大项目，不同的团队已经构建了项目的不同部分。其中一个小组负责火箭引擎的代码：
 
 ```rust
 /// 点燃推进器。返回产生的脉冲，单位为磅/秒。
@@ -144,13 +144,13 @@ fn print_page(sides: DoubleSided, color: ColorOutput) {
 print_page(DoubleSided(true), ColorOutput(false));
 ```
 
-如果需要考虑大小或二进制兼容性，那么 [`#[repr(transparent)]` 属性](https://doc.rust-lang.org/reference/type-layout.html#the-transparent-representation)能确保newtype在内存中的表示与内部类型相同。
+如果需要考虑大小或二进制兼容性，那么 [`#[repr(transparent)]` 属性]能确保newtype在内存中的表示与内部类型相同。
 
 这个来自[第 1 条]的例子，是 newtype 的简单用法—将语义编码到类型系统中，以让编译器负责管理这些语义。
 
 ## 绕过特征的孤儿规则
 
-另一个[常见](https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#using-the-newtype-pattern-to-implement-external-traits-on-external-types)但更巧妙的需要 newtype 模式的场景，是 Rust 的孤儿规则。这个规则意味着，在一个包里，以下条件之一满足时，才能为某个类型实现特性：
+另一个[常见]但更巧妙的需要 newtype 模式的场景，是 Rust 的孤儿规则。这个规则意味着，在一个包里，以下条件之一满足时，才能为某个类型实现特性：
 
 • 包定义了该特性
 • 包定义了该类型
@@ -199,7 +199,7 @@ impl fmt::Display for MyRng {
 }
 ```
 
-## newtype的限制
+## newtype 的限制
 
 newtype 模式解决了两类问题——阻止类型转换和绕过孤儿原则。但它也有一些不足——每个 newtype 的操作都需要转发到内部类型。
 
@@ -231,3 +231,6 @@ impl fmt::Display for NewType {
 [第 1 条]: item1-use-types.md
 [第 5 条]: https://www.lurklurk.org/effective-rust/casts.html
 [第 25 条]: https://www.lurklurk.org/effective-rust/dep-graph.html
+[常见]: https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#using-the-newtype-pattern-to-implement-external-traits-on-external-types
+[`#[repr(transparent)]` 属性]: https://doc.rust-lang.org/reference/type-layout.html#the-transparent-representation
+[额外的语义]: https://doc.rust-lang.org/book/ch19-04-advanced-types.html#using-the-newtype-pattern-for-type-safety-and-abstraction
