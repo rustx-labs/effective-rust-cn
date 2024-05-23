@@ -144,7 +144,7 @@ fn print_page(sides: DoubleSided, color: ColorOutput) {
 print_page(DoubleSided(true), ColorOutput(false));
 ```
 
-如果需要考虑大小或二进制兼容性，那么 [`#[repr(transparent)]` 属性]能确保newtype在内存中的表示与内部类型相同。
+如果需要考虑大小或二进制兼容性，那么 [`#[repr(transparent)]` 属性](https://doc.rust-lang.org/reference/type-layout.html#the-transparent-representation)能确保newtype在内存中的表示与内部类型相同。
 
 这个来自[第 1 条]的例子，是 newtype 的简单用法—将语义编码到类型系统中，以让编译器负责管理这些语义。
 
@@ -232,5 +232,4 @@ impl fmt::Display for NewType {
 [第 5 条]: https://www.lurklurk.org/effective-rust/casts.html
 [第 25 条]: https://www.lurklurk.org/effective-rust/dep-graph.html
 [常见]: https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#using-the-newtype-pattern-to-implement-external-traits-on-external-types
-[`#[repr(transparent)]` 属性]: https://doc.rust-lang.org/reference/type-layout.html#the-transparent-representation
 [额外的语义]: https://doc.rust-lang.org/book/ch19-04-advanced-types.html#using-the-newtype-pattern-for-type-safety-and-abstraction
