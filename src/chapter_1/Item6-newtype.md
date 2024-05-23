@@ -1,6 +1,6 @@
 ## 第 6 条：拥抱 newtype 模式
 
-[第 1 条](https://www.lurklurk.org/effective-rust/use-types.html)描述了*元组结构体*，它的字段没有名字，而是通过数字（`self.0`）来引用。本条着重介绍的是，只包含一个类型的元组结构体。它是一个新的类型，可以包含和内置类型一样的值。在 Rust 中，这个模式非常普遍，它叫做：*newtype* 模式。
+[第 1 条]描述了*元组结构体*，它的字段没有名字，而是通过数字（`self.0`）来引用。本条着重介绍的是，只包含一个类型的元组结构体。它是一个新的类型，可以包含和内置类型一样的值。在 Rust 中，这个模式非常普遍，它叫做：*newtype* 模式。
 
 
 newtype 模式的最简单用法，是在类型原有行为的基础上，提供[额外的语义](https://doc.rust-lang.org/book/ch19-04-advanced-types.html#using-the-newtype-pattern-for-type-safety-and-abstraction)。想象有一个将卫星送往火星的项目。这是一个大项目，不同的团队已经构建了项目的不同部分。其中一个小组负责火箭引擎的代码：
@@ -112,7 +112,7 @@ help: call `Into::into` on this expression to convert `PoundForceSeconds` into
    |                                                         +++++++
 ```
 
-如在[第 5 条](https://www.lurklurk.org/effective-rust/casts.html)中所述，添加标准库的 `From` 特性的实现：
+如在[第 5 条]中所述，添加标准库的 `From` 特性的实现：
 
 ```rust
 impl From<PoundForceSeconds> for NewtonSeconds {
@@ -129,7 +129,7 @@ let thruster_force: PoundForceSeconds = thruster_impulse(direction);
 let new_direction = update_trajectory(thruster_force.into());
 ```
 
-使用 newtype，除了能附加「单位」语义，还可以使布尔参数更清晰。回顾[第 1 条](https://www.lurklurk.org/effective-rust/use-types.html)的例子，使用newtype可以清晰地说明参数的含义：
+使用 newtype，除了能附加「单位」语义，还可以使布尔参数更清晰。回顾[第 1 条]的例子，使用newtype可以清晰地说明参数的含义：
 
 ```rust
 struct DoubleSided(pub bool);
@@ -146,7 +146,7 @@ print_page(DoubleSided(true), ColorOutput(false));
 
 如果需要考虑大小或二进制兼容性，那么 [`#[repr(transparent)]` 属性](https://doc.rust-lang.org/reference/type-layout.html#the-transparent-representation)能确保newtype在内存中的表示与内部类型相同。
 
-这个来自[第 1 条](https://www.lurklurk.org/effective-rust/use-types.html)的例子，是 newtype 的简单用法—将语义编码到类型系统中，以让编译器负责管理这些语义。
+这个来自[第 1 条]的例子，是 newtype 的简单用法—将语义编码到类型系统中，以让编译器负责管理这些语义。
 
 ## 绕过特征的孤儿规则
 
@@ -183,7 +183,7 @@ error[E0117]: only traits defined in the current crate can be implemented for
     = note: define and implement a trait or new type instead
 ```
 
-这种限制的原因是可能发生歧义：如果依赖关系图中的两个不同的包（[第 25 条](https://www.lurklurk.org/effective-rust/dep-graph.html)）都要实现 `impl std::fmt::Display for rand::rngs::StdRng`，那么编译器/链接器不知道选择哪个。
+这种限制的原因是可能发生歧义：如果依赖关系图中的两个不同的包（[第 25 条]）都要实现 `impl std::fmt::Display for rand::rngs::StdRng`，那么编译器/链接器不知道选择哪个。
 
 这经常会带来挫败：例如，如果你试图序列化包含来自其他包的类型的数据，孤儿规则会阻止你写 `impl serde::Serialize for somecrate::SomeType`。
 
@@ -225,3 +225,9 @@ impl fmt::Display for NewType {
     }
 }
 ```
+
+<!-- 参考链接 -->
+
+[第 1 条]: item1-use-types.md
+[第 5 条]: https://www.lurklurk.org/effective-rust/casts.html
+[第 25 条]: https://www.lurklurk.org/effective-rust/dep-graph.html
