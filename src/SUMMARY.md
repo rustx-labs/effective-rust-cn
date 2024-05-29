@@ -8,6 +8,7 @@
     - [第 2 条：使用类型系统表达常见行为](./chapter_1/use-types-2.md)
     - [第 3 条：避免匹配 Option 和 Result](./chapter_1/transform.md)
     - [第 7 条：对于复杂的类型，使用构造器](./chapter_1/builder.md)
+    - [第 9 条：考虑使用迭代器转换代替显式循环](./chapter_1/iterators.md)
 - [概念](./chapter_2.md)
 - [依赖](./chapter_3.md)
 - [工具](./chapter_4.md)
