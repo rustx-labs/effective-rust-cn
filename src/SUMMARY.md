@@ -12,6 +12,7 @@
     - [第 6 条：拥抱 newtype 模式](./chapter_1/item6-newtype.md)
     - [第 7 条：对于复杂的类型，使用构造器](./chapter_1/item7-builder.md)
     - [第 8 条：熟悉引用和指针类型](./chapter_1/item8-references&pointer.md)
+    - [第 9 条：考虑使用迭代器转换代替显式循环](./chapter_1/iterators.md)
 - [特征（Traits）](./chapter_2.md)
     - [第 11 条：为RAII模式实现Drop trait](./chapter_2/item11-impl-drop-for-RAII.md)
     - [第 12 条：理解泛型与特征对象之间的权衡](./chapter_2/item12-generics&trait-objects.md)
