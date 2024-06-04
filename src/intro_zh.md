@@ -41,3 +41,7 @@
 Rust 以其安全性和类型系统，在编程语言的世界中独领风骚。虽然面临学习曲线和编译器斗争等挑战，但 Rust 的优势使其成为值得每一位开发者投入时间和精力的语言。
 
 通过持续翻译分享《Effective Rust》，我们将一起深入 Rust 的世界，掌握 Rust 编程的精髓，为未来的软件开发铺就一条坚实的道路。
+
+<div id="footer" class="footer">
+    <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"></a></p>
+</div>

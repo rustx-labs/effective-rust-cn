@@ -9,3 +9,7 @@
 翻译：**lispking**
 
 ![cover](./images/cover.png)
+
+<div id="footer" class="footer">
+    <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"></a></p>
+</div>

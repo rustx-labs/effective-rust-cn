@@ -70,7 +70,7 @@ Rust 的安全性也导致完全没有标题为“永远不要…”的条目。
     - Chris Fleetwood, Sergey Kaunov, Clifford Matthews, Remo Senekowitsch, Kirill Zaborsky，以及一位匿名Proton Mail用户，他们指出了文本中的错误。
 - 我的家人，他们忍受了许多我因写作而分心的周末。
 
-原文[点这里](https://www.lurklurk.org/effective-rust/intro.html)查看
+原文[点这里](https://www.lurklurk.org/effective-rust/preface.html)查看
 
 <!-- 参考链接 -->
 
@@ -79,3 +79,7 @@ Rust 的安全性也导致完全没有标题为“永远不要…”的条目。
 [Rust 程序设计]: https://www.oreilly.com/library/view/programming-rust-2nd/9781492052586/
 
 [第19条]: https://www.lurklurk.org/effective-rust/reflection.html
+
+<div id="footer" class="footer">
+    <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png"></a></p>
+</div>
