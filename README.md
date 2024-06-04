@@ -17,6 +17,7 @@
 * [《Effective Rust》第2条：使用类型系统表达常见行为](https://mp.weixin.qq.com/s/a3eUvXc-vruL2YEwUiPMTQ)
 * [《Effective Rust》第3条：避免匹配 Option 和 Result](https://mp.weixin.qq.com/s/EKlaUcJMn-h1AaqMqMMZ4g)
 * [《Effective Rust》第4条：优先使用惯用的错误类型](https://mp.weixin.qq.com/s/ZLxXV289CGpkdZgyDeE5Jw)
+* [《Effective Rust》第5条：理解类型转换](https://mp.weixin.qq.com/s/H64PJHaoEb9OPzdkLTd4lw)
 
 ## 如何参与？
 
