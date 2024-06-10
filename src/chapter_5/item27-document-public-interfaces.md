@@ -68,8 +68,80 @@ error: unresolved link to `Polygone`
 * `crates.io`：展示包含在项目仓库中的任何顶层*README.md* [^2]文件内容。
 
 ## 不文档化的内容
-当一个项目*要求*公共条目都需要添加注释的时候，很容易就陷入到给无价值的内容也文档化的陷阱中。
+当一个项目*要求*公共条目都需要添加注释的时候，很容易就陷入到给无价值的内容也文档化的陷阱中。编译器的缺少注释文档的警告只是你真正需要的——有用的文档——一种体现，并且往往会鼓励程序员做最少的事情来消除警告。
 
+好的注释文档是一种能够帮助用户了解他们所使用代码的福利；糟糕的注释文档则增加了代码的维护成本并且让用户在他们不再和代码保持一致的时候变得更加困惑。那么好与不好的区别是什么呢？
+
+最重要的建议是*避免重复可以从代码中看出的信息*。[第 1 条]建议你的代码尽量的和 Rust 的类型系统保持一致；一旦你做到了这一点，就通过类型系统来说明这些语意。假定代码的用户对 Rust 已经熟悉了——可能他们已经读了一些描述了高效使用语言的建议条目——并且不要重复从代码的类型和签名中就能读出来的东西。
+
+回到之前的例子，一个冗余的注释文档可能如下面描述的这样：
+
+```rust
+/// Return a new [`BoundingBox`] object that exactly encompasses a pair
+/// of [`BoundingBox`] objects.
+///
+/// Parameters:
+///  - `a`: an immutable reference to a `BoundingBox`
+///  - `b`: an immutable reference to a `BoundingBox`
+/// Returns: new `BoundingBox` object.
+pub fn union(a: &BoundingBox, b: &BoundingBox) -> BoundingBox {
+```
+
+这个注释重复了很多从函数签名中就能读到的信息，注释信息毫无益处。
+
+更糟的是，考虑一种代码重构后，将结果存储到其中一个参数（这是一种不兼容的变更；参照[第 21 条]）。没有编译器或者工具能够发现注释没有随之更新，结果就产生了一个未能和代码逻辑保持一致的注释：
+
+```rust
+/// Return a new [`BoundingBox`] object that exactly encompasses a pair
+/// of [`BoundingBox`] objects.
+///
+/// Parameters:
+///  - `a`: an immutable reference to a `BoundingBox`
+///  - `b`: an immutable reference to a `BoundingBox`
+/// Returns: new `BoundingBox` object.
+pub fn union(a: &mut BoundingBox, b: &BoundingBox) {
+```
+
+相反地，原始的注释在重构中可以毫发无损地保留下来，因为它的文本描述的是行为，而非语意本身：
+
+```rust
+/// Calculate the [`BoundingBox`] that exactly encompasses a pair
+/// of [`BoundingBox`] objects.
+pub fn union(a: &mut BoundingBox, b: &BoundingBox) {
+```
+
+先前的场景也可以帮助提升文档质量：*在文档中包含任何从代码中无法了解的内容*。这包含前置条件、可变性、异常、报错条件以及任何可能会让用户感到意外的事情；如果你的代码不能遵守[最小惊奇原则]，确保这些意外都被记录在文档里，至少你可以说“我已经告诉过你了”。
+
+另一个常见的失败情形是，注释里描述了其他使用这个方法的代码，而非这个方法做了什么：
+
+```rust
+/// Return the intersection of two [`BoundingBox`] objects, returning `None`
+/// if there is no intersection. The collision detection code in `hits.rs`
+/// uses this to do an initial check to see whether two objects might overlap,
+/// before performing the more expensive pixel-by-pixel check in
+/// `objects_overlap`.
+pub fn intersection(
+    a: &BoundingBox,
+    b: &BoundingBox,
+) -> Option<BoundingBox> {
+```
+
+像这样的注释几乎不可能和代码保持一致：当使用了这个方法的代码（比如，`hits.rs`）变更的时候，这段描述了调用行为的注释相隔甚远而无法保持一致。
+
+应当将注释重新组织以聚焦在*为什么*这样使用，可以让这段注释更好的适应未来的变更。
+
+```rust
+/// Return the intersection of two [`BoundingBox`] objects, returning `None`
+/// if there is no intersection.  Note that intersection of bounding boxes
+/// is necessary but not sufficient for object collision -- pixel-by-pixel
+/// checks are still required on overlap.
+pub fn intersection(
+    a: &BoundingBox,
+    b: &BoundingBox,
+) -> Option<BoundingBox> {
+```
+
+当编写软件时，“面向未来的编程”[^3]是一种很好的实践：调整代码结构以适应未来的变更。同样的原则也适用于文档：聚焦在语意，为什么这样做以及为什么不这样做，会让文本在未来的运行中始终是有意义的。
 
 ## 总结
 * 给公共的 API 内容添加注释文档。
@@ -82,6 +154,7 @@ error: unresolved link to `Polygone`
 ### 注释
 [^1]: 这个配置也曾被成为`intra_doc_link_resolution_failure`。
 [^2]: 包含 *README.md* 的引用动作可以被[Cargo.toml 中的 readme 字段](https://doc.rust-lang.org/cargo/reference/manifest.html#the-readme-field)覆盖。。
+[^3]: Scott Meyers，More Effective C++ (Addison-Wesley)，第 32 条。
 
 
 <!-- 参考链接 -->
@@ -93,3 +166,6 @@ error: unresolved link to `Polygone`
 [第 32 条]: https://www.lurklurk.org/effective-rust/ci.html
 [第 30 条]: https://www.lurklurk.org/effective-rust/testing.html
 [docs.rs]: https://docs.rs/
+[第 1 条]: https://rustx-labs.github.io/effective-rust-cn/chapter_1/item1-use-types.html
+[第 21 条]: https://www.lurklurk.org/effective-rust/semver.html
+[最小惊奇原则]: https://en.wikipedia.org/wiki/Principle_of_least_astonishment
