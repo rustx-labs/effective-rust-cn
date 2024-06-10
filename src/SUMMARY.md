@@ -21,6 +21,7 @@
 - [概念](./chapter_3.md)
 - [依赖](./chapter_4.md)
 - [工具](./chapter_5.md)
+    - [第 27 条：为公共接口撰写文档](./chapter_5/item27-document-public-interfaces.md)
 - [超出 Rust 标准](./chapter_6.md)
 
 [后记](./afterword.md)
