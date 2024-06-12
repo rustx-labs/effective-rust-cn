@@ -19,6 +19,7 @@
     - [第 12 条：理解泛型与特征对象之间的权衡](./chapter_2/item12-generics&trait-objects.md)
     - [第 13 条：使用默认实现来减少必需实现的 trait 方法](./chapter_2/item13-use-default-impl.md)
 - [概念](./chapter_3.md)
+    - [第 14 条：理解生命周期](./chapter_3/item14-lifetimes.md)
 - [依赖](./chapter_4.md)
 - [工具](./chapter_5.md)
 - [超出 Rust 标准](./chapter_6.md)
