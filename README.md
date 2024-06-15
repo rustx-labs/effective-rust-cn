@@ -18,6 +18,7 @@
 * [《Effective Rust》第3条：避免匹配 Option 和 Result](https://mp.weixin.qq.com/s/EKlaUcJMn-h1AaqMqMMZ4g)
 * [《Effective Rust》第4条：优先使用惯用的错误类型](https://mp.weixin.qq.com/s/ZLxXV289CGpkdZgyDeE5Jw)
 * [《Effective Rust》第5条：理解类型转换](https://mp.weixin.qq.com/s/H64PJHaoEb9OPzdkLTd4lw)
+* [《Effective Rust》第6条：拥抱 newtype 模式](https://mp.weixin.qq.com/s/zgiS8-WBeaXCjYQ-znp41g)
 
 ## 如何参与？
 
