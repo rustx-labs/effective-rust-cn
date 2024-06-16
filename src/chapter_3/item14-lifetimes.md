@@ -708,10 +708,11 @@ pub trait Debug {
 
 <!-- 参考链接 -->
 
-[第 8 条]: https://www.lurklurk.org/effective-rust/references.html
-[第 11 条]: https://www.lurklurk.org/effective-rust/raii.html
+[第 8 条]: /chapter_1/item8-references&pointer.md
+[第 11 条]: /chapter_2/item11-impl-drop-for-RAII.md
 [第 15 条]: https://www.lurklurk.org/effective-rust/borrows.html
 [第 20 条]: https://www.lurklurk.org/effective-rust/optimize.html
+
 [非词法生命周期]: https://rust-lang.github.io/rfcs/2094-nll.html
 [static]: https://doc.rust-lang.org/std/keyword.static.html
 [提升]: https://doc.rust-lang.org/reference/destructors.html#constant-promotion
