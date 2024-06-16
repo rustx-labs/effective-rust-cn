@@ -1,7 +1,7 @@
 ---
-name: Custom issue template
+name: Feature request
 about: 翻译认领申请模板
-title: 'Item x: xxx'
+title: 'Item xx: xxxx'
 labels: ''
 assignees: ''
 
