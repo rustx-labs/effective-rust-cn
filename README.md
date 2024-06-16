@@ -45,3 +45,13 @@
 > 每一位读者的认可都是我持续创作的动力。
 
 ![微信公众号](./src/images/wechat-blog.png)
+
+## Star 历史
+
+<a href="https://star-history.com/#rustx-labs/effective-rust-cn&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=rustx-labs/effective-rust-cn&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=rustx-labs/effective-rust-cn&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=rustx-labs/effective-rust-cn&type=Date" />
+  </picture>
+</a>
