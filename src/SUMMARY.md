@@ -20,6 +20,7 @@
     - [第 13 条：使用默认实现来减少必需实现的 trait 方法](./chapter_2/item13-use-default-impl.md)
 - [概念](./chapter_3.md)
     - [第 14 条：理解生命周期](./chapter_3/item14-lifetimes.md)
+    - [第 15 条：理解借用检查器](./chapter_3/item15-borrows.md)
 - [依赖](./chapter_4.md)
 - [工具](./chapter_5.md)
 - [超出 Rust 标准](./chapter_6.md)
