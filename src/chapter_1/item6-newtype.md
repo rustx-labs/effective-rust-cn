@@ -240,7 +240,7 @@ impl fmt::Display for NewType {
 <!-- 参考链接 -->
 
 [第 1 条]: item1-use-types.md
-[第 5 条]: https://www.lurklurk.org/effective-rust/casts.html
+[第 5 条]: item5-casts.md
 [第 25 条]: https://www.lurklurk.org/effective-rust/dep-graph.html
 
 [常见]: https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#using-the-newtype-pattern-to-implement-external-traits-on-external-types

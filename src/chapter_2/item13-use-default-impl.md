@@ -42,7 +42,7 @@ where
 原文[点这里](https://www.lurklurk.org/effective-rust/default-impl.html)查看
 
 <!-- 参考链接 -->
-[第9条]: https://www.lurklurk.org/effective-rust/iterators.html
+[第9条]: chapter_1/item9-iterators.md
 [第21条]: https://www.lurklurk.org/effective-rust/semver.html
 
 [is_empty()]:https://doc.rust-lang.org/std/iter/trait.ExactSizeIterator.html#method.is_empty
