@@ -15,6 +15,7 @@
     - [第 8 条：熟悉引用和指针类型](./chapter_1/item8-references&pointer.md)
     - [第 9 条：考虑使用迭代器转换代替显式循环](./chapter_1/item9-iterators.md)
 - [特征（Traits）](./chapter_2.md)
+    - [第 10 条：熟悉标准库的 traits](./chapter_2/item10-std-traits.md)
     - [第 11 条：为RAII模式实现Drop trait](./chapter_2/item11-impl-drop-for-RAII.md)
     - [第 12 条：理解泛型与特征对象之间的权衡](./chapter_2/item12-generics&trait-objects.md)
     - [第 13 条：使用默认实现来减少必需实现的 trait 方法](./chapter_2/item13-use-default-impl.md)
