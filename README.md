@@ -19,7 +19,7 @@
 * [《Effective Rust》第4条：优先使用惯用的错误类型](https://mp.weixin.qq.com/s/ZLxXV289CGpkdZgyDeE5Jw)
 * [《Effective Rust》第5条：理解类型转换](https://mp.weixin.qq.com/s/H64PJHaoEb9OPzdkLTd4lw)
 * [《Effective Rust》第6条：拥抱 newtype 模式](https://mp.weixin.qq.com/s/zgiS8-WBeaXCjYQ-znp41g)
-* [《Effective Rust》第 7 条：对于复杂的类型，使用构造器](https://mp.weixin.qq.com/s/Nsjk2qzRMLggUNCjdRt-ng)
+* [《Effective Rust》第7条：对于复杂的类型，使用构造器](https://mp.weixin.qq.com/s/Nsjk2qzRMLggUNCjdRt-ng)
 
 ## 如何参与？
 
