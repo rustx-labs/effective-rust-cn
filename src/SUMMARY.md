@@ -22,6 +22,7 @@
 - [概念](./chapter_3.md)
     - [第 14 条：理解生命周期](./chapter_3/item14-lifetimes.md)
     - [第 15 条：理解借用检查器](./chapter_3/item15-borrows.md)
+    - [第 16 条：避免写 unsafe 代码](./chapter_3/item16-unsafe.md)
 - [依赖](./chapter_4.md)
 - [工具](./chapter_5.md)
     - [第 27 条：为公共接口撰写文档](./chapter_5/item27-document-public-interfaces.md)
