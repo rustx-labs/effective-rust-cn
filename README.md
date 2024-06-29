@@ -20,6 +20,7 @@
 * [《Effective Rust》第5条：理解类型转换](https://mp.weixin.qq.com/s/H64PJHaoEb9OPzdkLTd4lw)
 * [《Effective Rust》第6条：拥抱 newtype 模式](https://mp.weixin.qq.com/s/zgiS8-WBeaXCjYQ-znp41g)
 * [《Effective Rust》第7条：对于复杂的类型，使用构造器](https://mp.weixin.qq.com/s/Nsjk2qzRMLggUNCjdRt-ng)
+* [《Effective Rust》第8条：熟悉引用和指针类型](https://mp.weixin.qq.com/s/viQnX1n1wfNYS45IZ9hY8g)
 
 ## 如何参与？
 
