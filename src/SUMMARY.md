@@ -25,6 +25,7 @@
     - [第 16 条：避免写 unsafe 代码](./chapter_3/item16-unsafe.md)
     - [第 17 条：对共享状态的并行性保持警惕](./chapter_3/item17-deadlock.md)
     - [第 18 条：不要 panic](./chapter_3/item18-panic.md)
+    - [第 19 条：避免反射](./chapter_3/item19-reflection.md)
 - [依赖](./chapter_4.md)
     - [第 23 条：避免通配符导入](./chapter_4/item23-wildcard.md)
 - [工具](./chapter_5.md)

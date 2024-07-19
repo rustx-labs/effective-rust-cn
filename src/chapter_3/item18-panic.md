@@ -104,6 +104,8 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 [^1]: Tom Cargill 在 1994 年的[文章《C++ Report》](https://ptgmedia.pearsoncmg.com/imprint_downloads/informit/aw/meyerscddemo/DEMO/MAGAZINE/CA_FRAME.HTM)中探讨了保持 C++ 模板代码的异常安全性是多么困难，Herb Sutter 的 [Guru of the Week #8](http://www.gotw.ca/gotw/008.htm) 也有类似的讨论。
 
+原文[点这里](https://www.lurklurk.org/effective-rust/panic.html)查看
+
 <!-- 参考链接 -->
 
 [第 4 条]: https://www.lurklurk.org/effective-rust/errors.html

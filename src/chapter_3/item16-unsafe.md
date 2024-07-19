@@ -48,6 +48,8 @@ Rust 标准库包含大量 `unsafe` 代码；快速查找发现 `alloc` 库中�
 
 [^1]: 实际上，大多数 `std` 功能实际上都由 `core` 提供，因此可用于 `no_std` 代码，如[第 33 条]所述。
 
+原文[点这里](https://www.lurklurk.org/effective-rust/unsafe.html)查看
+
 <!-- 参考链接 -->
 
 [第 8 条]: https://www.lurklurk.org/effective-rust/references.html
