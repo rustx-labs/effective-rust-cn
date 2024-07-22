@@ -30,6 +30,7 @@
     - [第 23 条：避免通配符导入](./chapter_4/item23-wildcard.md)
 - [工具](./chapter_5.md)
     - [第 27 条：为公共接口撰写文档](./chapter_5/item27-document-public-interfaces.md)
+    - [第 28 条：在合适的时候使用宏](./chapter_5/item28-use-macros-judiciously.md)
 - [超出 Rust 标准](./chapter_6.md)
 
 [后记](./afterword.md)
