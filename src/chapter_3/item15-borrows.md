@@ -793,6 +793,8 @@ struct SelfRefIdx {
 [^3]: `Cow` 意思是写时克隆 (clone-on-write)；仅当数据需要对其更改（写入）时才克隆底层数据。
 [^4]: 处理 `async` 代码已经超出本书的范围；要了解更多关于自引用(self-referential)结构体的更多信息，参考 Jon Gjengset (No Starch Press) 编写的[《Rust for Rustaceans》](https://rust-for-rustaceans.com/)的第 8 章节。
 
+原文[点这里](https://www.lurklurk.org/effective-rust/borrows.html)查看
+
 <!-- 参考链接 -->
 
 [第 1 条]: https://www.lurklurk.org/effective-rust/use-types.html

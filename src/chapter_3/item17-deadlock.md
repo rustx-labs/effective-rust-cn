@@ -585,6 +585,8 @@ Go 语言[内置了](https://go.dev/ref/spec#Channel_types)用于这种操作的
 [^1]: 第三种类的行为是*线程对立（thread-hostile）*的：*即使*对它的所有访问都是对外同步的，代码在多线程环境中也是危险的。
 [^2]: Clang C++ 编译器包含一个 [`-Wthread-safety`](https://clang.llvm.org/docs/ThreadSafetyAnalysis.html) 选项，有时也称为*注释*，它允许通过关于哪一个互斥锁保护该数据的信息来注释该数据，并通过关于该函数获取锁的信息来注释该函数。当这些不变量被破坏时，会在编译期产生错误，就像 Rust 一样；然而，并没有强制使用这些注释——例如，当一个线程兼容的库第一个在多线程环境中使用时。
 
+原文[点这里](https://www.lurklurk.org/effective-rust/deadlock.html)查看
+
 <!-- 参考链接 -->
 
 [第 8 条]: https://www.lurklurk.org/effective-rust/references.html
