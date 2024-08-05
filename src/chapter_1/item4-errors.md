@@ -331,10 +331,10 @@ error[E0119]: conflicting implementations of trait `From<WrappedError>` for
 
 [第 1 条]: item1-use-types.md
 [第 3 条]: item3-transform.md
-[第 5 条]: https://www.lurklurk.org/effective-rust/casts.html
-[第 6 条]: https://www.lurklurk.org/effective-rust/newtype.html
+[第 5 条]: item5-casts.md
+[第 6 条]: item6-newtype.md
 [第 10 条]: https://www.lurklurk.org/effective-rust/std-traits.html
-[第 12 条]: https://www.lurklurk.org/effective-rust/generics.html
+[第 12 条]: /chapter_2/item12-generics&trait-objects.md
 [第 13 条]: /chapter_2/item13-use-default-impl.md
 [第 24 条]: https://www.lurklurk.org/effective-rust/re-export.html
 [第 25 条]: https://www.lurklurk.org/effective-rust/dep-graph.html

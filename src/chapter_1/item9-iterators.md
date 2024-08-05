@@ -1,6 +1,6 @@
 # 第 9 条：考虑使用迭代器转换代替显式循环
 
-编程语言中简陋朴素的循环经历了一段漫长路长的发展，逐步提高了使用的便利性和抽象性。B 语言（C 语言的前身）当时仅有 `while (condition) { ... }` 这种结构，但随着 C 语言的到来，`for` 循环的加入使通过数组下标进行遍历这种高频行为变得越来越方便：
+编程语言中简陋朴素的循环经历了一段漫长的发展，逐步提高了使用的便利性和抽象性。B 语言（C 语言的前身）当时仅有 `while (condition) { ... }` 这种结构，但随着 C 语言的到来，`for` 循环的加入使通过数组下标进行遍历这种高频行为变得越来越方便：
 
 ```c
 // C code
@@ -11,7 +11,7 @@ for (i = 0; i < len; i++) {
 }
 ```
 
-C++ 的早期版本通过允许将循环变量的声明嵌入到 `for` 语句钟，进一步提高了便利性（这也被 C 语言的 C99 标准所纳入）：
+C++ 的早期版本通过允许将循环变量的声明嵌入到 `for` 语句中，进一步提高了便利性（这也被 C 语言的 C99 标准所纳入）：
 
 ```c++
 // C++98 code
@@ -476,12 +476,15 @@ let even_sum_squares: u64 = values
 
 <a id="footnote-2">2</a>:如果对容器元素的修改可能会导致容器内部的一些约束被打破，那么这个方法就不能提供了。比如说：导致元素的 [Hash] 值发生变化的修改，就可能会导致 `HashMap` 内部数据结构的失效。
 
+<!-- 参考链接 -->
+
+[第 3 条]: item3-transform.md
+[第 10 条]: https://www.lurklurk.org/effective-rust/std-traits.html
+[第 13 条]: /chapter_2/item13-use-default-impl.md
+[第 15 条]: https://www.lurklurk.org/effective-rust/borrows.html
+[第 30 条]: https://www.lurklurk.org/effective-rust/testing.html
+
 [Java 1.5]:https://docs.oracle.com/javase/1.5.0/docs/guide/language/foreach.html
-[第 3 条]:https://www.lurklurk.org/effective-rust/transform.html
-[第 10 条]:https://www.lurklurk.org/effective-rust/std-traits.html
-[第 13 条]:https://www.lurklurk.org/effective-rust/default-impl.html
-[第 15 条]:https://www.lurklurk.org/effective-rust/borrows.html
-[第 30 条]:https://www.lurklurk.org/effective-rust/testing.html
 [Iterator]:https://doc.rust-lang.org/core/iter/trait.Iterator.html
 [next]:https://doc.rust-lang.org/core/iter/trait.Iterator.html#tymethod.next
 [IntoIterator]:https://doc.rust-lang.org/core/iter/trait.IntoIterator.html

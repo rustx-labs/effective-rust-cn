@@ -1,7 +1,9 @@
 # 第 12 条：理解泛型和特征对象之间的权衡
+
 [第2条]描述了如何使用特征来封装类型系统中的行为，作为相关方法的集合，并观察到有两种使用特征的方法：作为泛型的特征约束( `trait bound` )或特征对象( `trait object` )。本条探讨了这两种可能性之间的权衡。
 
 下面是一个运行示例，请考虑一个涵盖显示图形对象的功能的特征：
+
 ```Rust
 #[derive(Debug, Copy, Clone)]
 pub struct Point {
@@ -31,6 +33,7 @@ pub trait Draw {
 ```
 
 ## 泛型
+
 Rust 的泛型大致等同于 C++ 的模板：它允许程序员编写适用于任意类型 `T` 的代码，而泛型代码的特定用途会在编译时生成--这一过程在 Rust 中称为*单态化(monomorphization)*，在 C++ 中称为*模板实例化(template instantiation)*。与 C++ 不同的是，Rust 在类型系统中以泛型的特质约束的形式明确编码了对 `T` 类型的期望。
 
 例如，一个使用特征的 `bounds()` 方法的泛型函数具有显式的 `Draw` 特征约束：
@@ -54,6 +57,7 @@ pub fn on_screen<T: Draw>(draw: &T) -> bool {
 ```
 
 或者使用 `impl Trait` 作为参数的类型[^1]：
+
 ```Rust
 pub fn on_screen(draw: &impl Draw) -> bool {
     overlap(SCREEN_BOUNDS, draw.bounds()).is_some()
@@ -61,6 +65,7 @@ pub fn on_screen(draw: &impl Draw) -> bool {
 ```
 
 如果一个类型实现了特征：
+
 ```Rust
 #[derive(Clone)] // no `Debug`
 struct Square {
@@ -80,7 +85,9 @@ impl Draw for Square {
     }
 }
 ```
+
 然后该类型的实例可以传递给泛型函数，通过单例化来产生特定于一种特定类型的代码：
+
 ```Rust
 let square = Square {
     top_left: Point { x: 1, y: 2 },
@@ -91,6 +98,7 @@ let visible = on_screen(&square);
 ```
 
 如果将相同的泛型函数用于实现相关特征约束的其他类型：
+
 ```Rust
 #[derive(Clone, Debug)]
 struct Circle {
@@ -104,7 +112,9 @@ impl Draw for Circle {
     }
 }
 ```
+
 然后使用不同的单态化代码：
+
 ```Rust
 let circle = Circle {
     center: Point { x: 3, y: 4 },
@@ -117,11 +127,13 @@ let visible = on_screen(&circle);
 换句话说，程序员编写了一个单一的泛型函数，但编译器会为每次调用该函数时使用的不同类型输出一个不同的单态化版本的函数。
 
 ## 特征对象
+
 相比之下，特征对象是一个胖指针([第8条])，它将指向底层具体项目的指针与指向虚表（vtable）的指针结合在一起，而虚表又持有特征实现的所有方法的函数指针，如图 2-1 所示：
 ![图 2-1](../images/item12/draw.svg "特征对象布局，包含指向具体项目的指针和指向vtable的指针")
 *图 2-1.特征对象布局，包含指向具体项目的指针和指向vtable的指针*
 
 这意味着接受特征对象的函数不需要泛型，也不需要单态化：程序员使用特征对象编写函数，编译器只输出该函数的一个版本，它可以接受来自多种输入类型的特征对象：
+
 ```Rust
 /// Indicate whether an object is on-screen.
 pub fn on_screen(draw: &dyn Draw) -> bool {
@@ -136,6 +148,7 @@ let visible = on_screen(&circle);
 ```
 
 ## 基本比较
+
 这些基本事实已经允许在两种可能性之间进行一些直接比较：
  - 泛型可能会导致代码量增大，因为编译器会为每个使用 `on_screen` 函数泛型版本的 `T` 类型生成一份全新的代码副本（ `on_screen::<T>(&T)` ）。相比之下，该函数的特征对象版本（ `on_screen(&dyn T)` ）只需要生成一个实例。
  - 从泛型中调用特征方法通常比从使用特征对象的代码中调用特征方法要稍微快一些，因为后者需要执行两次反引用来查找代码的位置（特征对象到 vtable，vtable 到实现位置）。
@@ -144,6 +157,7 @@ let visible = on_screen(&circle);
 在大多数情况下，这些差异并不显著--只有当你测量了优化的影响并发现它确实会产生影响（速度瓶颈或占用率增加）时，才应将优化相关的问题作为主要的决策驱动因素。
 
 更重要的区别在于，通用特征约束可用于有条件地提供不同的功能，这取决于类型参数是否实现了*多个*特征：
+
 ```Rust
 // The `area` function is available for all containers holding things
 // that implement `Draw`.
@@ -194,10 +208,13 @@ trait DebugDraw: Debug + Draw {}
 /// are implemented.
 impl<T: Debug + Draw> DebugDraw for T {}
 ```
+
 但是，如果存在不同特征的多种组合，这种方法的组合学显然会迅速变得臃肿不堪。
 
 ## 更多特征约束
+
 除了使用特征约束来限制泛型函数可接受的类型参数外，还可以将其应用于特征定义本身：
+
 ```Rust
 /// Anything that implements `Shape` must also implement `Draw`.
 trait Shape: Draw {
@@ -214,11 +231,13 @@ trait Shape: Draw {
     }
 }
 ```
+
 在本例中，`render()` 方法的默认实现（[第13条]）使用了特征 `bound`，依赖于 `Draw` 中的 `bounds()` 方法。
 
 来自面向对象语言的程序员经常会混淆特征约束和继承，误以为这样的特征约束意味着 `Shape` *就是* `Draw`。事实并非如此：这两种类型之间的关系最好表述为 `Shape` *也实现了* `Draw`。
 
 从底层来看，那些具有特征约束的特征对象：
+
 ```Rust
 let square = Square {
     top_left: Point { x: 1, y: 2 },
@@ -227,6 +246,7 @@ let square = Square {
 let draw: &dyn Draw = &square;
 let shape: &dyn Shape = &square;
 ```
+
 有一个组合的虚表，其中包括顶层特征的方法以及所有特征约束的方法。如图 2-2 所示：`Shape` 的虚表包括 `Draw` 特征的 `bounds` 方法，以及 `Shape` 特征本身的两个方法。
 ![图 2-2](../images/item12/traitbounds.svg "具有`Draw`与`Shape`两种虚表的具有特征约束的特征对象")
 *图 2-2.具有 `Draw` 与 `Shape` 两种虚表的具有特征约束的特征对象*
@@ -252,6 +272,7 @@ let shape: &dyn Shape = &square;
 第二种限制比较微妙，但往往是在实践中更常遇到的限制--使用 `Copy` 或 `Clone` 特征约束（[第10条]）的特征会立即受到这条规则的限制，因为它们返回的是 `Self`。如果代码调用（例如） `let y = x.clone()`，会发生什么情况？调用代码需要在堆栈中为 `y` 预留足够的空间，但它不知道 `y` 的大小，因为 `Self` 是一个任意类型。因此，提及 `Self` 的返回类型会导致特征对对象不安全[^2]。
 
 第二个限制有一个例外。如果 `Self` 对编译时已知大小的类型有明确的限制，即 `Sized` 标记特征作为特征，那么返回某种 `Self` 相关类型的方法就不会影响对象的安全性：
+
 ```Rust
 /// A `Stamp` can be copied and drawn multiple times.
 trait Stamp: Draw {
@@ -273,7 +294,9 @@ let copy = square.make_copy();
 // creating a `Stamp` trait object is possible.
 let stamp: &dyn Stamp = &square;
 ```
+
 这种特征约束意味着该方法无论如何都不能与特征对象一起使用，因为特征指的是未知大小的东西（`dyn Trait`），所以该方法违背了对象安全：
+
 ```Rust
 // However, the method can't be invoked via a trait object.
 let copy = stamp.make_copy();
@@ -290,6 +313,7 @@ error: the `make_copy` method cannot be invoked on a trait object
 ```
 
 ## 权衡取舍
+
 从目前各种因素的权衡来看，你应该更倾向于使用泛型而非特征对象，但在某些情况下，特征对象才是最合适的工具。
 
 首先是实际考虑：如果生成代码的大小或编译时间是个问题，那么特征对象的性能会更好（如本项目前面所述）。
@@ -297,24 +321,30 @@ error: the `make_copy` method cannot be invoked on a trait object
 从理论上讲，特征对象从根本上涉及类型擦除：在转换为特征对象的过程中，具体类型的信息会丢失。这可能是一个缺点（见[第19条]），但它也可能是有用的，因为它允许异构对象的集合--因为代码只依赖于特质的方法，它可以调用和组合具有不同具体类型的项的方法。
 
 渲染形状列表的传统面向对象例子就是一个例子：在同一个循环中，可以对正方形、圆形、椭圆形和星形使用相同的 `render()` 方法：
+
 ```Rust
 let shapes: Vec<&dyn Shape> = vec![&square, &circle];
 for shape in shapes {
     shape.render()
 }
 ```
+
 当编译时还不知道可用类型时，特征对象的潜在优势就显得模糊得多。如果新代码在运行时被动态加载（例如通过[dlopen(3)]），那么在新代码中实现特征的项目只能通过特征对象调用，因为没有源代码可以单态化。
 
 原文[点这里](https://www.lurklurk.org/effective-rust/generics.html)查看
 
-<!-- 参考链接 -->
-[第2条]: ../chapter_1/item2-use-types-2.md
-[第8条]: ../chapter_1/item8-references&pointer.md
-[第10条]: https://www.lurklurk.org/effective-rust/std-traits.html
-[第13条]: item13-use-default-impl.md
-[里氏替换原则（Liskov substitution）]: https://en.wikipedia.org/wiki/Liskov_substitution_principle
-[第19条]: https://www.lurklurk.org/effective-rust/reflection.html
-[对象安全]: https://doc.rust-lang.org/reference/items/traits.html#object-safety
-[dlopen(3)]: https://man7.org/linux/man-pages/man3/dlopen.3.html
+#### 注释
+
 [^1]: 使用["impl Trait in argument position"](https://doc.rust-lang.org/reference/types/impl-trait.html#anonymous-type-parameters)并不完全等同于前两个版本，因为它取消了调用者通过类似`on_screen::<Circle>(&c)`这样的方式明确指定类型参数的功能。
 [^2]: 在撰写本文时，对返回 `Self` 的方法的限制包括像 `Box<Self> ` 这样可以安全地存储在堆栈中的类型；这一限制将来可能会放宽。
+
+<!-- 参考链接 -->
+[第2条]: /chapter_1/item2-use-types-2.md
+[第8条]: /chapter_1/item8-references&pointer.md
+[第10条]: https://www.lurklurk.org/effective-rust/std-traits.html
+[第13条]: item13-use-default-impl.md
+[第19条]: https://www.lurklurk.org/effective-rust/reflection.html
+
+[里氏替换原则（Liskov substitution）]: https://en.wikipedia.org/wiki/Liskov_substitution_principle
+[对象安全]: https://doc.rust-lang.org/reference/items/traits.html#object-safety
+[dlopen(3)]: https://man7.org/linux/man-pages/man3/dlopen.3.html

@@ -152,7 +152,7 @@ print_page(DoubleSided(true), ColorOutput(false));
 
 另一个[常见]但更巧妙的需要 newtype 模式的场景，是 Rust 的孤儿规则。这个规则意味着，在一个包里，以下条件之一满足时，才能为某个类型实现特性：
 
-• 包定义了该特性
+• 包定义了该特性  
 • 包定义了该类型
 
 我们来尝试为一个外部类型实现一个外部特性：
@@ -240,7 +240,7 @@ impl fmt::Display for NewType {
 <!-- 参考链接 -->
 
 [第 1 条]: item1-use-types.md
-[第 5 条]: https://www.lurklurk.org/effective-rust/casts.html
+[第 5 条]: item5-casts.md
 [第 25 条]: https://www.lurklurk.org/effective-rust/dep-graph.html
 
 [常见]: https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#using-the-newtype-pattern-to-implement-external-traits-on-external-types

@@ -18,6 +18,9 @@
 * [《Effective Rust》第3条：避免匹配 Option 和 Result](https://mp.weixin.qq.com/s/EKlaUcJMn-h1AaqMqMMZ4g)
 * [《Effective Rust》第4条：优先使用惯用的错误类型](https://mp.weixin.qq.com/s/ZLxXV289CGpkdZgyDeE5Jw)
 * [《Effective Rust》第5条：理解类型转换](https://mp.weixin.qq.com/s/H64PJHaoEb9OPzdkLTd4lw)
+* [《Effective Rust》第6条：拥抱 newtype 模式](https://mp.weixin.qq.com/s/zgiS8-WBeaXCjYQ-znp41g)
+* [《Effective Rust》第7条：对于复杂的类型，使用构造器](https://mp.weixin.qq.com/s/Nsjk2qzRMLggUNCjdRt-ng)
+* [《Effective Rust》第8条：熟悉引用和指针类型](https://mp.weixin.qq.com/s/viQnX1n1wfNYS45IZ9hY8g)
 
 ## 如何参与？
 
@@ -32,6 +35,13 @@
 
 通过这样的方式，我们可以有序且高效地推进翻译工作，共同为技术社区贡献力量。
 
+## 翻译的那些小规范
+
+* 标题与正文前后加空行
+* 破折号前后加空格
+* 英文单词前后加空格
+* 代码块前后加空行
+* 链接统一放在最后管理，参考现有翻译好的文章格式
 
 ## 环境准备
 
@@ -44,3 +54,13 @@
 > 每一位读者的认可都是我持续创作的动力。
 
 ![微信公众号](./src/images/wechat-blog.png)
+
+## Star 历史
+
+<a href="https://star-history.com/#rustx-labs/effective-rust-cn&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=rustx-labs/effective-rust-cn&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=rustx-labs/effective-rust-cn&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=rustx-labs/effective-rust-cn&type=Date" />
+  </picture>
+</a>

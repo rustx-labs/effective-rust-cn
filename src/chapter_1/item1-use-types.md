@@ -262,7 +262,7 @@ struct DisplayProperties {
 
 [第3条]: item3-transform.md
 [第4条]: item4-errors.md
-[第6条]: https://www.lurklurk.org/effective-rust/casts.html
+[第6条]: item6-newtype.md
 [第7条]: item7-builder.md
 [第16条]: https://www.lurklurk.org/effective-rust/unsafe.html
 [第18条]: https://www.lurklurk.org/effective-rust/panic.html
