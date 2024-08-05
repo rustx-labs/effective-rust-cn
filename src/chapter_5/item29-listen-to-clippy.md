@@ -2,7 +2,7 @@
 
 > “看起来你在写信。需要什么帮助么？” —— [Microsoft Clippit]
 
-[第 31 条]描述了 Rust 工具箱中很有用的一些工具。但是其中一个特别有用且重要的工具值得拿出来进行进行单独的介绍：[Clippy]。
+[第 31 条]会描述了 Rust 工具箱中一些很有用的工具。但是其中一个特别有用且重要的工具值的在这里进行进行单独的介绍：[Clippy]。
 
 Clippy 是 Cargo 的一个附加模块（通过`cargo clippy`的方式调用）。它可以生成涵盖多种类别的`warining`信息：
 * 正确性：提示常见的编程错误。
@@ -13,6 +13,8 @@ Clippy 是 Cargo 的一个附加模块（通过`cargo clippy`的方式调用）�
 
 比如，如下这段代码编译是正常的：
 
+<div class="ferris"><img src="../images/ferris/not_desired_behavior.svg" width="75" height="75" /></div>
+
 ```rust
 pub fn circle_area(radius: f64) -> f64 {
     let pi = 3.14;
@@ -20,7 +22,7 @@ pub fn circle_area(radius: f64) -> f64 {
 }
 ```
 
-但是 Clippy 会指出本地的对 π 的近似赋值是没必要且不准确的：
+但是 Clippy 会指出这里对 π 的近似赋值是没必要且不准确的：
 
 ```rust
 error: approximate value of `f{32, 64}::consts::PI` found
@@ -35,7 +37,7 @@ error: approximate value of `f{32, 64}::consts::PI` found
   = note: `#[deny(clippy::approx_constant)]` on by default
 ```
 
-链接中的文档解释了问题并且给出了优化代码的方式：
+链接中的文档解释了问题并且给出了优化代码的方式。上述示例可调整为：
 
 ```rust
 pub fn circle_area(radius: f64) -> f64 {
@@ -43,9 +45,9 @@ pub fn circle_area(radius: f64) -> f64 {
 }
 ```
 
-正如示例中所展示的，每个 Clippy 警告都会伴随着一个网页的链接来描述问题。链接中会说明为什么目标代码会被认为是不恰当的。这些说明很重要。它们的存在使得你可以自行判断采纳这些建议或者由于特殊的原因而忽略它们。有的时候，说明文本中还会描述一些校验器的已知问题，这些内容会解释一些令人困惑的误报。
+正如示例中所展示的，每个 Clippy 警告都会伴随着一个网页的链接来描述问题。链接的网页中会说明为什么目标代码会被认为是不恰当的。这些说明很重要：它们的存在使得你可以自行判断采纳这些建议或者由于特殊的原因而忽略它们。有的时候，说明文本中还会描述一些校验器的已知问题，这些描述会解释一些令人困惑的误报。
 
-如果你认定一些警告信息和自己的代码没有关系，你可以通过添加(#[allow(clippy::some\_line)])来忽略关联代码的报错，或者在包的顶层（top level）添加(#![allow(clipy::some\_lint)])来忽略整个包中的警告信息。通常情况下，建议调整目标代码而非花费很多时间来确认警告关联的代码是否是一个高明的误报。
+如果你认定一些警告信息和自己的代码没有关系，你可以通过添加(#[allow(clippy::some\_line)])来忽略关联代码的报错，或者在包的顶层（top level）添加(#![allow(clipy::some\_lint)])来忽略整个包中的警告信息。通常情况下，建议调整目标代码而非花费很多时间来确认警告关联的代码是否是一个罕见的误报。
 
 无论你选择了修复或者忽略掉这些警告信息，请**确保你的代码中没有 Clippy-warning 的信息**。
 
@@ -53,9 +55,9 @@ pub fn circle_area(radius: f64) -> f64 {
 
 Clippy 的警告信息在你学习 Rust 时特别重要，因为它们可以揭示那些被你忽略的细节，并帮助你熟悉 Rust 的风格。
 
-本书中提到的很多条目，在 Clippy 中均存在类似的警告信息：
+本书中提到的很多建议，在 Clippy 中均存在相关的警告信息：
 
-* [第 1 条]建议使用更具表现力的类型，而非一般的`bool`类型。Clippy 同时指出了在[函数参数]以及[结构体]中使用多个`bool`类型的问题。
+* [第 1 条]建议使用更具表现力的类型，而非一般的`bool`类型。Clippy 也指出了在[函数参数]以及[结构体]中使用多个`bool`类型的问题。
 * [第 3 条]包括了一些`Option`及`Result`类型的操作。Clippy 指出了一些可行的精简行为，比如：
   * [Unnecessarily converting `Result` to `Option`]。
   * [Opportunities to use `unwrap_or_default`]。
@@ -87,7 +89,7 @@ Clippy 的警告信息在你学习 Rust 时特别重要，因为它们可以揭�
   * [Missing descriptions of `panic!`s]。
   * [Missing descriptions] of [`unsafe` concerns]。
 
-上述的信息无疑说明了**阅读 [Clippy 的警告信息]**同样是一中有意义的学习方式 —— 包括那些默认被关掉校验的原因，是由于它们太严苛了还是由于它们会产生虚警？尽管你可能并不希望代码中出现这么多的警告信息，理解这些校验规则出现的原因将会提升你对 Rust 及其风格的理解。
+上述的信息无疑说明了**阅读 [Clippy 的警告信息]列表**同样是一种有意义的学习方式 —— 包括那些默认被关掉校验的原因，是由于它们太严苛了还是由于它们会产生虚警？尽管你可能并不希望代码中出现这么多的警告信息，领悟这些校验规则出现的原因将会提升你对 Rust 及其风格的理解。
 
 ### 注释
 [^1]: 部分校验器列举如下。[explicit_counter_loop]，[explicit_iter_loop]，[explicit_into_iter_loop]，[filter_map_identity]，[from_iter_instead_of_collect]，[into_iter_on_ref]，[iter_count]，[iter_next_loop]，[iter_not_returning_iterator]，[manual_filter_map]，[manual_find_map]，[map_clone]，[needless_range_loop]，[search_is_some]，[skip_while_next]，[suspicious_map]，[unnecessary_filter_map]，[unnecessary_fold]。
@@ -103,6 +105,7 @@ Clippy 的警告信息在你学习 Rust 时特别重要，因为它们可以揭�
 [第 1 条]: https://rustx-labs.github.io/effective-rust-cn/chapter_1/item1-use-types.html
 [函数参数]: https://rust-lang.github.io/rust-clippy/stable/index.html#/fn_params_excessive_bools
 [结构体]: https://rust-lang.github.io/rust-clippy/stable/index.html#/struct_excessive_bools
+[第 3 条]: https://rustx-labs.github.io/effective-rust-cn/chapter_1/item3-transform.html
 [Unnecessarily converting `Result` to `Option`]: https://rust-lang.github.io/rust-clippy/stable/index.html#/ok_expect
 [Opportunities to use `unwrap_or_default`]: https://rust-lang.github.io/rust-clippy/stable/index.html#/unwrap_or_else_default
 [应当返回的地方]: https://rust-lang.github.io/rust-clippy/stable/index.html#/unwrap_in_result
@@ -114,9 +117,11 @@ Clippy 的警告信息在你学习 Rust 时特别重要，因为它们可以揭�
 [`as` casts that lose precision]: https://rust-lang.github.io/rust-clippy/stable/index.html#/cast_precision_loss
 [`as` casts that might convert signed negative numbers to large positive numbers]: https://rust-lang.github.io/rust-clippy/stable/index.html#/cast_sign_loss
 [any use of `as`]: https://rust-lang.github.io/rust-clippy/stable/index.html#/as_conversions
+[第 8 条]: https://rustx-labs.github.io/effective-rust-cn/chapter_1/item8-references&pointer.html 
 [Holding a heap-allocated collection in a `Box`]: https://rust-lang.github.io/rust-clippy/stable/index.html#/box_collection
 [Holding a heap-allocated collection of `Box` items]: https://rust-lang.github.io/rust-clippy/stable/index.html#/vec_box
 [Taking a reference to a `Box`]: https://rust-lang.github.io/rust-clippy/stable/index.html#/borrowed_box
+[第 9 条]: https://rustx-labs.github.io/effective-rust-cn/chapter_1/item9-iterators.html
 [explicit_counter_loop]: https://rust-lang.github.io/rust-clippy/stable/index.html#/explicit_counter_loop
 [explicit_iter_loop]: https://rust-lang.github.io/rust-clippy/stable/index.html#/explicit_iter_loop
 [explicit_into_iter_loop]: https://rust-lang.github.io/rust-clippy/stable/index.html#/explicit_into_iter_loop
@@ -135,6 +140,7 @@ Clippy 的警告信息在你学习 Rust 时特别重要，因为它们可以揭�
 [suspicious_map]: https://rust-lang.github.io/rust-clippy/stable/index.html#/suspicious_map
 [unnecessary_filter_map]: https://rust-lang.github.io/rust-clippy/stable/index.html#/unnecessary_filter_map
 [unnecessary_fold]: https://rust-lang.github.io/rust-clippy/stable/index.html#/unnecessary_fold
+[第 10 条]: https://rustx-labs.github.io/effective-rust-cn/chapter_2/item10-std-traits.html
 [`Ord` must agree with `PartialOrd`]: https://rust-lang.github.io/rust-clippy/stable/index.html#/derive_ord_xor_partial_ord
 [`PartialEq::ne` should not need a nondefault implementation]: https://rust-lang.github.io/rust-clippy/stable/index.html#/partialeq_ne_impl
 [第 13 条]: https://rustx-labs.github.io/effective-rust-cn/chapter_2/item13-use-default-impl.html
@@ -148,6 +154,7 @@ Clippy 的警告信息在你学习 Rust 时特别重要，因为它们可以揭�
 [第 23 条]: https://rustx-labs.github.io/effective-rust-cn/chapter_4/item23-wildcard.html
 [第 25 条]: https://www.lurklurk.org/effective-rust/dep-graph.html
 [在问题出现时给出警告信息]: https://rust-lang.github.io/rust-clippy/stable/index.html#/multiple_crate_versions
+[第 26 条]: https://www.lurklurk.org/effective-rust/features.html
 [“否定”的特性]: https://rust-lang.github.io/rust-clippy/stable/index.html#/negative_feature_names
 [需要明确的特性名（如："use-crate-x"形式的命名）]: https://rust-lang.github.io/rust-clippy/stable/index.html#/redundant_feature_names
 [第 27 条]: https://rustx-labs.github.io/effective-rust-cn/chapter_5/item27-document-public-interfaces.html
