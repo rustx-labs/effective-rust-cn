@@ -31,6 +31,7 @@
 - [工具](./chapter_5.md)
     - [第 27 条：为公共接口撰写文档](./chapter_5/item27-document-public-interfaces.md)
     - [第 28 条：在合适的时候使用宏](./chapter_5/item28-use-macros-judiciously.md)
+    - [第 29 条：遵循 Clippy 的提示](./chapter_5/item29-listen-to-clippy.md)
 - [超出 Rust 标准](./chapter_6.md)
 
 [后记](./afterword.md)
