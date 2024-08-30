@@ -32,6 +32,7 @@
     - [第 27 条：为公共接口撰写文档](./chapter_5/item27-document-public-interfaces.md)
     - [第 28 条：在合适的时候使用宏](./chapter_5/item28-use-macros-judiciously.md)
     - [第 29 条：遵循 Clippy 的提示](./chapter_5/item29-listen-to-clippy.md)
+    - [第 30 条：不仅仅是单测](./chapter_5/item30-write-more-than-unit-tests.md)
     - [第 31 条：使用生态系统工具](./chapter_5/item31-use-tools.md)
 - [超出 Rust 标准](./chapter_6.md)
     - [第 35 条：优先使用bindgen而不是手动FFI映射](./chapter_6/item35-bindgen.md)
