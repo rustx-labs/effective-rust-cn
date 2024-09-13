@@ -28,6 +28,7 @@
     - [第 19 条：避免反射](./chapter_3/item19-reflection.md)
     - [第 20 条：避免过度优化的诱惑](./chapter_3/item20-optimize.md)
 - [依赖](./chapter_4.md)
+    - [第 21 条：理解语义化版本](./chapter_4/item21-semver.md)
     - [第 23 条：避免通配符导入](./chapter_4/item23-wildcard.md)
 - [工具](./chapter_5.md)
     - [第 27 条：为公共接口撰写文档](./chapter_5/item27-document-public-interfaces.md)
