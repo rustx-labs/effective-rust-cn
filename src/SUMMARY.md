@@ -32,6 +32,7 @@
     - [第 22 条：最小化可见性](./chapter_4/item22-visibility.md)
     - [第 23 条：避免通配符导入](./chapter_4/item23-wildcard.md)
     - [第 24 条：重新导出在 API 中所用的依赖项类型](./chapter_4/item24-re-export.md)
+    - [第 25 条：管理依赖项关系图](./chapter_4/item25-dep-graph.md)
 - [工具](./chapter_5.md)
     - [第 27 条：为公共接口撰写文档](./chapter_5/item27-document-public-interfaces.md)
     - [第 28 条：在合适的时候使用宏](./chapter_5/item28-use-macros-judiciously.md)
