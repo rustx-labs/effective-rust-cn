@@ -149,7 +149,7 @@ dep-graph v0.1.0
 [crates.io]: https://crates.io/
 [Item 21]: ./item21-semver.md
 [Item 24]: ./item24-re-export.md
-[Item 26]: https://www.lurklurk.org/effective-rust/features.html
+[Item 26]: ./item26-features.md
 [Item 31]: ../chapter_5/item31-use-tools.md
 [Item 32]: https://www.lurklurk.org/effective-rust/ci.html
 [Item 33]: https://www.lurklurk.org/effective-rust/no-std.html

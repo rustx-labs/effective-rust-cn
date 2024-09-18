@@ -90,4 +90,4 @@ use thing::prelude::*;
 
 最后，如果你不打断遵循这个条款的建议，**考虑将你使用通配符引入的依赖项固定到一个特定的版本上（见 [第 21 条]）**，让依赖项不会自动升级次要版本。
 
-[第 21 条]:https://www.lurklurk.org/effective-rust/semver.html
+[第 21 条]:./item21-semver.md

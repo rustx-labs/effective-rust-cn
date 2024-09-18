@@ -131,7 +131,7 @@ let choice = dep_lib::pick_number_with(&mut prev_rng, max);
 [original]: https://www.lurklurk.org/effective-rust/re-export.html
 [RustCrypto crates]: https://docs.rs/signature/1.3.0/signature/index.html#reexports
 [Item 21]: ./item21-semver.md
-[Item 25]: https://www.lurklurk.org/effective-rust/dep-graph.html
+[Item 25]: ./item25-dep-graph.md
 [path mechanism]: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-path-dependencies
 [rand-gen-range-0.7]: https://docs.rs/rand/0.7.3/rand/trait.Rng.html#method.gen_range
 [rand-gen-range-0.8]: https://docs.rs/rand/0.8.5/rand/trait.Rng.html#method.gen_range
