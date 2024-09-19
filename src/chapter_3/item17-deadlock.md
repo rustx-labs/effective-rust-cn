@@ -596,9 +596,9 @@ Go 语言[内置了](https://go.dev/ref/spec#Channel_types)用于这种操作的
 [第 15 条]: https://www.lurklurk.org/effective-rust/borrows.html
 [第 16 条]: https://www.lurklurk.org/effective-rust/unsafe.html
 [第 34 条]: https://www.lurklurk.org/effective-rust/ffi.html
-[第 18 条]: https://www.lurklurk.org/effective-rust/panic.html
-[第 30 条]: https://www.lurklurk.org/effective-rust/testing.html
-[第 32 条]: https://www.lurklurk.org/effective-rust/ci.html
+[第 18 条]: ./item18-panic.md
+[第 30 条]: ../chapter_5/item30-write-more-than-unit-tests.md
+[第 32 条]: ../chapter_5/item32-ci.md
 [“无畏并发”]: https://doc.rust-lang.org/book/ch16-00-concurrency.html
 [`std::lock_guard`]: https://en.cppreference.com/w/cpp/thread/lock_guard
 [Rust “免费” 获得了线程安全]: https://blog.rust-lang.org/2015/04/10/Fearless-Concurrency.html

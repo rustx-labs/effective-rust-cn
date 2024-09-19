@@ -140,7 +140,7 @@ Cargo 在选择依赖项的版本时，会在符合条件的版本中选择最�
 [第 25 条]: ./item25-dep-graph.md
 [第 26 条]: ./item26-features.md
 [第 31 条]: ../chapter_5/item31-use-tools.md
-[第 32 条]: https://www.lurklurk.org/effective-rust/ci.html
+[第 32 条]: ../chapter_5/item32-ci.md
 [第 35 条]: ../chapter_6/item35-bindgen.md
 [官方文档]:https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html
 [官方文档_semver_summary]: https://semver.org/#summary

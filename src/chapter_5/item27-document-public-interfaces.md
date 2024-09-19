@@ -178,13 +178,13 @@ pub fn intersection(
 [Effective Java]: https://www.oreilly.com/library/view/effective-java-2nd/9780137150021/
 [Rust book]: https://doc.rust-lang.org/book/ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments
 [文档注释]: https://doc.rust-lang.org/rustdoc/write-documentation/documentation-tests.html
-[第 13 条]: https://www.lurklurk.org/effective-rust/testing.html
+[第 13 条]: ../chapter_2/item13-use-default-impl.md
 [标准库]: https://doc.rust-lang.org/std/index.html
-[第 32 条]: https://www.lurklurk.org/effective-rust/ci.html
-[第 30 条]: https://www.lurklurk.org/effective-rust/testing.html
+[第 32 条]: ./item32-ci.md
+[第 30 条]: ./item30-write-more-than-unit-tests.md
 [docs.rs]: https://docs.rs/
-[第 1 条]: https://rustx-labs.github.io/effective-rust-cn/chapter_1/item1-use-types.html
-[第 21 条]: https://www.lurklurk.org/effective-rust/semver.html
+[第 1 条]: ../chapter_1/item1-use-types.md
+[第 21 条]: ../chapter_4/item21-semver.md
 [最小惊讶原则]: https://en.wikipedia.org/wiki/Principle_of_least_astonishment
 [点这里]: https://www.lurklurk.org/effective-rust/documentation.html
 [Cargo.toml 中的 readme 字段]: https://doc.rust-lang.org/cargo/reference/manifest.html#the-readme-field
