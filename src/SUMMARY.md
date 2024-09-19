@@ -41,5 +41,6 @@
     - [第 30 条：不仅仅是单测](./chapter_5/item30-write-more-than-unit-tests.md)
     - [第 31 条：使用生态系统工具](./chapter_5/item31-use-tools.md)
 - [超出 Rust 标准](./chapter_6.md)
+    - [第 33 条：考虑使库代码与 `no_std` 兼容](./chapter_6/item33-no-std.md)
     - [第 35 条：优先使用bindgen而不是手动FFI映射](./chapter_6/item35-bindgen.md)
     [后记](./afterword.md)
