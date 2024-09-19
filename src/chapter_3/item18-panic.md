@@ -109,9 +109,9 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 <!-- 参考链接 -->
 
 [第 4 条]: https://www.lurklurk.org/effective-rust/errors.html
-[第 27 条]: https://www.lurklurk.org/effective-rust/documentation.html
-[第 31 条]: https://www.lurklurk.org/effective-rust/use-tools.html
-[第 32 条]: https://www.lurklurk.org/effective-rust/ci.html
+[第 27 条]: ../chapter_5/item27-document-public-interfaces.md
+[第 31 条]: ../chapter_5/item31-use-tools.md
+[第 32 条]: ../chapter_5/item32-ci.md
 [第 34 条]: https://www.lurklurk.org/effective-rust/ffi.html
 [`std::panic::catch_unwind`]: https://doc.rust-lang.org/std/panic/fn.catch_unwind.html
 [编译器选项]: https://doc.rust-lang.org/rustc/codegen-options/index.html#panic

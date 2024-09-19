@@ -206,6 +206,5 @@ pub trait AsCbor: Sized {
 [Item 13]: ../chapter_2/item13-use-default-impl.md
 [Item 25]: ./item25-dep-graph.md
 [Item 30]: ../chapter_5/item30-write-more-than-unit-tests.md
-[Item 32]: https://www.lurklurk.org/effective-rust/ci.html
-[Item 33]: https://www.lurklurk.org/effective-rust/no-std.html
-
+[Item 32]: ../chapter_5/item32-ci.md
+[Item 33]: ../chapter_6/item33-no-std.md

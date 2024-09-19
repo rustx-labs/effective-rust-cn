@@ -151,8 +151,8 @@ dep-graph v0.1.0
 [Item 24]: ./item24-re-export.md
 [Item 26]: ./item26-features.md
 [Item 31]: ../chapter_5/item31-use-tools.md
-[Item 32]: https://www.lurklurk.org/effective-rust/ci.html
-[Item 33]: https://www.lurklurk.org/effective-rust/no-std.html
+[Item 32]: ../chapter_5/item32-ci.md
+[Item 33]: ../chapter_6/item33-no-std.md
 [Item 34]: https://www.lurklurk.org/effective-rust/ffi.html
 [alternate registry]: https://doc.rust-lang.org/cargo/reference/registries.html
 [frowned upon]: https://rust-lang.github.io/rfcs/3463-crates-io-policy-update.html
@@ -169,32 +169,3 @@ dep-graph v0.1.0
 [typo]: https://en.wikipedia.org/wiki/Typosquatting
 [hijack]: https://eslint.org/blog/2018/07/postmortem-for-malicious-package-publishes/
 [build.rs]: https://doc.rust-lang.org/cargo/reference/build-scripts.html
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
