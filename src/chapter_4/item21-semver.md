@@ -135,10 +135,10 @@ Cargo 在选择依赖项的版本时，会在符合条件的版本中选择最�
 [《Google 软件工程》（O'Reilly）]: https://abseil.io/resources/swe-book/html/ch21.html#the_limitations_of_semver
 [第 12 条]: ../chapter_2/item12-generics&trait-objects.md
 [第 13 条]: ../chapter_2/item13-use-default-impl.md
-[第 22 条]: https://www.lurklurk.org/effective-rust/visibility.html
+[第 22 条]: ./item22-visibility.md
 [第 23 条]: ./item23-wildcard.md
-[第 25 条]: https://www.lurklurk.org/effective-rust/dep-graph.html
-[第 26 条]: https://www.lurklurk.org/effective-rust/features.html
+[第 25 条]: ./item25-dep-graph.md
+[第 26 条]: ./item26-features.md
 [第 31 条]: ../chapter_5/item31-use-tools.md
 [第 32 条]: https://www.lurklurk.org/effective-rust/ci.html
 [第 35 条]: ../chapter_6/item35-bindgen.md
