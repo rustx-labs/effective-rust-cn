@@ -43,5 +43,6 @@
     - [第 32 条：搭建持续集成（CI）系统](./chapter_5/item32-ci.md)
 - [超出 Rust 标准](./chapter_6.md)
     - [第 33 条：考虑使库代码与 `no_std` 兼容](./chapter_6/item33-no-std.md)
+    - [第 34 条：控制跨越 FFI 边界的内容](./chapter_6/item34-ffi.md)
     - [第 35 条：优先使用bindgen而不是手动FFI映射](./chapter_6/item35-bindgen.md)
     [后记](./afterword.md)

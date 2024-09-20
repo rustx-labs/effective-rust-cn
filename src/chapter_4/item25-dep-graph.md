@@ -153,7 +153,7 @@ dep-graph v0.1.0
 [Item 31]: ../chapter_5/item31-use-tools.md
 [Item 32]: ../chapter_5/item32-ci.md
 [Item 33]: ../chapter_6/item33-no-std.md
-[Item 34]: https://www.lurklurk.org/effective-rust/ffi.html
+[Item 34]: ../chapter_6/item34-ffi.md
 [alternate registry]: https://doc.rust-lang.org/cargo/reference/registries.html
 [frowned upon]: https://rust-lang.github.io/rfcs/3463-crates-io-policy-update.html
 [one definition rule]: https://en.wikipedia.org/wiki/One_Definition_Rule
