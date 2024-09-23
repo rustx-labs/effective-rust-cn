@@ -2,18 +2,24 @@
 
 > “谁叫他们是程序员，而不是打字员” —— [@thingskatedid](https://twitter.com/thingskatedid/status/1400213496785108997)
 
-对于来自其他静态类型编程语言（如 C++、Go 或 Java）的人来说，Rust 类型系统的基本概念是非常熟悉的。有一系列具有特定大小的整数类型，包括有符号（i8, i16, i32, i64, i128）和无符号（u8, u16, u32, u64, u128）。
+本章从编译器提供的基本类型开始，到可以组合成数据结构的类型来快速介绍 Rust 的类型系统。
 
-还有两种整数类型，其大小与目标系统上的指针大小匹配：有符号（isize）和无符号（usize）。Rust 并不是那种会在指针和整数之间进行大量转换的语言，所以这种特性并不是特别相关。然而，标准集合返回它们的大小作为一个 usize（来自 .len()），所以集合索引意味着 usize 值非常常见 —— 从容量的角度来看，这是显然没有问题的，因为内存中的集合不可能有比系统上的内存地址更多的项。
+在 Rust 中，枚举（`enum`）类型扮演了重要的角色。虽然最初版本的枚举类型和其他语言相比，没有什么区别。但是后续增加的在枚举类型值中携带数据字段的能力极大的提高了其灵活性和表达能力。
 
-整数类型确实让我们第一次意识到 Rust 是一个比 C++ 更严格的世界 —— 尝试将一个 quart（i32）放入 pint pot（i16）会在编译时产生错误。
+## 基础类型
+
+对于熟悉其他静态类型编程语言（如 C++、Go 或 Java）的人来说，Rust 类型系统的基本概念应该不太陌生。有一系列具有特定大小的整数类型，包括有符号（[`i8`][i8]，[`i16`][i16]，[`i32`][i32] ，[`i64`][i64]， [`i128`][i128]）和无符号（[`u8`][u8] ,  [`u16`][u16] ， [`u32`][u32] ， [`u64`][u64] ， [`u128`][u128]）。
+
+还有两种整数类型，其大小与目标系统上的指针大小匹配：有符号（[`isize`][isize]）和无符号（[`usize`][usize]）。Rust 并不是那种会在指针和整数之间进行大量转换的语言，所以这种大小等价的特性并不重要。然而，标准集合的大小是 `usize`（来自 `.len()` 方法）类型的，所以在处理集合索引的时候， `usize` 值非常常见 —— 从容量的角度来看，这是显然没有问题的，因为内存中的集合不可能包含比系统上内存寻址范围更多的项。
+
+整数类型确实让我们第一次意识到 Rust 是一个比 C++ 更严格的世界 —— 尝试将一个更大的整数类型（`i32`）赋值给较小的整数类型（`i16`）会在编译时产生错误。
 
 
 ```rust
 let x: i32 = 42;
 let y: i16 = x;
 ```
-```rust
+```
 error[E0308]: mismatched types
   --> use-types/src/main.rs:14:22
    |
@@ -28,18 +34,23 @@ help: you can convert an `i32` to an `i16` and panic if the converted value does
    |                       ++++++++++++++++++++
 ```
 
-这让人感到安心：当程序员进行有风险的操作时，Rust 不会安静地坐视不管。这也早早地表明，尽管 Rust 有更严格的规则，但它也有助于编译器消息指向如何遵守规则的方法。
+这让人感到安心：当程序员进行有风险的操作时，Rust 不会安静地坐视不管。虽然本例中给出的数值没有超出目标类型 `i16` 能够表达的范围，但是 Rust 编译器仍然会考虑如果转换*不*成功应该怎么办：
 
-建议的解决方案是抛出一个问题，即如何处理转换会改变值的情况，关于`错误处理`（[第4条]）和使用 `panic!`（[第18条]）我们将在后面有更多的讨论。
+```rust
+let x: i32 = 66_000;
+let y: i16 = x; // `y` 的值是什么？
+```
 
-Rust 也不允许一些可能看起来“安全”的操作：
+从错误提示中也可以看出 Rust 拥有严格的规则，但是编译失败的时候也会给出有用的信息，来指引你如何遵守这些规则。编译器的解决方案也引出另外一个问题：如何处理转换过程中可能超出范围的情况？关于错误处理（[第 4 条][第 4 条]）和使用 `panic!`（[第 18 条][第 18 条]）我们将在后面有更多的讨论。
+
+Rust 也不允许一些可能看起来“安全”的操作，哪怕是从更小的整数类型向更大的转换：
 
 
 ```rust
-let x = 42i32; // Integer literal with type suffix
+let x = 42i32; // 带有类型后缀的整数字面量
 let y: i64 = x;
 ```
-```rust
+```
 error[E0308]: mismatched types
   --> use-types/src/main.rs:23:22
    |
@@ -54,37 +65,44 @@ help: you can convert an `i32` to an `i64`
    |                       +++++++
 ```
 
-在这里，建议的解决方案并没有提出错误处理的方法，但转换仍然需要是显式的。我们将在后面章节更详细地讨论类型转换（[第6条]）。
+在这里，建议的解决方案并没有给出错误处理的方法，但转换仍然需要是显式的。我们将在后面章节更详细地讨论类型转换（[第 5 条][第 5 条]）。
 
-现在继续探讨不出乎意料的原始类型，Rust 有布尔类型（`bool`）、浮点类型（`f32`, `f64`）和单元类型 `()`（类似于 `C` 的 `void`）。
+现在继续探讨其他原始类型，Rust 有布尔类型（[`bool`][bool]）、浮点类型（[`f32`][f32]， [`f64`][f64]）和[单元类型][unit type] [`()`][unit]（类似于 `C` 的 `void`）。
 
-更有趣的是 `char` 字符类型，它持有一个 [`Unicode` 值]（类似于 Go 的 [`rune 类型`]）。尽管它在内部以 `4 字节`存储，但与 `32 位`整数的转换仍然不会有静默转换。
+更有趣的是 [`char`][char] 字符类型，它持有一个 [`Unicode` 值][Unicode]（类似于 Go 的 [`rune` 类型][rune]）。尽管它在内部以 4 字节存储，但与 32 位整数仍然不支持静默转换。
 
-类型系统中的这种精确性迫使你明确地表达你想要表达的内容 —— u32 值与 char 不同，后者又与序列 UTF-8 字节不同，这又与序列任意字节不同，而且需要你准确地指定你的意思[^1]。[Joel Spolsky 的著名博客]文章可以帮助你理解需要哪种类型。
+类型系统中的这种精确性迫使你明确地表达你想要表达的内容 —— `u32` 值与 `char` 不同，后者又与序列 UTF-8 字节不同，这又与任意字节序列不同，而且需要你准确地表明你的意图 [^1]。[Joel Spolsky 的著名博客]文章可以帮助你理解需要哪种类型。
 
-当然，有一些辅助方法允许你在这不同的类型之间进行转换，但它们的签名迫使你处理（或明确忽略）失败的可能性。例如，一个 `Unicode` 代码点[^2] 总是可以用 `32 位`表示，所以 `'a' as u32` 是允许的，但反向转换就比较复杂了（因为有些 u32 值不是有效的 Unicode 代码点），例如：
+当然，有一些辅助方法允许你在这不同的类型之间进行转换，但它们的签名迫使你处理（或明确忽略）失败的可能性。例如，一个 `Unicode` 代码点 [^2] 总是可以用 32 位表示，所以 `'a' as u32` 是允许的，但反向转换就比较复杂了（因为 `u32` 值不一定是有效的 Unicode 代码点），例如：
 
-* [char::from_u32] 返回一个 `Option<char>`，迫使调用者处理失败的情况
-* [char::from_u32_unchecked] 假设有效性，但由于结果是未定义的，因此被标记为`unsafe`，迫使调用者也使用`unsafe`（[第16条]）。
+* [char::from_u32][char::from_u32] 返回一个 `Option<char>`，迫使调用者处理失败的情况。
+* [char::from_u32_unchecked][char::from_u32_unchecked] 假设有效性，但由于结果是未定义的，因此被标记为 `unsafe`，迫使调用者也使用 `unsafe`（[第 16 条][第 16 条]）。
 
 ## 聚合类型
 
 继续讨论聚合类型，Rust 有：
-- 数组（`Arrays`），它们持有单个类型的多个实例，实例的数量在编译时已知。例如 `[u32; 4]` 是四个连续的 4 字节整数。
-- 元组（`Tuples`），它们持有多个异构类型的实例，元素的数量和类型在编译时已知，例如 `(WidgetOffset, WidgetSize, WidgetColour)`。如果元组中的类型不够独特 —— 例如 `(i32, i32, &'static str, bool)` —— 最好给每个元素命名并使用 …
-- 结构体（`Structs`），它们也持有编译时已知的异构类型实例，但是允许通过名称来引用整个类型和各个字段。
-- 元组结构体（`Tuple structs`）是结构体和元组的杂交体：整个类型有一个名称，但各个字段没有名称 —— 它们通过数字来引用：`s.0`, `s.1` 等。
 
+- 数组（[*Arrays*][Array]），它们持有单个类型的多个实例，实例的数量在编译时已知。例如 `[u32; 4]` 是四个连续的 4 字节整数。
+- 元组（[*Tuples*][Tuple]），它们持有多个异构类型的实例，元素的数量和类型在编译时已知，例如 `(WidgetOffset, WidgetSize, WidgetColour)`。如果元组中的类型不够独特 —— 例如 `(i32, i32, &'static str, bool)` —— 最好给每个元素命名并使用，或者使用结构体。
+- 结构体（[*Structs*][Struct]），它们也持有编译时已知的异构类型实例，但是允许通过名称来引用整个类型和各个字段。
+
+Rust 也支持元组结构体（*Tuple structs*），它是结构体和元组的杂交体：整个类型有一个名称，但各个字段没有名称 —— 它们通过数字索引来使用：`s.0`, `s.1` 。
 
 ```rust
+/// 拥有 2 个未命名字段的结构体
 struct TextMatch(usize, String);
+
+// 按顺序传入值来构构造实例
 let m = TextMatch(12, "needle".to_owned());
+
+// 使用字段下标索引访问其值
 assert_eq!(m.0, 12);
 ```
+## 枚举（`enum`）
 
-这让我们来到了 Rust 类型系统的皇冠上的宝石：枚举（`enum`）。
+让我们认识一下 Rust 类型系统中皇冠上的宝石：枚举（`enum`）。
 
-在其基本形式中，很难看出有什么值得兴奋的。与其他语言一样，枚举允许你指定一组互斥的值，可能附带一个数字或字符串值。
+在其基本形式中，很难看出有什么值得兴奋的。与其他语言一样，枚举允许你指定一组互斥的值，这些值还可能附带一个数字或字符串值。
 
 
 ```rust
@@ -97,7 +115,7 @@ let code = HttpResultCode::NotFound;
 assert_eq!(code as i32, 404);
 ```
 
-因为每个枚举定义都创建了一个独特的类型，这可以用来提高那些接受布尔参数的函数的可读性和可维护性。例如：
+因为每个枚举定义都创建了一个独特的类型，这可以用来提高那些接受诸如布尔参数的函数的可读性和可维护性。例如：
 
 ```rust
 print_page(/* both_sides= */ true, /* colour= */ false);
@@ -121,13 +139,13 @@ pub fn print_page(sides: Sides, colour: Output) {
 }
 ```
 
-在调用处更加类型安全，而且易于阅读：
+在调用的时候是类型安全的，而且易于阅读：
 
 ```rust
 print_page(Sides::Both, Output::BlackAndWhite);
 ```
 
-不同于布尔版本，如果使用该库的用户不小心颠倒了参数的顺序，编译器会立即报错：
+不同于使用布尔值的版本，如果使用该库的用户不小心颠倒了参数的顺序，编译器会立即报错：
 
 ```rust
 error[E0308]: mismatched types
@@ -142,9 +160,9 @@ error[E0308]: mismatched types
    |                                           ^^^^^^^^^^^^^ expected enum `enums::Output`, found enum `enums::Sides`
 ```
 
-> 使用新类型模式（[第7条]）来包装一个 `bool` 也可以实现类型安全和可维护性；如果语义始终是布尔型的，通常最好使用这种方式，如果将来可能会出现新的选择（例如 `Sides::BothAlternateOrientation`），则应使用`枚举`。
+使用新类型模式（[第 6 条][第 6 条]）来包装一个 `bool` 也可以实现类型安全和可维护性；如果语义始终是布尔型的，通常最好使用这种方式，如果将来可能会出现新的选择（例如 `Sides::BothAlternateOrientation`），则应使用枚举类型。
 
-Rust 枚举的类型安全性在 `match` 表达式中继续体现出以下这段代码无法编译：
+Rust 枚举的类型安全性也延续到 `match` 表达式中。下面这段代码无法编译：
 
 <div class="ferris"><img src="../images/ferris/does_not_compile.svg" width="75" height="75" /></div>
 
@@ -156,7 +174,7 @@ let msg = match code {
 };
 ```
 
-```rust
+```
 error[E0004]: non-exhaustive patterns: `Teapot` not covered
   --> use-types/src/main.rs:65:25
    |
@@ -175,15 +193,13 @@ error[E0004]: non-exhaustive patterns: `Teapot` not covered
    = note: the matched value is of type `HttpResultCode`
 ```
 
-编译器强制程序员考虑枚举所表示的所有可能性，即使结果只是添加一个默认分支 `_ => {}`。
+编译器强制程序员处理枚举类型的*所有*可能性 [^3]，即使只是添加一个默认分支 `_ => {}` 来处理其他情况。（现代 C++ 编译器也能够并且会对枚举缺失的 `switch` 分支发出警告。）
 
-> 注意，现代 C++ 编译器能够并且会对枚举缺失的switch分支发出警告。
+## 带有字段的枚举
 
-## 带有字段的`枚举`
+Rust 枚举特性的真正强大之处在于每个变体都可以携带数据，使其成为一个[*代数数据类型*][代数数据类型]（ADT）。这对于主流语言的程序员来说不太熟悉。在 C/C++ 的术语中，它类似于枚举与联合（`union`）的组合，并且在 Rust 是类型安全的。
 
-Rust枚举特性的真正强大之处在于每个变体都可以携带数据，使其成为一个[代数数据类型]（ADT）。这对于主流语言的程序员来说不太熟悉；在C/C++的术语中，它类似于枚举与联合的组合 —— 只是类型安全的。
-
-这意味着程序数据结构的不变式可以被编码到 Rust 的类型系统中；不符合那些不变式状态的代码甚至无法编译。一个设计良好的枚举使得创建者的意图对于人类以及编译器都是清晰的：
+这意味着程序数据结构的不变式可以被编码到 Rust 的类型系统中；不符合不变式状态的代码甚至无法编译。一个设计良好的枚举使得创建者的意图对于人类以及编译器都是清晰的：
 
 ```rust
 pub enum SchedulerState {
@@ -193,11 +209,11 @@ pub enum SchedulerState {
 }
 ```
 
-仅从类型定义来看，可以合理猜测 Job 在 Pending 状态中排队，直到调度器完全激活，此时它们被分配到某个特定 CPU 的池中。
+仅从类型定义来看，可以合理猜测 `Job` 在 `Pending` 状态中排队，直到调度器完全激活，此时它们被分配到某个特定 CPU 的池中。
 
 这突出了本方法的中心主题，即使用 Rust 的类型系统来表达与软件设计相关的概念。
 
-当一个字段或参数何时有效需要通过注释来解释时，这就是一个明显的迹象表明这种情况没有发生：
+如果代码中需要一些注释来解释什么样的值对这个字段是有效的：
 
 <div class="ferris"><img src="../images/ferris/not_desired_behavior.svg" width="75" height="75" /></div>
 
@@ -211,7 +227,7 @@ struct DisplayProps {
 }
 ```
 
-这是一个非常适合用带有数据的`枚举`来替换的结构体：
+这种情况适合用带有数据的枚举来替换：
 
 ```rust
 #[derive(Debug)]
@@ -227,54 +243,83 @@ struct DisplayProperties {
 }
 ```
 
-这个简单的例子说明了一个关键的建议：让你的类型无法表达无效状态。只支持有效值组合的类型意味着整类的错误会被编译器拒绝，从而使得代码更小、更安全。
+这个简单的例子说明了一个关键的建议：**让你的类型无法表达无效状态**。只支持有效值组合的类型意味着不符合期望的错误会被编译器拒绝，从而使得代码更小、更安全。
 
-## 选项与错误
+## 常用的枚举类型
 
-回到枚举的强大功能，有两个概念非常常见，以至于Rust内置了枚举类型来表达它们。
+回到枚举的强大功能，有两个概念非常常见，以至于 Rust 内置了枚举类型来表达它们。
 
-第一个是Option的概念：要么存在特定类型的值（`Some(T)`），要么不存在（`None`）。始终为可能缺失的值使用 `Option`；永远不要退回到使用哨兵值（`-1`, `nullptr`, …）来试图在带内表达相同的概念。
+### `Option<T>`
 
-然而，有一个微妙的点需要考虑。如果您处理的是事物的集合，您需要决定集合中没有任何事物是否与没有集合相同。在大多数情况下，这种区别不会出现，您可以继续使用 `Vec<Thing>`：零个事物意味着事物的缺失。
+第一个是 [`Option`][Option] ：要么存在特定类型的值（`Some(T)`），要么不存在（`None`）。**始终为可能缺失的值使用 `Option`**，永远不要退回到使用哨兵值（`-1`， `nullptr`，……）来表达值的缺失。
 
-然而，确实存在其他罕见的情况，需要用 `Option<Vec<Thing>>` 来区分这两种情况 —— 例如，加密系统可能需要区分“负载单独传输”和“提供空负载”。（这与 `SQL` 中 `NULL` 标记列的争论有关。）
+然而，有一个微妙的点需要考虑。如果您处理的是事物的*集合*，您需要决定集合中没有任何元素是否与没有集合相同。在大多数情况下，这两种情况并无不同，您可以继续使用 `Vec<Thing>`：0 长度的集合表示元素的缺失。
+
+然而，确实存在其他罕见的情况，需要用 `Option<Vec<Thing>>` 来区分这两种情况 —— 例如，加密系统可能需要区分[“负载单独传输”][payload]和“提供空负载”。（这与 SQL 中 [`NULL` 标记][null marker]列的争论有关。）
 
 一个常见的边缘情况是 `String` 可能缺失 —— 是用 `""` 还是 `None` 来表示值的缺失更有意义？无论哪种方式都可以，但 `Option<String>` 清楚地传达了可能缺失该值的可能性。
 
-第二个常见的概念源于`错误处理`：如果一个函数失败，应该如何报告这个失败？历史上，使用了特殊的哨兵值（例如，`Linux 系统调用` 的 `-errno` 返回值）或全局变量（`POSIX 系统`的`errno`）。近年来，支持函数返回多个或元组返回值的语言（如Go）可能有一个约定，即返回一个`(result, error)`对，假设在错误非“零”时，结果存在合适的“零”值。
+### `Result<T, E>`
 
-在Rust中，始终将可能失败的操作的 结果编码为 `Result<T, E>`。`T 类型`保存成功的结果（在`Ok`变体中），`E 类型`在失败时保存错误详情（在`Err`变体中）。使用标准类型使得设计意图清晰，并且允许使用标准转换（[第3条]）和错误处理（[第4条]）；它还使得使用 `?` 运算符来简化错误处理成为可能。
+第二个常见的概念源于错误处理：如果一个函数执行失败，应该如何报告这个失败？历史上，使用了特殊的哨兵值（例如，Linux 系统调用 的 `-errno` 返回值）或全局变量（POSIX 系统的 `errno`）。最近，一些支持从函数返回多个值或元组值的语言（例如 Go），通常会采用返回一个  `(result, error)` 对的惯例。假设在出现错误时，结果存在某种合适的“零”值。
+
+在 Rust 中，**始终将可能失败的操作的 结果编码为 [`Result<T, E>`][Result]**。`T` 保存成功的结果（在 `Ok` 变体中），`E` 在失败时保存错误详情（在 `Err` 变体中）。
+
+使用标准类型使得设计意图清晰，并且允许使用标准转换（[第 3 条][第 3 条]）和错误处理（[第 4 条][第 4 条]）；它还使得使用 `?` 运算符来简化错误处理成为可能。
 
 ---
 
 #### 注释
 
-[^1]: 如果涉及到文件系统，情况会更加复杂，因为流行平台上的文件名介于任意字节和 UTF-8 序列之间：请参阅 [std::ffi::OsString] 文档。
+[^1]: 如果涉及到文件系统，情况会更加复杂，因为流行平台上的文件名介于任意字节和 UTF-8 序列之间：请参阅 [std::ffi::OsString][std::ffi::OsString] 文档。
 
-[^2]: 技术上，是一个 Unicode 标量值，而不是代码点。
+[^2]: 技术上，是一个 *Unicode 标量值*，而不是代码点。
 
-[^3]: 这也意味着在库中为一个现有枚举添加一个新的变体是一个破坏性的更改（[第21条]）：库的客户需要更改他们的代码以适应新的变体。如果一个枚举实际上只是一个旧式的值列表，可以通过将其标记为 non_exhaustive 枚举来避免这种行为；请参阅[第21条]。
+[^3]: 这也意味着在库中为一个现有枚举添加一个新的变体是一个破坏性的更改（[第 21 条][第 21 条]）：库的用户需要更改他们的代码以适应新的变体。如果一个枚举实际上只是一个旧式的值列表，可以通过将其标记为 [`non_exhaustive`][non_exhaustive] 枚举来避免这种行为；请参阅 [第 21 条][第 21 条]。
 
 
 原文[点这里](https://www.lurklurk.org/effective-rust/use-types.html)查看
 
 <!-- 参考链接 -->
 
-[第3条]: item3-transform.md
-[第4条]: item4-errors.md
-[第6条]: item6-newtype.md
-[第7条]: item7-builder.md
-[第16条]: https://www.lurklurk.org/effective-rust/unsafe.html
-[第18条]: https://www.lurklurk.org/effective-rust/panic.html
-[第21条]: https://www.lurklurk.org/effective-rust/semver.html
-
-
+[第 3 条]: ./item3-transform.md
+[第 4 条]: ./item4-errors.md
+[第 5 条]: ./item5-casts.md
+[第 6 条]: ./item6-newtype.md
+[第 7 条]: ./item7-builder.md
+[第 16 条]: ../chapter_3/item16-unsafe.md
+[第 18 条]: ../chapter_3/item18-panic.md
+[第 21 条]: ../chapter_4/item21-semver.md
+[i8]: https://doc.rust-lang.org/std/primitive.i8.html
+[i16]: https://doc.rust-lang.org/std/primitive.i16.html
+[i32]: https://doc.rust-lang.org/std/primitive.i32.html
+[i64]: https://doc.rust-lang.org/std/primitive.i64.html
+[i128]: https://doc.rust-lang.org/std/primitive.i128.html
+[u8]: https://doc.rust-lang.org/std/primitive.u8.html
+[u16]: https://doc.rust-lang.org/std/primitive.u16.html
+[u32]: https://doc.rust-lang.org/std/primitive.u32.html
+[u64]: https://doc.rust-lang.org/std/primitive.u64.html
+[u128]: https://doc.rust-lang.org/std/primitive.u128.html
+[isize]: https://doc.rust-lang.org/std/primitive.isize.html
+[usize]: https://doc.rust-lang.org/std/primitive.usize.html
+[bool]: https://doc.rust-lang.org/std/primitive.bool.html
+[f32]: https://doc.rust-lang.org/std/primitive.f32.html
+[f64]: https://doc.rust-lang.org/std/primitive.f64.html
+[unit type]: https://en.wikipedia.org/wiki/Unit_type
+[unit]: https://doc.rust-lang.org/std/primitive.unit.html
+[char]: https://doc.rust-lang.org/std/primitive.char.html
 [char::from_u32]: https://doc.rust-lang.org/std/primitive.char.html#method.from_u32
 [char::from_u32_unchecked]: https://doc.rust-lang.org/std/primitive.char.html#method.from_u32_unchecked
-
 [Joel Spolsky 的著名博客]:https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/
-[`Unicode` 值]: http://www.unicode.org/glossary/#unicode_scalar_value
-[`rune 类型`]: https://golang.org/doc/go1#rune
+[Unicode]: http://www.unicode.org/glossary/#unicode_scalar_value
+[rune]: https://golang.org/doc/go1#rune
+[Array]: https://doc.rust-lang.org/std/primitive.array.html
+[Tuple]: https://doc.rust-lang.org/std/primitive.tuple.html
+[Struct]: https://doc.rust-lang.org/std/keyword.struct.html
 [代数数据类型]: https://en.wikipedia.org/wiki/Algebraic_data_type
-
+[Option]: https://doc.rust-lang.org/std/option/enum.Option.html
+[Result]: https://doc.rust-lang.org/std/result/enum.Result.html
+[payload]: https://tools.ietf.org/html/rfc8152#section-4.1
+[null marker]: https://en.wikipedia.org/wiki/Null_(SQL)
 [std::ffi::OsString]: https://doc.rust-lang.org/std/ffi/struct.OsString.html
+[non_exhaustive]: https://doc.rust-lang.org/reference/attributes/type_system.html#the-non_exhaustive-attribute
