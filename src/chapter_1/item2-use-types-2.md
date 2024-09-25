@@ -59,7 +59,7 @@ println!("op = {:p}", op);
 // Example output: "op = 0x101e9aeb0"
 ```
 
-<div class="ferris-border">
+<!-- <div class="ferris-border"> -->
 
 > 一个需要注意的技术细节：需要显式地将函数强制转换为 `fn` 类型，因为仅仅使用函数的名称并不能得到 `fn` 类型的值；
 
@@ -98,7 +98,7 @@ help: you might have forgotten to call this function
 相反，编译器错误表明类型类似于 `fn(i32, i32) -> i32 {main::sum}`，这是一种完全内部于编译器的类型（即不能在用户代码中编写），它同时标识了特定的函数及其签名。
 
 换句话说，`sum` 的类型既编码了函数的签名又编码了其位置（出于优化原因）；这种类型可以自动强制转换为 `fn` 类型（[第6条]）。
-</div>
+<!-- </div> -->
 
 ### 闭包
 
@@ -308,10 +308,12 @@ where
 
 类似的问题意味着用作特征对象的特征不能有返回 `Self` 类型的方法，因为预先编译的代码使用特征对象时将无法知道 `Self` 可能有多大。
 
-具有泛型方法 `fn method<T>(t:T)` 的特征允许存在无限数量的实现方法，适用于所有可能存在的不同类型 `T`。这对于用作特征约束的特征来说是可行的，因为无限集合的可能的泛型方法在编译时变为有限的实际调用的泛型方法集合。对于特征对象来说，情况并非如此：编译时可用的代码必须应对运行时可能出现的所有可能的 `Ts`。（因此trait中不能添加泛型方法，尽管有约束，可以满足约束的类型永远会是无数个）
+具有泛型方法 `fn method<T>(t:T)` 的特征允许存在无限数量的实现方法，适用于所有可能存在的不同类型 `T`。这对于用作特征约束的特征来说是可行的，因为无限集合的可能的泛型方法在编译时变为有限的实际调用的泛型方法集合。对于特征对象来说，情况并非如此：编译时可用的代码必须应对运行时可能出现的所有可能的 `T`。（因此trait中不能添加泛型方法，尽管有约束，可以满足约束的类型永远会是无数个）
+
+<div class="ferris"><img src="../images/ferris/does_not_compile.svg" width="75" height="75" /></div>
 
 ```rust
-trait foo {
+trait Foo {
     fn method<T>(&self, t: T);
 }
 
@@ -323,9 +325,9 @@ impl Bar {
     }
 }
 
-impl foo for Bar {
+impl Foo for Bar {
     fn method<T>(&self, t: T) {
-        println!("Bar impl trait foo!");
+        println!("Bar impl trait Foo!");
     }
 }
 
@@ -343,7 +345,7 @@ mod tests {
     #[test]
     fn as_trait_obj() {
         let bar = Bar::new();
-        let mut v: Vec<&dyn foo> = vec![];
+        let mut v: Vec<&dyn Foo> = vec![];
         v.push(&bar);
     }
 }
@@ -352,16 +354,16 @@ mod tests {
 fn as_trait_bound() 测试可以通过，没有错误。但是as_trait_obj()会报错：
 
 ```rust
-error[E0038]: the trait `foo` cannot be made into an object
+error[E0038]: the trait `Foo` cannot be made into an object
   --> src/lib.rs:33:20
    |
-33 |         let mut v: Vec<&dyn foo> = vec![];
-   |                    ^^^^^^^^^^^^^ `foo` cannot be made into an object
+33 |         let mut v: Vec<&dyn Foo> = vec![];
+   |                    ^^^^^^^^^^^^^ `Foo` cannot be made into an object
    |
 note: for a trait to be "object safe" it needs to allow building a vtable to allow the call to be resolvable dynamically; for more information visit <https://doc.rust-lang.org/reference/items/traits.html#object-safety>
   --> src/lib.rs:2:8
    |
-1  | trait foo {
+1  | trait Foo {
    |       --- this trait cannot be made into an object...
 2  |     fn method<T>(&self, t: T);
    |        ^^^^^^ ...because method `method` has generic type parameters
