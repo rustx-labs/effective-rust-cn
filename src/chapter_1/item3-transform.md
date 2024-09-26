@@ -40,15 +40,16 @@ let f = match result {
     Err(_e) => panic!("Failed to open /etc/passwd!"),
 };
 ```
-`Option`和`Result`都提供了一对方法来提取它们的内部值和`panic!`如果不存在： [unwrap](https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap)和[expect](https://doc.rust-lang.org/std/result/enum.Result.html#method.expect) 。后者允许个性化失败时的错误消息，但无论哪种情况，生成的代码都更短、更简单——错误处理被委托给.unwrap()后缀（但仍然存在）：
+当值不存在时,`Option`和`Result`都提供了一对方法来提取它们的内部值和`panic!`,它们分别是 [unwrap](https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap)和[expect](https://doc.rust-lang.org/std/result/enum.Result.html#method.expect) 。后者允许个性化失败时的错误消息，但无论哪种情况，将错误处理被委托给`.unwrap()`后缀（但仍然存在）生成的代码都更短、更简单：
 ```rust
 let f = std::fs::File::open("/etc/passwd").unwrap();
 ```
 但要明确的是：这些辅助函数仍然会引发 `panic!`，所以选择使用它们与选择直接 `panic!`（[第18条]）是一样的。
 
-然而，在许多情况下，正确的错误处理是将决策推迟给其他人。这在编写库时尤其正确，因为库的代码可能会在库作者无法预见的各种不同环境中使用。为了使库更易用，优先使用 `Result` 而不是 `Option`来表示错误,即使这可能涉及不同错误类型之间的转换（[第4条]）。
+然而，在许多情况下，正确的错误处理是将决策推迟给其他人。这在编写库时尤其如此，因为库的代码可能会在库作者无法预见的各种不同环境中使用。为了使库更易用，优先使用 `Result` 而不是 `Option`来表示错误,即使这可能涉及不同错误类型之间的转换（[第4条]）。
 
-当然，这提出了一个问题：什么算作错误？在此示例中，无法打开文件肯定是一个错误，并且该错误的详细信息（没有此类文件？权限被拒绝？）可以帮助用户决定下一步要做什么。另一方面，由于切片为空而未能检索切片的first()元素并不是真正的错误，因此它在标准库中表示为Option返回类型。在两种可能性之间进行选择需要判断，但如果错误可能传达任何有用的信息，则倾向于Result 。
+当然，这提出了一个问题：什么算作错误？在此示例中，无法打开文件肯定是一个错误，并且该错误的详细信息（没有此类文件？权限被拒绝？）可以帮助用户决定下一步要做什么。另一方面，由于切片为空而未能检索切片的first()元素并不是真正的错误，因此它在标准库中表示为Option返回类型。
+在两种可能性之间进行选择需要判断，但如果错误可能传达任何有用的信息，则倾向于Result 。
 
 `Result` 也有一个 `[#must_use]` 属性，用来引导库用户朝着正确的方向前进 —— 如果使用返回的 `Result` 的代码忽略了它，编译器将生成一个警告：
 
