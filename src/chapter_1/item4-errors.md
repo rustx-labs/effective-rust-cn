@@ -140,7 +140,7 @@ pub enum MyError {
 }
 ```
 
-这个`枚举`定义包括了 `derive(Debug)`，但为了满足 `Error` 特征，还需要一个 `Display` s实现：
+这个`枚举`定义包括了 `derive(Debug)`，但为了满足 `Error` 特征，还需要一个 `Display` 的实现：
 
 ```rust
 impl std::fmt::Display for MyError {
@@ -235,7 +235,7 @@ pub fn first_line(filename: &str) -> Result<String, MyError> {
 
 编写一个完整的错误类型可能涉及相当多的样板代码，这使得它成为通过派生宏（[第 28 条]）自动化的好候选。然而，没有必要自己编写这样的宏：**考虑使用 `David Tolnay` 提供的 [thiserror] crate**，它提供了一个高质量、广泛使用的宏实现。`thiserror` 生成的代码也小心翼翼地避免在生成的 `API` 中使任何 `thiserror` 类型可见，这意味着与 [第 24 条]相关的问题不适用。
 
-## 特质对象（`Trait Objects`）
+## 特征对象（`Trait Objects`）
 
 第一种处理嵌套错误的方法丢弃了所有子错误的细节，只保留了某些字符串输出（`format!("{:?}", err`)）。
 
@@ -243,7 +243,7 @@ pub fn first_line(filename: &str) -> Result<String, MyError> {
 
 这就引出了一个问题，这两种方法之间有没有中间地带，可以在不需要手动包含每个可能的错误类型的情况下保留子错误信息？
 
-将子错误信息编码为 [trait 对象]避免了为每种可能性都有一个`枚举`变体的需要，但擦除了特定基础错误类型的细节。接收此类对象的调用者将能够访问 `Error` 特征及其特征约束的方法 —— `source()`、`Display::fmt()` 和 `Debug::fmt()`，依次类推 —— 但不会知道子错误原始的静态类型：
+将子错误信息编码为 [特征对象]避免了为每种可能性都有一个`枚举`变体的需要，但擦除了特定基础错误类型的细节。接收此类对象的调用者将能够访问 `Error` 特征及其特征约束的方法 —— `source()`、`Display::fmt()` 和 `Debug::fmt()`，依次类推 —— 但不会知道子错误原始的静态类型：
 
 <div class="ferris"><img src="../images/ferris/not_desired_behavior.svg" width="75" height="75" /></div>
 
@@ -264,7 +264,7 @@ impl std::fmt::Display for WrappedError {
 }
 ```
 
-结果是这是可能的，但出奇地微妙。部分困难来自于特质对象的客观安全性约束（[第 12 条]），但 `Rust` 的一致性规则也发挥作用，它们（大致）指出对于一种类型最多只能有一个特征的实现。
+结果是这是可能的，但出奇地微妙。部分困难来自于特征对象的客观安全性约束（[第 12 条]），但 `Rust` 的一致性规则也发挥作用，它们（大致）指出对于一种类型最多只能有一个特征的实现。
 
 一个假设的 `WrappedError` 类型可能会天真地预期同时实现以下两个：
 - `Error` 特征，因为它本身就是一个错误。
