@@ -47,14 +47,6 @@
 
 * 中文版翻译使用 [mdBook](https://rust-lang.github.io/mdBook/guide/installation.html) 工具，请参考指南自行安装即可
 
-## 翻译工作，携手同行 —— 感恩您的支持与参与
-
-> 如果喜欢这本中文版，欢迎扫码关注、点赞、转发和赞赏我的微信公众号。
-
-> 每一位读者的认可都是我持续创作的动力。
-
-![微信公众号](./src/images/wechat-blog.png)
-
 ## Star 历史
 
 <a href="https://star-history.com/#rustx-labs/effective-rust-cn&Date">
@@ -64,3 +56,24 @@
     <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=rustx-labs/effective-rust-cn&type=Date" />
   </picture>
 </a>
+
+### 翻译工作，携手同行 —— 感恩您的支持与参与 ❤️
+
+<div align="center">
+  <a href="https://github.com/rustx-labs/effective-rust-cn/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=rustx-labs/effective-rust-cn" width="100%" />
+  </a>
+</div>
+
+### 诚挚邀请您关注我们的公众号
+
+生命苦短，让我们手牵手，共同追寻并投身那些充满意义的使命。
+
+在这个平台上，我们交流智慧，携手创造价值，让每一分每一秒都闪耀着非凡的光芒。
+
+满怀期待，等候您的到来，一同启程这段非凡的探险。
+
+> 若您喜爱这本书中文版，诚挚邀请您扫描二维码关注、点赞、分享并慷慨赞赏我们的微信公众号。每一位读者的支持与认可，都是我们不懈创作的源泉和动力。
+
+![微信公众号](./src/images/wechat-blog.png)
+
