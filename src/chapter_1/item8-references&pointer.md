@@ -143,7 +143,7 @@ let vslice = &vector[1..3];
 ![img](../images/item8/vecslice.svg)
 图1-5.指向堆上的Vec内容的栈切片
 
-表达式 `&vector[1..3]` 的底层有很多细节，所以值得将其拆解成d多个部分：
+表达式 `&vector[1..3]` 的底层有很多细节，所以值得将其拆解成多个部分：
 - `1..3` 部分是一个[范围表达式(range expression)]；编译器会将其转换为 [`Range<usize>`] 类型的实例，该类型包含下限（1）但不包含上限（3）。
 - `Range` 类型[实现了][`SliceIndex<T>`]特征，该特征描述了对任意类型 `T` 的切片的索引操作（因此`Output`类型为`[T]`）。
 - `vector[]`部分是一个[索引表达式(indexing expression)]；编译器将其转换为在 `vector` 上调用 [`Index`] 特征的 [`index`] 方法，并附加一次解引用（即 `*vector.index()` ）。[^2]
