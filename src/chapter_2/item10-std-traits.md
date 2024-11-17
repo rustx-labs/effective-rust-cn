@@ -180,7 +180,7 @@ let c = Color {
 
 `Eq` 版本只是一个标记 trait，用于扩展 `PartialEq`，它添加了*自反性*：任何声明了 `Eq` 的类型 `T`，对于任意的实例 `x: T` 都应该保证有 `x == x`。
 
-这很奇怪，你会立即提出这个问题：什么时候 `x == x` 是不成立的？对相等性的这种拆分主要跟浮点数 [floating point numbers](#footnote-1)。 有关，尤其是涉及到“不是数字”这个 NaN 值（对应 Rust 中的 `f32:NAN`/`f64:NAN`）。浮点数的标准要求任何东西不会等于 NaN，*包括 Nan 自身*；`PartialEq` trait 的存在就是这种要求的连锁反应。
+这很奇怪，你会立即提出这个问题：什么时候 `x == x` 是不成立的？对相等性的这种拆分主要跟浮点数 [floating point numbers](#footnote-1) 有关，尤其是涉及到“不是数字”这个 NaN 值（对应 Rust 中的 `f32:NAN`/`f64:NAN`）。浮点数的标准要求任何东西不会等于 NaN，*包括 Nan 自身*；`PartialEq` trait 的存在就是这种要求的连锁反应。
 
 对于没有任何浮点数相关的特性的用户自定义类型，**你应该在实现 `PartialEq` 的同时也实现 `Eq`**。如果你要把类型当作 [HashMap] 类型的 key，完整的 `Eq` trait 也是需要实现的（同样还有 `Hash` trait）。
 
