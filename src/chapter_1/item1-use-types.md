@@ -160,7 +160,7 @@ error[E0308]: mismatched types
    |                                           ^^^^^^^^^^^^^ expected enum `enums::Output`, found enum `enums::Sides`
 ```
 
-使用新的类型模式（[第 6 条][第 6 条]）来包装一个 `bool` 也可以实现类型安全和可维护性；如果语义始终是布尔型的，通常最好使用这种方式，如果将来可能会出现新的选择（例如 `Sides::BothAlternateOrientation`），则应使用枚举类型。
+使用 newtype 模式（[第 6 条][第 6 条]）来包装一个 `bool` 也可以实现类型安全和可维护性；如果语义始终是布尔型的，通常最好使用这种方式，如果将来可能会出现新的选择（例如 `Sides::BothAlternateOrientation`），则应使用枚举类型。
 
 Rust 枚举的类型安全性也延续到 `match` 表达式中。下面这段代码无法编译：
 

@@ -150,12 +150,12 @@ print_page(DoubleSided(true), ColorOutput(false));
 
 ## 绕过特征的孤儿规则
 
-另一个[常见]但更巧妙的需要 newtype 模式的场景，是 Rust 的孤儿规则。这个规则意味着，在一个包里，以下条件之一满足时，才能为某个类型实现特性：
+另一个[常见]但更巧妙的需要 newtype 模式的场景，是 Rust 的孤儿规则。这个规则意味着，在一个包里，以下条件之一满足时，才能为某个类型实现特征：
 
-• 包定义了该特性  
+• 包定义了该特征
 • 包定义了该类型
 
-我们来尝试为一个外部类型实现一个外部特性：
+我们来尝试为一个外部类型实现一个外部特征：
 
 <div class="ferris"><img src="../images/ferris/does_not_compile.svg" width="75" height="75" /></div>
 
@@ -189,7 +189,7 @@ error[E0117]: only traits defined in the current crate can be implemented for
 
 这经常会带来挫败：例如，如果你试图序列化包含来自其他包的类型的数据，孤儿规则会阻止你写 `impl serde::Serialize for somecrate::SomeType`。[^3]
 
-但是 newtype 模式意味着你定义了一个*新*类型，这是当前包的一部分，所以就满足了孤儿规则的第二点。现在就能够实现一个外部特性：
+但是 newtype 模式意味着你定义了一个*新*类型，这是当前包的一部分，所以就满足了孤儿规则的第二点。现在就能够实现一个外部特征：
 
 ```rust
 struct MyRng(rand::rngs::StdRng);
