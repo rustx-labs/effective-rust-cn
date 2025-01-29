@@ -282,11 +282,11 @@ struct DisplayProperties {
 
 <!-- 参考链接 -->
 
-[第 3 条]: ./item3-transform.md
-[第 4 条]: ./item4-errors.md
-[第 5 条]: ./item5-casts.md
-[第 6 条]: ./item6-newtype.md
-[第 7 条]: ./item7-builder.md
+[第 3 条]: item3-transform.md
+[第 4 条]: item4-errors.md
+[第 5 条]: item5-casts.md
+[第 6 条]: item6-newtype.md
+[第 7 条]: item7-builder.md
 [第 16 条]: ../chapter_3/item16-unsafe.md
 [第 18 条]: ../chapter_3/item18-panic.md
 [第 21 条]: ../chapter_4/item21-semver.md

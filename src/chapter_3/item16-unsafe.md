@@ -52,16 +52,16 @@ Rust 标准库包含大量 `unsafe` 代码；快速查找发现 `alloc` 库中�
 
 <!-- 参考链接 -->
 
-[第 8 条]: https://www.lurklurk.org/effective-rust/references.html
-[第 14 条]: https://www.lurklurk.org/effective-rust/lifetimes.html
-[第 15 条]: https://www.lurklurk.org/effective-rust/borrows.html
-[第 17 条]: https://www.lurklurk.org/effective-rust/deadlock.html
-[第 29 条]: https://www.lurklurk.org/effective-rust/clippy.html
-[第 30 条]: https://www.lurklurk.org/effective-rust/testing.html
-[第 31 条]: https://www.lurklurk.org/effective-rust/use-tools.html
-[第 33 条]: https://www.lurklurk.org/effective-rust/no-std.html
-[第 34 条]: https://www.lurklurk.org/effective-rust/ffi.html
-[第 35 条]: https://www.lurklurk.org/effective-rust/bindgen.html
+[第 8 条]: ../chapter_1/item8-references&pointer.md
+[第 14 条]: ../chapter_3/item14-lifetimes.md
+[第 15 条]: ../chapter_3/item15-borrows.md
+[第 17 条]: ../chapter_3/item17-deadlock.md
+[第 29 条]: ../chapter_5/item29-listen-to-clippy.md
+[第 30 条]: ../chapter_5/item30-write-more-than-unit-tests.md
+[第 31 条]: ../chapter_5/item31-use-tools.md
+[第 33 条]: ../chapter_6/item33-no-std.md
+[第 34 条]: ../chapter_6/item34-ffi.md
+[第 35 条]: ../chapter_6/item35-bindgen.md
 [《Rust Atomics and Locks》]: https://marabos.nl/atomics/
 [`std::pin::Pin`]: https://doc.rust-lang.org/std/pin/struct.Pin.html
 [bête noire]: https://rust-unofficial.github.io/too-many-lists/

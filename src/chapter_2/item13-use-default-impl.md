@@ -19,7 +19,7 @@ fn is_empty(&self) -> bool {
 
 这种方法使得 trait 定义具有少量必需的方法，以及大量默认实现的方法。实现者只需实现前者，即可随意使用所有后者。
 
-Rust 标准库广泛采用了这种方法；<code>[Iterator]</code> trait 就是一个很好的例子，它只有一个必需方法（ <code>[next()]</code> ），但包含了大量预提供的方法（ [第9条] ），撰写本文时已经超过50个。
+Rust 标准库广泛采用了这种方法；<code>[Iterator]</code> trait 就是一个很好的例子，它只有一个必需方法（ <code>[next()]</code> ），但包含了大量预提供的方法（[第 9 条]），撰写本文时已经超过50个。
 
 trait 方法可以添加 trait 约束，这意味着只有在相关类型实现特定 trait 时，目标方法才可用。这在结合默认方法实现时非常有用，<code>[Iterator]</code> 也印证了这点。例如，<code>[cloned()]</code> 的迭代器方法有一个 trait 约束和一个默认实现：
 
@@ -35,15 +35,15 @@ where
 
 换句话说，`cloned()` 方法只有在 `Item` 的类型实现了 <code>[Clone]</code> trait 时才可用；一旦实现 `Clone` trait， `clone()` 方法也会自动实现。
 
-关于带有默认实现的 trait 方法，最后一个要点是，即使在特征的初始版本发布之后，通常也可以安全地向 trait 添加新方法。只要新方法名不与类型实现的其他 trait 方法名冲突，就能保持向后兼容性（详见 [第21条]）。
+关于带有默认实现的 trait 方法，最后一个要点是，即使在特征的初始版本发布之后，通常也可以安全地向 trait 添加新方法。只要新方法名不与类型实现的其他 trait 方法名冲突，就能保持向后兼容性（详见 [第 21 条]）。
 
 因此，请参照标准库的示例，通过添加带有默认实现的方法（并根据需要添加 trait 约束），为实现者提供最少的 API 接口，但为用户提供方便且全面的 API 。
 
 原文[点这里](https://www.lurklurk.org/effective-rust/default-impl.html)查看
 
 <!-- 参考链接 -->
-[第9条]: chapter_1/item9-iterators.md
-[第21条]: https://www.lurklurk.org/effective-rust/semver.html
+[第 9 条]: ../chapter_1/item9-iterators.md
+[第 21 条]: ../chapter_4/item21-semver.md
 
 [is_empty()]:https://doc.rust-lang.org/std/iter/trait.ExactSizeIterator.html#method.is_empty
 [ExactSizeIterator]:https://doc.rust-lang.org/std/iter/trait.ExactSizeIterator.html

@@ -479,10 +479,10 @@ let even_sum_squares: u64 = values
 <!-- 参考链接 -->
 
 [第 3 条]: item3-transform.md
-[第 10 条]: https://www.lurklurk.org/effective-rust/std-traits.html
-[第 13 条]: /chapter_2/item13-use-default-impl.md
-[第 15 条]: https://www.lurklurk.org/effective-rust/borrows.html
-[第 30 条]: https://www.lurklurk.org/effective-rust/testing.html
+[第 10 条]: ../chapter_2/item10-std-traits.md
+[第 13 条]: ../chapter_2/item13-use-default-impl.md
+[第 15 条]: ../chapter_3/item15-borrows.md
+[第 30 条]: ../chapter_5/item30-write-more-than-unit-tests.md
 
 [Java 1.5]:https://docs.oracle.com/javase/1.5.0/docs/guide/language/foreach.html
 [Iterator]:https://doc.rust-lang.org/core/iter/trait.Iterator.html

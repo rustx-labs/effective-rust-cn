@@ -237,6 +237,6 @@ error[E0277]: the trait bound `u16: From<u32>` is not satisfied
 [第 4 条]: item4-errors.md
 [第 6 条]: item6-newtype.md
 [第 8 条]: item8-references&pointer.md
-[第 10 条]: https://www.lurklurk.org/effective-rust/std-traits.html
-[第 14 条]: https://www.lurklurk.org/effective-rust/lifetimes.html
-[第 29 条]: https://www.lurklurk.org/effective-rust/clippy.html
+[第 10 条]: ../chapter_2/item10-std-traits.md
+[第 14 条]: ../chapter_3/item14-lifetimes.md
+[第 29 条]: ../chapter_5/item29-listen-to-clippy.md

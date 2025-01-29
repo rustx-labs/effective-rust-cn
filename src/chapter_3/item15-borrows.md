@@ -797,14 +797,14 @@ struct SelfRefIdx {
 
 <!-- 参考链接 -->
 
-[第 1 条]: https://www.lurklurk.org/effective-rust/use-types.html
-[第 2 条]: https://www.lurklurk.org/effective-rust/use-types-2.html
-[第 8 条]: https://www.lurklurk.org/effective-rust/references.html
-[第 10 条]: https://www.lurklurk.org/effective-rust/std-traits.html
-[第 14 条]: https://www.lurklurk.org/effective-rust/lifetimes.html
-[第 16 条]: https://www.lurklurk.org/effective-rust/unsafe.html
-[第 17 条]: https://www.lurklurk.org/effective-rust/deadlock.html
-[第 28 条]: https://www.lurklurk.org/effective-rust/macros.html
+[第 1 条]: ../chapter_1/item1-use-types.md
+[第 2 条]: ../chapter_1/item2-use-types-2.md
+[第 8 条]: ../chapter_1/item8-references&pointer.md
+[第 10 条]: ../chapter_2/item10-std-traits.md
+[第 14 条]: ../chapter_3/item14-lifetimes.md
+[第 16 条]: ../chapter_3/item16-unsafe.md
+[第 17 条]: ../chapter_3/item17-deadlock.md
+[第 28 条]: ../chapter_5/item28-use-macros-judiciously.md
 [`Copy`]: https://doc.rust-lang.org/std/marker/trait.Copy.html
 [CRUD]: https://en.wikipedia.org/wiki/Create,_read,_update_and_delete
 [`std::mem::replace`]: https://doc.rust-lang.org/std/mem/fn.replace.html

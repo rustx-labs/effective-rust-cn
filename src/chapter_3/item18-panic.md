@@ -1,4 +1,4 @@
-# 不要 panic
+# 第 18 条：不要 panic
 
 > “它看起来非常复杂，这就是为什么它紧凑的塑料盖子上用大大的友好字母写着 DON'T PANIC 的原因之一。”——Douglas Adams
 
@@ -108,11 +108,11 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 <!-- 参考链接 -->
 
-[第 4 条]: https://www.lurklurk.org/effective-rust/errors.html
+[第 4 条]: ../chapter_1/item4-errors.md
 [第 27 条]: ../chapter_5/item27-document-public-interfaces.md
 [第 31 条]: ../chapter_5/item31-use-tools.md
 [第 32 条]: ../chapter_5/item32-ci.md
-[第 34 条]: https://www.lurklurk.org/effective-rust/ffi.html
+[第 34 条]: ../chapter_6/item34-ffi.md
 [`std::panic::catch_unwind`]: https://doc.rust-lang.org/std/panic/fn.catch_unwind.html
 [编译器选项]: https://doc.rust-lang.org/rustc/codegen-options/index.html#panic
 [配置文件]: https://doc.rust-lang.org/cargo/reference/profiles.html#panic

@@ -15,8 +15,8 @@
 
 <!-- 参考链接 -->
 
-[第 16 条]: https://www.lurklurk.org/effective-rust/unsafe.html
-[第 17 条]: https://www.lurklurk.org/effective-rust/deadlock.html
-[第 18 条]: https://www.lurklurk.org/effective-rust/panic.html
-[第 19 条]: https://www.lurklurk.org/effective-rust/reflection.html
-[第 20 条]: https://www.lurklurk.org/effective-rust/optimize.html
+[第 16 条]: chapter_3/item16-unsafe.md
+[第 17 条]: chapter_3/item17-deadlock.md
+[第 18 条]: chapter_3/item18-panic.md
+[第 19 条]: chapter_3/item19-reflection.md
+[第 20 条]: chapter_3/item20-optimize.md

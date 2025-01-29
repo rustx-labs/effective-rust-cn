@@ -183,11 +183,11 @@ _图 3-5. 用于 trait 约束的 trait 对象，用于 `Draw` 和 `Shape` 的不
 
 <!-- 参考链接 -->
 
-[第 2 条]: https://www.lurklurk.org/effective-rust/use-types-2.html
-[第 8 条]: https://www.lurklurk.org/effective-rust/references.html
-[第 12 条]: https://www.lurklurk.org/effective-rust/generics.html
-[第 25 条]: https://www.lurklurk.org/effective-rust/dep-graph.html
-[第 28 条]: https://www.lurklurk.org/effective-rust/macros.html
+[第 2 条]: ../chapter_1/item2-use-types-2.md
+[第 8 条]: ../chapter_1/item8-references&pointer.md
+[第 12 条]: ../chapter_2/item12-generics&trait-objects.md
+[第 25 条]: ../chapter_4/item25-dep-graph.md
+[第 28 条]: ../chapter_5/item28-use-macros-judiciously.md
 [Python]: https://docs.python.org/3/library/types.html#module-types
 [Java]: https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/package-summary.html
 [Go]: https://golang.org/pkg/reflect/

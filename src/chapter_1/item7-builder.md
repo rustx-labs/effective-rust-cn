@@ -346,9 +346,9 @@ pub fn build(&self) -> Details {
 
 <!-- 参考链接 -->
 
-[第 10 条]:https://www.lurklurk.org/effective-rust/std-traits.html
-[第 25 条]:https://www.lurklurk.org/effective-rust/dep-graph.html
-[第 28 条]:https://www.lurklurk.org/effective-rust/macros.html
+[第 10 条]: ../chapter_2/item10-std-traits.md
+[第 25 条]: ../chapter_4/item25-dep-graph.md
+[第 28 条]: ../chapter_5/item28-use-macros-judiciously.md
 
 [Default]:https://doc.rust-lang.org/std/default/trait.Default.html
 [derive_builder]:https://docs.rs/derive_builder/latest/derive_builder/

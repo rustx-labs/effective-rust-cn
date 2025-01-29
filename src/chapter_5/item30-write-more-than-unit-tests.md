@@ -255,10 +255,11 @@ stack backtrace:
 [编写测试]: https://doc.rust-lang.org/book/ch11-00-testing.html
 [第 23 条]: ../chapter_4/item23-wildcard.md
 [第 18 条]: ../chapter_3/item18-panic.md
-[第 28 条]: ./item28-use-macros-judiciously.md
-[第 27 条]: ./item27-document-public-interfaces.md
+[第 28 条]: item28-use-macros-judiciously.md
+[第 27 条]: item27-document-public-interfaces.md
+[第 20 条]: ../chapter_3/item20-optimize.md
 [第 21 条]: ../chapter_4/item21-semver.md
-[第 32 条]: ./item32-ci.md
+[第 32 条]: item32-ci.md
 [第 3 条]: ../chapter_1/item3-transform.md
 [cargo test]: https://doc.rust-lang.org/cargo/commands/cargo-bench.html
 [test]: https://doc.rust-lang.org/unstable-book/library-features/test.html
