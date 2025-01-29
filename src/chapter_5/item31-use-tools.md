@@ -56,12 +56,12 @@ Rust 工具链的可扩展性不仅限于包元数据；编译器的抽象语法
 [第 16 条]: ../chapter_3/item16-unsafe.md
 [第 21 条]: ../chapter_4/item21-semver.html
 [第 25 条]: ../chapter_4/item25-dep-graph.md
-[第 27 条]: ./item27-document-public-interfaces.md
-[第 28 条]: ./item28-use-macros-judiciously.md
-[第 29 条]: ./item29-listen-to-clippy.md
-[第 30 条]: ./item30-write-more-than-unit-tests.md
-[第 32 条]: ./item32-ci.md
-[第 35 条]: ../chapter_5/item31-use-tools.md
+[第 27 条]: item27-document-public-interfaces.md
+[第 28 条]: item28-use-macros-judiciously.md
+[第 29 条]: item29-listen-to-clippy.md
+[第 30 条]: item30-write-more-than-unit-tests.md
+[第 32 条]: item32-ci.md
+[第 35 条]: ../chapter_6/item35-bindgen.md
 
 [cargo]: https://doc.rust-lang.org/cargo/
 [rustup]: https://github.com/rust-lang/rustup

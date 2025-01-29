@@ -589,14 +589,14 @@ Go 语言[内置了](https://go.dev/ref/spec#Channel_types)用于这种操作的
 
 <!-- 参考链接 -->
 
-[第 8 条]: https://www.lurklurk.org/effective-rust/references.html
-[第 10 条]: https://www.lurklurk.org/effective-rust/std-traits.html
-[第 11 条]: https://www.lurklurk.org/effective-rust/raii.html
-[第 14 条]: https://www.lurklurk.org/effective-rust/lifetimes.html
-[第 15 条]: https://www.lurklurk.org/effective-rust/borrows.html
-[第 16 条]: https://www.lurklurk.org/effective-rust/unsafe.html
-[第 34 条]: https://www.lurklurk.org/effective-rust/ffi.html
-[第 18 条]: ./item18-panic.md
+[第 8 条]: ../chapter_1/item8-references&pointer.md
+[第 10 条]: ../chapter_2/item10-std-traits.md
+[第 11 条]: ../chapter_2/item11-impl-drop-for-RAII.md
+[第 14 条]: ../chapter_3/item14-lifetimes.md
+[第 15 条]: ../chapter_3/item15-borrows.md
+[第 16 条]: ../chapter_3/item16-unsafe.md
+[第 34 条]: ../chapter_6/item34-ffi.md
+[第 18 条]: item18-panic.md
 [第 30 条]: ../chapter_5/item30-write-more-than-unit-tests.md
 [第 32 条]: ../chapter_5/item32-ci.md
 [“无畏并发”]: https://doc.rust-lang.org/book/ch16-00-concurrency.html

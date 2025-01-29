@@ -177,8 +177,8 @@ error[E0040]: explicit use of destructor method
 原文[点这里](https://www.lurklurk.org/effective-rust/raii.html)查看
   
 <!-- 参考链接 -->
-[第 15 条]:https://www.lurklurk.org/effective-rust/borrows.html
-[第 17 条]:https://www.lurklurk.org/effective-rust/deadlock.html
+[第 15 条]: ../chapter_3/item15-borrows.md
+[第 17 条]: ../chapter_3/item17-deadlock.md
 
 [文件描述符]:https://en.wikipedia.org/wiki/File_descriptor
 [Mutex::lock()]:https://doc.rust-lang.org/std/sync/struct.Mutex.html#method.lock

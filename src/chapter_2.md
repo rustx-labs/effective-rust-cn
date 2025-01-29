@@ -7,4 +7,4 @@ Rust 类型系统的第二个核心支柱是特征（`traits`）的使用，它�
 
 <!-- 参考链接 -->
 
-[第 12 条]: https://www.lurklurk.org/effective-rust/generics.html
+[第 12 条]: ../chapter_2/item12-generics&trait-objects.md

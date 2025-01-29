@@ -371,17 +371,17 @@ if x <= y {
 
 <a id="footnote-3">3</a>:这里的一些名称有点隐晦——例如 `Rem` 是求余数，`Shl` 是按位左移——但是 [std::ops] 的文档清楚第说明了它们的预期行为。
 
-[第 2 条]:https://www.lurklurk.org/effective-rust/use-types-2.html
-[第 4 条]:https://www.lurklurk.org/effective-rust/errors.html
-[第 5 条]:https://www.lurklurk.org/effective-rust/casts.html
-[第 7 条]:https://www.lurklurk.org/effective-rust/builders.html
-[第 8 条]:https://www.lurklurk.org/effective-rust/references.html
-[第 9 条]:https://www.lurklurk.org/effective-rust/iterators.html
-[第 11 条]:https://www.lurklurk.org/effective-rust/raii.html
-[第 12 条]:https://www.lurklurk.org/effective-rust/generics.html
-[第 15 条]:https://www.lurklurk.org/effective-rust/borrows.html
-[第 17 条]:https://www.lurklurk.org/effective-rust/deadlock.html
-[第 29 条]:https://www.lurklurk.org/effective-rust/clippy.html
+[第 2 条]: ../chapter_1/item2-use-types-2.md
+[第 4 条]: ../chapter_1/item4-errors.md
+[第 5 条]: ../chapter_1/item5-casts.md
+[第 7 条]: ../chapter_1/item7-builder.md
+[第 8 条]: ../chapter_1/item8-references&pointer.md
+[第 9 条]: ../chapter_1/item9-iterators.md
+[第 11 条]: ../chapter_2/item11-impl-drop-for-RAII.md
+[第 12 条]: ../chapter_2/item12-generics&trait-objects.md
+[第 15 条]: ../chapter_3/item15-borrows.md
+[第 17 条]: ../chapter_3/item17-deadlock.md
+[第 29 条]: ../chapter_5/item29-listen-to-clippy.md
 
 [`derive` macros]:https://doc.rust-lang.org/reference/procedural-macros.html#derive-macros
 [add_assign]:https://doc.rust-lang.org/std/ops/trait.AddAssign.html#tymethod.add_assign

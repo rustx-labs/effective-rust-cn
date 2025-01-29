@@ -13,8 +13,8 @@
 
 <!-- 参考链接 -->
 
-[第 33 条]: https://www.lurklurk.org/effective-rust/no-std.html
-[第 34 条]: https://www.lurklurk.org/effective-rust/ffi.html
+[第 33 条]: chapter_6/item33-no-std.md
+[第 34 条]: chapter_6/item34-ffi.md
 
 [在线文档]: https://rust-lang.github.io/async-book/
 [异步 Rust]: https://learning.oreilly.com/library/view/async-rust/9781098149086/

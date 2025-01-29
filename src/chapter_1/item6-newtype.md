@@ -241,7 +241,7 @@ impl fmt::Display for NewType {
 
 [第 1 条]: item1-use-types.md
 [第 5 条]: item5-casts.md
-[第 25 条]: https://www.lurklurk.org/effective-rust/dep-graph.html
+[第 25 条]: ../chapter_4/item25-dep-graph.md
 
 [常见]: https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#using-the-newtype-pattern-to-implement-external-traits-on-external-types
 [额外的语义]: https://doc.rust-lang.org/book/ch19-04-advanced-types.html#using-the-newtype-pattern-for-type-safety-and-abstraction

@@ -208,8 +208,8 @@ let tlv = Tlv {
 
 [^1]: 在 Rust 语言中，你不能将字段命名为 “type”，因为这是一个被保留的关键字。如果你确实需要使用这个名称，可以通过在前面加上 r# 来绕过这个限制（https://oreil.ly/oC8VO），比如将字段命名为 r#type: u8。但大多数情况下，更简单的方法是选择一个不同的字段名称。
 
-[第 10 条]: /chapter_2/item10-std-traits.md
-[第 15 条]: ./item15-borrows.md
-[第 17 条]: ./item17-deadlock.md
-[第 30 条]: /chapter_5/item30-write-more-than-unit-tests.md
-[第 33 条]: https://www.lurklurk.org/effective-rust/testing.html
+[第 10 条]: ../chapter_2/item10-std-traits.md
+[第 15 条]: ../chapter_3/item15-borrows.md
+[第 17 条]: item17-deadlock.md
+[第 30 条]: ../chapter_5/item30-write-more-than-unit-tests.md
+[第 33 条]: ../chapter_6/item33-no-std.md
