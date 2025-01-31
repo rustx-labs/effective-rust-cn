@@ -2,7 +2,7 @@
 
 如果单看本章节的标题，会让人费解。没有关系，下面我们通过一个例子来把事情讲解清楚[^1]。
 
-在[第 25 条][Item 25]描述了 `cargo` 是如何支持将同一个 crate 的多个不同版本链接到最终输出的二进制文件中的，而且这个过程对用户而言是透明的。假设一个使用 `rand` crate 的二进制项目，更精确一些，使用的是 `0.8` 版本的 `rand`：
+在[第 25 条]描述了 `cargo` 是如何支持将同一个 crate 的多个不同版本链接到最终输出的二进制文件中的，而且这个过程对用户而言是透明的。假设一个使用 `rand` crate 的二进制项目，更精确一些，使用的是 `0.8` 版本的 `rand`：
 
 ```toml
 # 顶层二进制 crate 的 Cargo.toml 文件内容
@@ -48,7 +48,7 @@ pub fn pick_number(n: usize) -> usize {
 - `dep-lib` 所使用的 0.7 版本的 `rand` 中的 [`rand::gen_range()`][rand-gen-range-0.7] 方法有  `low` 和 `high` 2 个参数。
 - 在示例项目中所用的 0.8 版本的 `rand` 中的 [`rand::gen_range()`][rand-gen-range-0.8] 方法只有 `range` 1 个参数。
 
-这种差异属于不兼容的变更，所以根据语义化版本控制的指导原则， `rand` 升级了最左非零版本号（见[第 21 条][Item 21]）。虽然如此，基于 `cargo` 强大的能力，它仍然能这两个不兼容的版本合并到最终输出的二进制可执行文件中。
+这种差异属于不兼容的变更，所以根据语义化版本控制的指导原则， `rand` 升级了最左非零版本号（见[第 21 条]）。虽然如此，基于 `cargo` 强大的能力，它仍然能这两个不兼容的版本合并到最终输出的二进制可执行文件中。
 
 如果 `dep-lib` 的公共 API 中暴露了它所使用的依赖项中的类型的话，情况就会变得糟糕了，因为这会导致 `rand` 成为[*公共依赖项*][public dependency]。
 
@@ -62,9 +62,9 @@ pub fn pick_number_with<R: Rng>(rng: &mut R, n: usize) -> usize {
 }
 ```
 
-顺便说一下，**在你对外暴露的 API 中使用其他 crate 类型之前请谨慎考虑**：这会将你的 crate 与该依赖密切绑定。例如，依赖项的主版本号升级（见[第 21 条][Item 21]）将会自动要求你的 crate 也进行主版本号升级。
+顺便说一下，**在你对外暴露的 API 中使用其他 crate 类型之前请谨慎考虑**：这会将你的 crate 与该依赖密切绑定。例如，依赖项的主版本号升级（见[第 21 条]）将会自动要求你的 crate 也进行主版本号升级。
 
-`rand` crate 本身只有少量的依赖项（见[第 25 条][Item 25]），并且它被大量的其他项目所依赖，已经成为“事实上标准”的 crate 了。在上面的这段代码中，crate 中暴露出来的函数使用 `Rng` 倒也不是不可接受的。
+`rand` crate 本身只有少量的依赖项（见[第 25 条]），并且它被大量的其他项目所依赖，已经成为“事实上标准”的 crate 了。在上面的这段代码中，crate 中暴露出来的函数使用 `Rng` 倒也不是不可接受的。
 
 好的，回到我们这个示例中来，假设在顶层的二进制项目中使用 `dep-lib` 的函数：
 
@@ -128,10 +128,11 @@ let choice = dep_lib::pick_number_with(&mut prev_rng, max);
 
 <!-- 参考链接 -->
 
+[第 21 条]: item21-semver.md
+[第 25 条]: item25-dep-graph.md
+
 [original]: https://www.lurklurk.org/effective-rust/re-export.html
 [RustCrypto crates]: https://docs.rs/signature/1.3.0/signature/index.html#reexports
-[Item 21]: ./item21-semver.md
-[Item 25]: ./item25-dep-graph.md
 [path mechanism]: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-path-dependencies
 [rand-gen-range-0.7]: https://docs.rs/rand/0.7.3/rand/trait.Rng.html#method.gen_range
 [rand-gen-range-0.8]: https://docs.rs/rand/0.8.5/rand/trait.Rng.html#method.gen_range

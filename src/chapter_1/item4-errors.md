@@ -17,11 +17,12 @@
 换句话说，应该能够将错误类型显示给用户和程序员。
 
 特征中唯一的方法是 `source()`，[^1] 它允许错误类型公开一个内部的、嵌套的错误。此方法是可选的 —— 它带有一个返回 `None` 的默认实现（[第 13 条]），表示内部错误信息不可用。
+
 最后要注意的一点是：如果您正在为 `no_std` 环境（[第 33 条]）编写代码，可能无法实现 `Error` —— `Error` 特征目前在 `std` 中实现，而不是 `core`，因此不可用。[^2]
 
 ## 最小错误（Minimal Errors）
 
-如果不需要嵌套错误信息，那么错误类型的实现不必比 `String` 复杂多少 —— 这是一个“字符串类型”的变量可能合适的罕见情况。但它需要比 `String` 多一点；虽然可以使用 `String` 作为 `E` 类型参数：
+如果不需要嵌套错误信息，那么错误类型的实现不必比 `String` 复杂多少 —— “字符串类型”的变量就能满足要求的情况并不常见。但它需要的确实比 `String` 多一点；虽然可以使用 `String` 作为 `E` 类型参数：
 
 ```rust
 pub fn find_user(username: &str) -> Result<UserId, String> {
@@ -31,7 +32,7 @@ pub fn find_user(username: &str) -> Result<UserId, String> {
 }
 ```
 
-一个 `String` 并不实现 `Error`，我们希望是这样，以便代码的其他部分可以处理 `Errors`。为 `String` 实现 `Error` 是不可能的，因为特征（`trait`）和类型都不属于我们（所谓的孤儿规则）：
+`String` 类型并没有实现 `Error`，虽然我们希望是这样，以便代码的其他部分可以处理 `Errors`。为 `String` 实现 `Error` 是不可能的，因为特征（`trait`）和类型都不属于我们（所谓的孤儿规则）：
 
 ```rust
 impl std::error::Error for String {}
@@ -73,7 +74,7 @@ error[E0117]: only traits defined in the current crate can be implemented for
    = note: define and implement a trait or new type instead
 ```
 
-像往常一样，编译器错误消息为解决问题提供了一个线索。定义一个包装 `String` 类型的元组结构体（"新类型模式"，[第 6 条]）允许实现 `Error` 特征，前提是也实现了 `Debug` 和 `Display`：
+像往常一样，编译器错误消息为解决问题提供了一个线索。定义一个包装 `String` 类型的元组结构体（"newtype 模式"，[第 6 条]）允许实现 `Error` 特征，前提是也实现了 `Debug` 和 `Display`：
 
 ```rust
 #[derive(Debug)]
@@ -105,7 +106,7 @@ impl From<String> for MyError {
 }
 ```
 
-当编译器遇到问号运算符（`?`）时，它会自动应用任何需要的 `From` 特征实现，以便达到目标错误返回类型。这允许进一步的最小化：
+当编译器遇到问号运算符（`?`）时，它会自动应用任何需要的 `From` 特征实现，以便达到目标错误返回类型。这样代码就更简洁了：
 
 ```rust
 pub fn find_user(username: &str) -> Result<UserId, MyError> {
@@ -211,7 +212,7 @@ impl From<std::string::FromUtf8Error> for MyError {
 
 这防止了库用户自己受到孤儿规则的影响：他们不允许在 `MyError` 上实现 `From`，因为特征和结构体对他们来说是外部的。
 
-更好的是，实现 `From` 允许更加简洁，因为[问号运算符]将自动执行任何必要的 `From` 转换，从而消除了 `.map_err()` 的需求：
+更好的是，实现 `From` 能让代码更加简洁，因为[问号运算符]将自动执行任何必要的 `From` 转换，从而消除了 `.map_err()` 的需求：
 
 ```rust
 use std::io::BufRead; // for `.read_until()`
@@ -237,13 +238,13 @@ pub fn first_line(filename: &str) -> Result<String, MyError> {
 
 ## 特征对象（`Trait Objects`）
 
-第一种处理嵌套错误的方法丢弃了所有子错误的细节，只保留了某些字符串输出（`format!("{:?}", err`)）。
+第一种处理嵌套错误的方法丢弃了所有子错误的细节，只保留了某些字符串输出（`format!("{:?}", err)`）。
 
 第二种方法保留了所有可能子错误的全类型信息，但需要完整枚举所有可能的子错误类型。
 
 这就引出了一个问题，这两种方法之间有没有中间地带，可以在不需要手动包含每个可能的错误类型的情况下保留子错误信息？
 
-将子错误信息编码为 [特征对象]避免了为每种可能性都有一个`枚举`变体的需要，但擦除了特定基础错误类型的细节。接收此类对象的调用者将能够访问 `Error` 特征及其特征约束的方法 —— `source()`、`Display::fmt()` 和 `Debug::fmt()`，依次类推 —— 但不会知道子错误原始的静态类型：
+将子错误信息编码为[特征对象]避免了为每种可能性都定义一个`枚举`变体的需要，但擦除了特定基础错误类型的细节。接收此类对象的调用者将能够访问 `Error` 特征及其特征约束的方法 —— `source()`、`Display::fmt()` 和 `Debug::fmt()`，依次类推 —— 但不会知道子错误原始的静态类型：
 
 <div class="ferris"><img src="../images/ferris/not_desired_behavior.svg" width="75" height="75" /></div>
 
@@ -264,13 +265,13 @@ impl std::fmt::Display for WrappedError {
 }
 ```
 
-结果是这是可能的，但出奇地微妙。部分困难来自于特征对象的客观安全性约束（[第 12 条]），但 `Rust` 的一致性规则也发挥作用，它们（大致）指出对于一种类型最多只能有一个特征的实现。
+结果是这是可能的，但出奇地微妙。部分困难来自于特征对象的对象安全约束（[第 12 条]），但 `Rust` 的一致性规则也发挥作用，它们（大致）指出一种类型对于一个特征最多只能有一个实现。
 
-一个假设的 `WrappedError` 类型可能会天真地预期同时实现以下两个：
+一个假设的 `WrappedError` 类型可能会天真地预期同时实现以下两个特征：
 - `Error` 特征，因为它本身就是一个错误。
 - `From<Error>` 特征，以便子错误可以被轻松包装。
 
-这意味着可以从一个内部的 `WrappedError` 创建一个 `WrappedError`，因为 `WrappedError` 实现了 `Error`，并且这与 `From` 的泛反射实现冲突：
+这意味着可以从一个内部的 `WrappedError` 创建一个 `WrappedError`，因为 `WrappedError` 实现了 `Error`，但是这与 `From` 的通用自反实现（Blanket Reflective Implementation）冲突了：
 
 <div class="ferris"><img src="../images/ferris/does_not_compile.svg" width="75" height="75" /></div>
 
@@ -297,11 +298,11 @@ error[E0119]: conflicting implementations of trait `From<WrappedError>` for
 
 ```
 
-`David Tolnay` 的 [anyhow] 是一个已经解决了这些问题（通过添加一个额外的间接层，[通过 Box](https://github.com/dtolnay/anyhow/issues/63#issuecomment-582079114)）并增加了其他有用功能（如堆栈跟踪）的 `crate`。因此，它迅速成为错误处理的标准化建议 —— 在这里也得到支持：**考虑在应用程序中使用 `anyhow` crate 进行错误处理。**
+`David Tolnay` 的 [anyhow] 是一个已经解决了这些问题（通过[使用 Box 来添加一个额外的间接层](https://github.com/dtolnay/anyhow/issues/63#issuecomment-582079114)）并增加了其他有用功能（如堆栈跟踪）的 `crate`。因此，它迅速成为了错误处理的推荐标准 —— 在这里也是一样：**考虑在应用程序中使用 `anyhow` crate 进行错误处理。**
 
 ## 库与应用程序
 
-上一节的最后建议中包含了这样的限定：“……用于应用程序中的错误处理”。这是因为库中编写的代码和构成顶级应用程序的代码之间通常有一个区别。[^3]
+上一节的最后建议中包含了这样的限定：“……用于**应用程序**中的错误处理”。这是因为在库中编写的代码和上层应用程序的代码之间通常有一个区别。[^3]
 
 为库编写的代码无法预测代码使用的环境，因此最好发出具体、详细的错误信息，让调用者去弄清楚如何使用这些信息。这倾向于前面描述的枚举风格的嵌套错误（并且在库的公共 `API` 中避免了依赖 `anyhow`，参见[第 24 条]）。
 
@@ -341,8 +342,8 @@ error[E0119]: conflicting implementations of trait `From<WrappedError>` for
 [第 28 条]: ../chapter_5/item28-use-macros-judiciously.md
 [第 33 条]: ../chapter_6/item33-no-std.md
 
-[anyhow]:https://docs.rs/anyhow
-[thiserror]:https://docs.rs/thiserror
-[类型别名]:https://doc.rust-lang.org/reference/items/type-aliases.html
-[问号运算符]:https://doc.rust-lang.org/reference/expressions/operator-expr.html#the-question-mark-operator
-[trait 对象]:https://doc.rust-lang.org/reference/types/trait-object.html
+[anyhow]: https://docs.rs/anyhow
+[thiserror]: https://docs.rs/thiserror
+[类型别名]: https://doc.rust-lang.org/reference/items/type-aliases.html
+[问号运算符]: https://doc.rust-lang.org/reference/expressions/operator-expr.html#the-question-mark-operator
+[特征对象]: https://doc.rust-lang.org/reference/types/trait-object.html

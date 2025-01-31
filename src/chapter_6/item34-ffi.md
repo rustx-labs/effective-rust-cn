@@ -8,7 +8,7 @@ Rust 的默认目标是可以与 C 程序互操作，许多其他提供跨语言
 
 但是，这并不是说 Rust 和 C 互操作就是非常简单的事情。由于引入了其他语言编写的代码，Rust 提供的安全保证和保护将不再使用，尤其是涉及到内存安全的部分。
 
-所以，Rust 中的 FFI 代码都是 `unsafe` 的，[第 16 条][Item 16]的建议将不再适用于此场景。本章节提供一些针对 FFI 的替代建议，[第 35 条][Item 35]探讨了用来解决使用 FFI 时遇到的某些问题（但不是全部）的工具，《[Rustonomicon][Rustonomicon]》 中的 [FFI][FFI chapter] 一章也提供了很有帮助的建议和信息。
+所以，Rust 中的 FFI 代码都是 `unsafe` 的，[第 16 条]的建议将不再适用于此场景。本章节提供一些针对 FFI 的替代建议，[第 35 条]探讨了用来解决使用 FFI 时遇到的某些问题（但不是全部）的工具，《[Rustonomicon][Rustonomicon]》 中的 [FFI][FFI chapter] 一章也提供了很有帮助的建议和信息。
 
 ## 从 Rust 调用 C 函数
 
@@ -121,7 +121,7 @@ error[E0133]: call to unsafe function is unsafe and requires unsafe function
 
 最后一个实际问题是，C 代码和 Rust 代码中的函数声明要完全匹配。更糟糕的是，如果它们不匹配，构建工具不会给出任何警告，而是默默的生成错误的代码。
 
-[第 35 条][Item 35]中提到，可以使用 `bindgen` 工具来避免类似问题，*为什么*构建工具无法检测这种问题，其背后的原因是什么？这值得我们花时间去搞搞清楚，特别是，了解*名称重整*的基本原理。
+[第 35 条]中提到，可以使用 `bindgen` 工具来避免类似问题，*为什么*构建工具无法检测这种问题，其背后的原因是什么？这值得我们花时间去搞搞清楚，特别是，了解*名称重整*的基本原理。
 
 ### 名称重整
 
@@ -200,7 +200,7 @@ pub struct FfiStruct {
 }
 ```
 
-上面所示的结构体定义中，有一行注释专门提醒程序员此两处的定义一定要保持同步。长期来看，完全依靠程序员来保证两处的同步是不可靠的，所以应该借助类似 `bindgen` 这样的工具来实现两种语言代码之间的自动化同步（见[第 25 条][Item 35]）。
+上面所示的结构体定义中，有一行注释专门提醒程序员此两处的定义一定要保持同步。长期来看，完全依靠程序员来保证两处的同步是不可靠的，所以应该借助类似 `bindgen` 这样的工具来实现两种语言代码之间的自动化同步（见[第 35 条]）。
 
 在 FFI 互操作场景中，要特别小心字符串类型。C 和 Rust 中默认的字符串类型是完全不同的：
 
@@ -211,7 +211,7 @@ pub struct FfiStruct {
 
 ## 生命周期
 
-大部分的数据都比较大，以至于无法存储到寄存器，只能存储到内存中。也就是说，访问数据实际上访问的是内存地址。在 C 中对应的是*指针*：一个无任何其他附加语义信息的、代表内存地址的数值（见[第 8 条][Item 8]）。
+大部分的数据都比较大，以至于无法存储到寄存器，只能存储到内存中。也就是说，访问数据实际上访问的是内存地址。在 C 中对应的是*指针*：一个无任何其他附加语义信息的、代表内存地址的数值（见[第 8 条]）。
 
 在 Rust 中，表示内存地址的概念叫做*引用*，其数值可以提取为一个*裸指针*，方便传递给 FFI ：
 
@@ -231,13 +231,13 @@ let v = FfiStruct {
 let x = unsafe { use_struct(&v as *const FfiStruct) };
 ```
 
-但是，正如[第 14 条][Item 14]所述，Rust 中的引用包含所关联内存段*生命周期*相关的额外约束，当将引用转换成裸指针时，这种约束将会丢失。
+但是，正如[第 14 条]所述，Rust 中的引用包含所关联内存段*生命周期*相关的额外约束，当将引用转换成裸指针时，这种约束将会丢失。
 
 因此，使用裸指针本质上是不安全的，`unsafe` 标记表明这里存在风险：FFI 边界另一侧的 C 代码可以做出一些破坏 Rust 内存安全性的操作：
 
 - C 代码可能保留指针的值，并在后续的代码中使用。当关联的内存已经从堆上释放，或者在栈上重用了，就会发生*使用已释放的内存*问题。
 - C 代码可能会抛弃传递给它的指针的 `const` 限定符，然后修改指针指向的数据，但是 Rust 一侧期望这段数据是不可变的。
-- C 代码不受限于 Rust 的 `Mutex` 保护，因此引发数据竞争（见[第 17 条][Item 17]）问题。
+- C 代码不受限于 Rust 的 `Mutex` 保护，因此引发数据竞争（见[第 17 条]）问题。
 - C 代码可能错误地（例如，调用 `free()` 函数）将关联的堆内存地址返回给内存分配器，意味着 Rust 代码面临使用已释放内存的问题。
 
 这些风险是通过 FFI 机制重用现有代码以节约成本的时候不可避免的。优点是，你只需编写或者自动生成相应的声明就可以重用现有的、大概率可以正常工作的代码；缺点是你失去了使用 Rust 的最大优势 —— 内存保护。
@@ -265,7 +265,7 @@ extern "C" {
 
 ```
 
-为了确保分配内存的代码有对应的释放内存的代码，建议实现一个 RAII 包装来自动避免 C 一侧分配的内存泄漏问题（见[第 11 条][Item 11]）。用作包装器的结构体持有 C 一侧分配的内存：
+为了确保分配内存的代码有对应的释放内存的代码，建议实现一个 RAII 包装来自动避免 C 一侧分配的内存泄漏问题（见[第 11 条]）。用作包装器的结构体持有 C 一侧分配的内存：
 
 ```rust
 /// 包装器结构体拥有 C 一侧分配的内存
@@ -289,7 +289,7 @@ impl Drop for FfiWrapper {
 }
 ```
 
-**为 FFI 派生的资源实现 `Drop` trait 以实现 RAII** 这条法则同样适用于除内存之外的其他资源：打开的文件、数据库连接等（见[第 11 条][Item 11]）。
+**为 FFI 派生的资源实现 `Drop` trait 以实现 RAII** 这条法则同样适用于除内存之外的其他资源：打开的文件、数据库连接等（见[第 11 条]）。
 
 将与 C 的互操作包装到一个结构体中，还可以捕获一些其他潜在的陷阱，例如：可以将原本不可见的失败转换成 `Result` ：
 
@@ -321,7 +321,7 @@ impl FfiWrapper {
 }
 ```
 
-或者，如果底层的 C 数据结构有一个等价的 Rust 映射，并且可以安全的直接操作该数据，那么实现 `AsRef` 和 `AsMut` trait （见[第 8 条][Item 8]）用起来更直接：
+或者，如果底层的 C 数据结构有一个等价的 Rust 映射，并且可以安全的直接操作该数据，那么实现 `AsRef` 和 `AsMut` trait （见[第 8 条]）用起来更直接：
 
 ```rust
 impl AsMut<FfiStruct> for FfiWrapper {
@@ -338,7 +338,7 @@ let mut wrapper = FfiWrapper::new(42).expect("real code would check");
 wrapper.as_mut().byte = 12;
 ```
 
-上面的示例展示了使用 FFI 时一条非常有帮助的法则：**将访问 `unsafe` FFI 库的代码封装到安全的 Rust 代码之内**。这可以使得其他代码遵循[第 16 条][Item 16]的建议，避免编写 `unsafe` 代码。它还可以将危险的代码集中在一个地方，便于仔细研究和测试以发现问题，并在出现问题的时候将这些代码视为首要怀疑点来处理。
+上面的示例展示了使用 FFI 时一条非常有帮助的法则：**将访问 `unsafe` FFI 库的代码封装到安全的 Rust 代码之内**。这可以使得其他代码遵循[第 16 条]的建议，避免编写 `unsafe` 代码。它还可以将危险的代码集中在一个地方，便于仔细研究和测试以发现问题，并在出现问题的时候将这些代码视为首要怀疑点来处理。
 
 ## 从 C 调用 Rust
 
@@ -384,7 +384,7 @@ pub extern "C" fn add_contents_safer(p: *const FfiStruct) -> u32 {
 
 在上面的示例代码中，C 代码给 Rust 代码传入了一个裸指针，Rust 代码将其转换成一个引用来操作结构体。但是，这个指针从哪里来？Rust 的引用到底引用了什么？
 
-在[第 8 条][Item 8]的示例中，演示了 Rust 的内存安全机制会防止返回对栈上过期对象的引用。当你把引用作为裸指针返回的时候，就会出现类似的问题：
+在[第 8 条]的示例中，演示了 Rust 的内存安全机制会防止返回对栈上过期对象的引用。当你把引用作为裸指针返回的时候，就会出现类似的问题：
 
 <div class="ferris"><img src="../images/ferris/not_desired_behavior.svg" width="75" height="75" /></div>
 
@@ -454,7 +454,7 @@ pub extern "C" fn free_struct_raw(p: *mut FfiStruct) {
 
 以上表明了本章的主题：使用 FFI 会让你面对标准 Rust 中不存在的风险。只要你能够意识到其中的风险和成本，那也是值得的。控制跨越 FFI 边界内容的细节有助于降低风险，但是无法完全消除它。
 
-当使用 C 代码调用 Rust 代码的时候，还有一点需要关注的：如果你的 Rust 代码忽略了[第 18 条][Item 18]的建议，你应该**防止 `panic!` 跨越 FFI 边界**，因为这会导致未定义的、糟糕的行为 [^4]。
+当使用 C 代码调用 Rust 代码的时候，还有一点需要关注的：如果你的 Rust 代码忽略了[第 18 条]的建议，你应该**防止 `panic!` 跨越 FFI 边界**，因为这会导致未定义的、糟糕的行为 [^4]。
 
 ## 牢记
 
@@ -480,15 +480,16 @@ pub extern "C" fn free_struct_raw(p: *mut FfiStruct) {
 
 <!-- 参考链接 -->
 
+[第 8 条]: ../chapter_1/item8-references&pointer.md
+[第 11 条]: ../chapter_2/item11-impl-drop-for-RAII.md
+[第 14 条]: ../chapter_3/item14-lifetimes.md
+[第 16 条]: ../chapter_3/item16-unsafe.md
+[第 17 条]: ../chapter_3/item17-deadlock.md
+[第 35 条]: item35-bindgen.md
+
 [origin]: https://www.lurklurk.org/effective-rust/ffi.html
 [standard library]: https://doc.rust-lang.org/std/index.html
 [crate eco]: https://crates.io/
-[Item 8]: ../chapter_1/item8-references&pointer.md
-[Item 11]: ../chapter_2/item11-impl-drop-for-RAII.md
-[Item 14]: ../chapter_3/item14-lifetimes.md
-[Item 16]: ../chapter_3/item16-unsafe.md
-[Item 17]: ../chapter_3/item17-deadlock.md
-[Item 35]: ./item35-bindgen.md
 [Rustonomicon]: https://doc.rust-lang.org/nomicon/
 [FFI chapter]: https://doc.rust-lang.org/nomicon/ffi.html
 [libc]: https://docs.rs/libc

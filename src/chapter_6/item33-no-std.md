@@ -164,6 +164,11 @@ fn try_build_a_vec() -> Result<Vec<u8>, String> {
 
 <!-- 参考链接 -->
 
+[第 14 条]: ../chapter_3/item14-lifetimes.md
+[第 25 条]: ../chapter_4/item25-dep-graph.md
+[第 26 条]: ../chapter_4/item26-features.md
+[第 32 条]: ../chapter_5/item32-ci.md
+
 [prelude]: https://doc.rust-lang.org/std/prelude/index.html
 [`Option`]: https://doc.rust-lang.org/core/option/enum.Option.html
 [`Result`]: https://doc.rust-lang.org/core/result/enum.Result.html
@@ -174,7 +179,6 @@ fn try_build_a_vec() -> Result<Vec<u8>, String> {
 [core::]: https://doc.rust-lang.org/1.70.0/core/error/trait.Error.html
 [`std::` 版本]: https://doc.rust-lang.org/1.70.0/std/error/trait.Error.html
 [sysroot crates]: https://doc.rust-lang.org/edition-guide/rust-2018/path-changes.html#an-exception
-[第 14 条]: ../chapter_3/item14-lifetimes.md
 [`alloc`]: https://doc.rust-lang.org/alloc/
 [`alloc::boxed::Box<T>`]: https://doc.rust-lang.org/alloc/boxed/struct.Box.html
 [`alloc::rc::Rc<T>`]: https://doc.rust-lang.org/alloc/rc/struct.Rc.html
@@ -188,10 +192,7 @@ fn try_build_a_vec() -> Result<Vec<u8>, String> {
 [`HashSet`]: https://doc.rust-lang.org/std/collections/hash_set/struct.HashSet.html
 [`std::sync::Mutex`]: https://doc.rust-lang.org/std/sync/struct.Mutex.html
 [`spin`]: https://docs.rs/spin/
-[第 25 条]: ../chapter_4/item25-dep-graph.md
-[第 32 条]: ../chapter_5/item32-ci.md
 [交叉编译]: https://www.reddit.com/r/rust/comments/ef8nd9/how_to_avoid_accidentally_breaking_no_std/fbyz6ix/
-[第 26 条]: ../chapter_4/item26-features.md
 [配置]: https://doc.rust-lang.org/std/alloc/fn.set_alloc_error_hook.html
 [`std::bad_alloc`]: https://en.cppreference.com/w/cpp/memory/new/bad_alloc
 [`std::nothrow`]: https://en.cppreference.com/w/cpp/memory/new/nothrow

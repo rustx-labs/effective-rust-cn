@@ -606,14 +606,17 @@ let y = log_failure!(std::str::from_utf8(b"\xc3\x28")); // invalid UTF-8
 
 <!-- 参考链接 -->
 
+[第 10 条]: ../chapter_2/item10-std-traits.md
+[第 19 条]: ../chapter_3/item19-reflection.md
+[第 25 条]: ../chapter_4/item25-dep-graph.md
+[第 31 条]: ../chapter_5/item31-use-tools.md
+
 [On Lisp (Prentice Hall)]: https://www.paulgraham.com/onlisp.html
 [卫生的]: https://en.wikipedia.org/wiki/Hygienic_macro
 [声明宏]: https://doc.rust-lang.org/reference/macros-by-example.html
 [cargo-expand]: https://github.com/dtolnay/cargo-expand
 [fmt 文档]: https://doc.rust-lang.org/std/fmt/index.html
-[第 10 条]: ../chapter_2/item10-std-traits.md
 [过程宏]: https://doc.rust-lang.org/reference/procedural-macros.html
-[第 19 条]: ../chapter_3/item19-reflection.md
 [serd 库]: https://docs.rs/serde/latest/serde/
 [Deserialize]: https://docs.rs/serde/latest/serde/derive.Deserialize.html
 [syn 包]: https://docs.rs/syn/latest/syn/
@@ -622,8 +625,6 @@ let y = log_failure!(std::str::from_utf8(b"\xc3\x28")); // invalid UTF-8
 [syn::DeriveInput]: https://docs.rs/syn/latest/syn/struct.DeriveInput.html
 [file!()]: https://doc.rust-lang.org/std/macro.file.html
 [line!()]: https://doc.rust-lang.org/std/macro.line.html
-[第 31 条]: ../chapter_5/item31-use-tools.md
-[第 25 条]: ../chapter_4/item25-dep-graph.md
 [enumn::N]: https://docs.rs/enumn/latest/enumn/derive.N.html
 [num_enum::TryFromPrimitive]: https://docs.rs/enumn/latest/enumn/derive.N.html
 [num\_derive::FromPrimitive]: https://docs.rs/num-derive/latest/num_derive/derive.FromPrimitive.html

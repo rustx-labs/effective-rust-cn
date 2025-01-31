@@ -159,11 +159,11 @@ pub trait AsCbor: Sized {
 
 在项目中使用这个 trait 的用户同样会面临困惑：到底要不要实现 `cddl(&self)` 方法？外部代码根本没有办法得知是否应该实现 trait 中特征隔离的方法。
 
-所以，结论就是：**避免在公共 trait 中设计特征隔离的方法**。包含默认实现的 trait 方法是个例外（见[第 13 条][Item 13]） —— 前提是，外部代码永远不会改写默认实现。
+所以，结论就是：**避免在公共 trait 中设计特征隔离的方法**。包含默认实现的 trait 方法是个例外（见[第 13 条]） —— 前提是，外部代码永远不会改写默认实现。
 
-特征联合也意味着，如果你的 crate 包含了 *N* 个特征 [^3]，那么可能的特征组合是 *2<sup>N</sup>* 种。为了避免不必要的问题，应在你的 CI 系统中（见[第 32 条][Item 32]）通过完备的测试用例（见[第 30 条][Item 30]）来涵盖所有的 *2<sup>N</sup>*  种特征组合。
+特征联合也意味着，如果你的 crate 包含了 *N* 个特征 [^3]，那么可能的特征组合是 *2<sup>N</sup>* 种。为了避免不必要的问题，应在你的 CI 系统中（见[第 32 条]）通过完备的测试用例（见[第 30 条]）来涵盖所有的 *2<sup>N</sup>*  种特征组合。
 
-然而，当需要控制向展开后的依赖图（见[第 25 条][Item 25]）暴露的内容时，使用可选的特征还是非常有帮助的，尤其是那些可以在 `no_std` 环境（见[第 33 条][Item 33]）中使用的偏底层的 crate，通常会包含 `std` 或者 `alloc` 特征，来方便你在标准环境中使用它们。
+然而，当需要控制向展开后的依赖图（见[第 25 条]）暴露的内容时，使用可选的特征还是非常有帮助的，尤其是那些可以在 `no_std` 环境（见[第 33 条]）中使用的偏底层的 crate，通常会包含 `std` 或者 `alloc` 特征，来方便你在标准环境中使用它们。
 
 ## 牢记
 
@@ -187,6 +187,12 @@ pub trait AsCbor: Sized {
 
 <!-- 参考链接 -->
 
+[第 13 条]: ../chapter_2/item13-use-default-impl.md
+[第 25 条]: item25-dep-graph.md
+[第 30 条]: ../chapter_5/item30-write-more-than-unit-tests.md
+[第 32 条]: ../chapter_5/item32-ci.md
+[第 33 条]: ../chapter_6/item33-no-std.md
+
 [origin]: https://www.lurklurk.org/effective-rust/features.html
 [dep-crate-doc]: https://doc.rust-lang.org/cargo/reference/features.html#optional-dependencies
 [conditional compilation]: https://doc.rust-lang.org/reference/conditional-compilation.html
@@ -203,8 +209,3 @@ pub trait AsCbor: Sized {
 [Cargo.toml]: https://doc.rust-lang.org/cargo/reference/manifest.html
 [rename]: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#renaming-dependencies-in-cargotoml
 [feature unification]: https://doc.rust-lang.org/cargo/reference/features.html#feature-unification
-[Item 13]: ../chapter_2/item13-use-default-impl.md
-[Item 25]: ./item25-dep-graph.md
-[Item 30]: ../chapter_5/item30-write-more-than-unit-tests.md
-[Item 32]: ../chapter_5/item32-ci.md
-[Item 33]: ../chapter_6/item33-no-std.md

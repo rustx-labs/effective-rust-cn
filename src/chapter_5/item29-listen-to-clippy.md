@@ -98,18 +98,29 @@ Clippy 的警告信息在你学习 Rust 时特别重要，因为它们可以揭�
 
 <!-- 参考链接 -->
 
-[Microsoft Clippy]: https://en.wikipedia.org/wiki/Office_Assistant
-[第 31 条]: ./item31-use-tools.md
-[Clippy]: https://github.com/rust-lang/rust-clippy#clippy
-[第 32 条]: ./item32-ci.md
 [第 1 条]: ../chapter_1/item1-use-types.md
+[第 3 条]: ../chapter_1/item3-transform.md
+[第 5 条]: ../chapter_1/item5-casts.md
+[第 8 条]: ../chapter_1/item8-references&pointer.md
+[第 9 条]: ../chapter_1/item9-iterators.md
+[第 10 条]: ../chapter_2/item10-std-traits.md
+[第 13 条]: ../chapter_2/item13-use-default-impl.md
+[第 18 条]: ../chapter_3/item18-panic.md
+[第 21 条]: ../chapter_4/item21-semver.md
+[第 23 条]: ../chapter_4/item23-wildcard.md
+[第 25 条]: ../chapter_4/item25-dep-graph.md
+[第 26 条]: ../chapter_4/item26-features.md
+[第 27 条]: item27-document-public-interfaces.md
+[第 31 条]: item31-use-tools.md
+[第 32 条]: item32-ci.md
+
+[Microsoft Clippy]: https://en.wikipedia.org/wiki/Office_Assistant
+[Clippy]: https://github.com/rust-lang/rust-clippy#clippy
 [函数参数]: https://rust-lang.github.io/rust-clippy/stable/index.html#/fn_params_excessive_bools
 [结构体]: https://rust-lang.github.io/rust-clippy/stable/index.html#/struct_excessive_bools
-[第 3 条]: ../chapter_1/item3-transform.md
 [Unnecessarily converting `Result` to `Option`]: https://rust-lang.github.io/rust-clippy/stable/index.html#/ok_expect
 [Opportunities to use `unwrap_or_default`]: https://rust-lang.github.io/rust-clippy/stable/index.html#/unwrap_or_else_default
 [应当返回的地方]: https://rust-lang.github.io/rust-clippy/stable/index.html#/unwrap_in_result
-[第 5 条]: ../chapter_1/item5-casts.md
 [建议]: https://rust-lang.github.io/rust-clippy/stable/index.html#/from_over_into
 [`as` casts that could be from instead]: https://rust-lang.github.io/rust-clippy/stable/index.html#/cast_lossless
 [`as` casts that might truncate]: https://rust-lang.github.io/rust-clippy/stable/index.html#/cast_possible_truncation
@@ -117,11 +128,9 @@ Clippy 的警告信息在你学习 Rust 时特别重要，因为它们可以揭�
 [`as` casts that lose precision]: https://rust-lang.github.io/rust-clippy/stable/index.html#/cast_precision_loss
 [`as` casts that might convert signed negative numbers to large positive numbers]: https://rust-lang.github.io/rust-clippy/stable/index.html#/cast_sign_loss
 [any use of `as`]: https://rust-lang.github.io/rust-clippy/stable/index.html#/as_conversions
-[第 8 条]: ../chapter_1/item8-references&pointer.md
 [Holding a heap-allocated collection in a `Box`]: https://rust-lang.github.io/rust-clippy/stable/index.html#/box_collection
 [Holding a heap-allocated collection of `Box` items]: https://rust-lang.github.io/rust-clippy/stable/index.html#/vec_box
 [Taking a reference to a `Box`]: https://rust-lang.github.io/rust-clippy/stable/index.html#/borrowed_box
-[第 9 条]: ../chapter_1/item9-iterators.md
 [explicit_counter_loop]: https://rust-lang.github.io/rust-clippy/stable/index.html#/explicit_counter_loop
 [explicit_iter_loop]: https://rust-lang.github.io/rust-clippy/stable/index.html#/explicit_iter_loop
 [explicit_into_iter_loop]: https://rust-lang.github.io/rust-clippy/stable/index.html#/explicit_into_iter_loop
@@ -140,24 +149,16 @@ Clippy 的警告信息在你学习 Rust 时特别重要，因为它们可以揭�
 [suspicious_map]: https://rust-lang.github.io/rust-clippy/stable/index.html#/suspicious_map
 [unnecessary_filter_map]: https://rust-lang.github.io/rust-clippy/stable/index.html#/unnecessary_filter_map
 [unnecessary_fold]: https://rust-lang.github.io/rust-clippy/stable/index.html#/unnecessary_fold
-[第 10 条]: ../chapter_2/item10-std-traits.md
 [`Ord` must agree with `PartialOrd`]: https://rust-lang.github.io/rust-clippy/stable/index.html#/derive_ord_xor_partial_ord
 [`PartialEq::ne` should not need a nondefault implementation]: https://rust-lang.github.io/rust-clippy/stable/index.html#/partialeq_ne_impl
-[第 13 条]: ../chapter_2/item13-use-default-impl.md
 [`Hash` and `Eq` must be consistent]: https://rust-lang.github.io/rust-clippy/stable/index.html#/derived_hash_with_manual_eq
 [`Clone` for `Copy` types should match]: https://rust-lang.github.io/rust-clippy/stable/index.html#/expl_impl_clone_on_copy
-[第 18 条]: ../chapter_3/item18-panic.md
 [`panic!`]: https://rust-lang.github.io/rust-clippy/stable/index.html#/panic
 [`expect`]: https://rust-lang.github.io/rust-clippy/stable/index.html#/expect_used
-[第 21 条]: ../chapter_4/item21-semver.md
 [进行了校验]: https://rust-lang.github.io/rust-clippy/stable/index.html#/wildcard_dependencies
-[第 23 条]: ../chapter_4/item23-wildcard.md
-[第 25 条]: ../chapter_4/item25-dep-graph.md
 [在问题出现时给出警告信息]: https://rust-lang.github.io/rust-clippy/stable/index.html#/multiple_crate_versions
-[第 26 条]: ../chapter_4/item26-features.md
 [“否定”的特性]: https://rust-lang.github.io/rust-clippy/stable/index.html#/negative_feature_names
 [需要明确的特性名（如："use-crate-x"形式的命名）]: https://rust-lang.github.io/rust-clippy/stable/index.html#/redundant_feature_names
-[第 27 条]: ./item27-document-public-interfaces.md
 [Missing descriptions of `panic!`s]: https://rust-lang.github.io/rust-clippy/stable/index.html#/missing_panics_doc
 [Missing descriptions]: https://rust-lang.github.io/rust-clippy/stable/index.html#/missing_safety_doc
 [`unsafe` concerns]: https://rust-lang.github.io/rust-clippy/stable/index.html#/undocumented_unsafe_blocks
