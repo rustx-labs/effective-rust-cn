@@ -7,7 +7,7 @@
 - [类型](./chapter_1.md)
     - [第 1 条：使用类型系统表达数据结构](./chapter_1/item1-use-types.md)
     - [第 2 条：使用类型系统表达常见行为](./chapter_1/item2-use-types-2.md)
-    - [第 3 条：优先选择Option和Result转换，而非显式匹配表达式](./chapter_1/item3-transform.md)
+    - [第 3 条：优先选择Option和Result转换，而非显式match表达式](./chapter_1/item3-transform.md)
     - [第 4 条：优先使用惯用的错误类型](./chapter_1/item4-errors.md)
     - [第 5 条：理解类型转换](./chapter_1/item5-casts.md)
     - [第 6 条：拥抱 newtype 模式](./chapter_1/item6-newtype.md)
