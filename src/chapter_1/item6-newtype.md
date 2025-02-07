@@ -111,7 +111,7 @@ help: call `Into::into` on this expression to convert `PoundForceSeconds` into
    |                                                         +++++++
 ```
 
-如在[第 5 条]中所述，添加标准的 `From` 特征的实现：
+如在[第 5 条]中所述，添加标准的 `From` `trait` 的实现：
 
 ```rust
 impl From<PoundForceSeconds> for NewtonSeconds {
@@ -148,14 +148,14 @@ print_page(DoubleSided(true), ColorOutput(false));
 
 这个来自[第 1 条]的例子，是 newtype 的简单用法 — 将语义编码到类型系统中，以让编译器负责管理这些语义。
 
-## 绕过特征的孤儿规则
+## 绕过 `trait` 的孤儿规则
 
-另一个[常见]但更巧妙的需要 newtype 模式的场景，是 Rust 的孤儿规则。这个规则意味着，在一个包里，以下条件之一满足时，才能为某个类型实现特征：
+另一个[常见]但更巧妙的需要 newtype 模式的场景，是 Rust 的孤儿规则。这个规则意味着，在一个包里，以下条件之一满足时，才能为某个类型实现 `trait`：
 
-• 包定义了该特征
+• 包定义了该 `trait`
 • 包定义了该类型
 
-我们来尝试为一个外部类型实现一个外部特征：
+我们来尝试为一个外部类型实现一个外部 `trait`：
 
 <div class="ferris"><img src="../images/ferris/does_not_compile.svg" width="75" height="75" /></div>
 
@@ -189,7 +189,7 @@ error[E0117]: only traits defined in the current crate can be implemented for
 
 这经常会带来挫败感：例如，如果你试图序列化包含来自其他包的类型的数据，孤儿规则会阻止你写 `impl serde::Serialize for somecrate::SomeType`。[^3]
 
-但是 newtype 模式意味着你定义了一个*新*类型，这是当前包的一部分，所以就满足了孤儿规则的第二点。现在就能够实现一个外部特征：
+但是 newtype 模式意味着你定义了一个*新*类型，这是当前包的一部分，所以就满足了孤儿规则的第二点。现在就能够实现一个外部 `trait`：
 
 ```rust
 struct MyRng(rand::rngs::StdRng);
@@ -207,16 +207,16 @@ newtype 模式解决了两类问题 —— 阻止单位转换和绕过孤儿原�
 
 这意味着必须在所有地方都使用 `thing.0`，而不是使用 `thing`。不过这很容易做到，而且编译器会告诉你在哪里需要。
 
-比较麻烦的是，内部类型的任何特征实现都会丢失：因为 newtype 是一个新类型，所以现有的内部实现都不适用。
+比较麻烦的是，内部类型的任何 `trait` 实现都会丢失：因为 newtype 是一个新类型，所以现有的内部实现都不适用。
 
-对于能派生的特征，只需要在 newtype 的声明上使用 `derive`：
+对于能派生的 `trait`，只需要在 newtype 的声明上使用 `derive`：
 
 ```rust
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd)]
 pub struct NewType(InnerType);
 ```
 
-然而，对于更复杂的特征，需要一些样板代码来恢复内部类型的实现，例如：
+然而，对于更复杂的 `trait`，需要一些样板代码来恢复内部类型的实现，例如：
 
 ```rust
 use std::fmt;
