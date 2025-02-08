@@ -146,7 +146,7 @@ print_page(DoubleSided(true), ColorOutput(false));
 
 如果需要考虑大小或二进制兼容性，那么 <code>#[repr(transparent)]</code> 属性能确保 newtype 在内存中的表示与内部类型相同。
 
-这个来自[第 1 条]的例子，是 newtype 的简单用法 — 将语义编码到类型系统中，以让编译器负责管理这些语义。
+这个来自[第 1 条]的例子，是 newtype 的简单用法 —— 将语义编码到类型系统中，以让编译器负责管理这些语义。
 
 ## 绕过 `trait` 的孤儿规则
 
