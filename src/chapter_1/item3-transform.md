@@ -129,7 +129,7 @@ pub fn find_user(username: &str) -> Result<UserId, String> {
 
 ![转换方法](../images/transform.svg)
 
-（此图的[在线版本]可点击：每个框都会链接到相关文档。）
+图1-1. `Optoin` 和 `Result` 转换 [^1]
 
 图中未涵盖的一种常见情况是处理引用。例如，考虑一个可能包含一些数据的结构。
 
@@ -164,7 +164,7 @@ help: consider borrowing the `Option`'s content
    |                                  +++++++++
 ```
 
-错误消息准确地描述了使代码工作所需的内容，即 `Option` 上的 `as_ref()` 方法[^1]。这个方法将一个对 `Option` 的引用转换为对引用的 `Option`：
+错误消息准确地描述了使代码工作所需的内容，即 `Option` 上的 `as_ref()` 方法[^2]。这个方法将一个对 `Option` 的引用转换为对引用的 `Option`：
 
 ```rust
 pub fn encrypted(&self) -> Vec<u8> {
@@ -183,7 +183,9 @@ pub fn encrypted(&self) -> Vec<u8> {
 
 #### 注释
 
-[^1]: 注意，这个方法与 `AsRef` `trait` 是独立的，尽管方法名称相同。
+[^1]: 此图的 [在线版本] 可点击，每个框都会链接到相关文档。
+
+[^2]: 注意，这个方法与 `AsRef` `trait` 是独立的，尽管方法名称相同。
 
 原文[点这里](https://www.lurklurk.org/effective-rust/transform.html)查看
 
