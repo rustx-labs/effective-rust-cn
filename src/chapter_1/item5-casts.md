@@ -224,8 +224,11 @@ error[E0277]: the trait bound `u16: From<u32>` is not satisfied
 #### 注释
 
 [^1]: 更准确地称为 `trait` 一致性规则。
+
 [^2]: 暂时如此 —— 这可能会在未来的 `Rust` 版本中被 `!` "`never`" 类型所取代。
+
 [^3]: 在 Rust 中允许有损转换可能是个错误，已经有过尝试去除这种行为的讨论。
+
 [^4]: `Rust` 将这些转换称为“子类型化”，但它与面向对象语言中“子类型化”的定义大不相同。
 
 原文[点这里](https://www.lurklurk.org/effective-rust/casts.html)
