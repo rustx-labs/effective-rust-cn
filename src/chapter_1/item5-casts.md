@@ -231,7 +231,7 @@ error[E0277]: the trait bound `u16: From<u32>` is not satisfied
 
 [^4]: `Rust` 将这些转换称为“子类型化”，但它与面向对象语言中“子类型化”的定义大不相同。
 
-原文[点这里](https://www.lurklurk.org/effective-rust/casts.html)
+原文[点这里](https://www.lurklurk.org/effective-rust/casts.html)查看
 
 <!-- 参考链接 -->
 [第 1 条]: item1-use-types.md

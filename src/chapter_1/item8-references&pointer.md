@@ -310,6 +310,8 @@ let b2 = rc.borrow();
 
 [^4]: 请注意，这并不影响 Rust 的内存安全保证：项仍然是安全的，只是无法访问
 
+原文[点这里](https://www.lurklurk.org/effective-rust/references.html)查看
+
 <!-- 参考链接 -->
 [第 5 条]: item5-casts.md
 [第 10 条]: ../chapter_2/item10-std-traits.md

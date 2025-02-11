@@ -180,7 +180,7 @@ let c = Color {
 
 `Eq` 版本只是一个标记 trait，用于扩展 `PartialEq`，它添加了*自反性*：任何声明了 `Eq` 的类型 `T`，对于任意的实例 `x: T` 都应该保证有 `x == x`。
 
-这很奇怪，你会立即提出这个问题：什么时候 `x == x` 是不成立的？对相等性的这种拆分主要跟浮点数 [floating point numbers](#footnote-1) 有关，尤其是涉及到“不是数字”这个 NaN 值（对应 Rust 中的 `f32:NAN`/`f64:NAN`）。浮点数的标准要求任何东西不会等于 NaN，*包括 Nan 自身*；`PartialEq` trait 的存在就是这种要求的连锁反应。
+这很奇怪，你会立即提出这个问题：什么时候 `x == x` 是不成立的？对相等性的这种拆分主要跟[浮点数][floating point numbers] [^1] 有关，尤其是涉及到“不是数字”这个 NaN 值（对应 Rust 中的 `f32:NAN`/`f64:NAN`）。浮点数的标准要求任何东西不会等于 NaN，*包括 Nan 自身*；`PartialEq` trait 的存在就是这种要求的连锁反应。
 
 对于没有任何浮点数相关的特性的用户自定义类型，**你应该在实现 `PartialEq` 的同时也实现 `Eq`**。如果你要把类型当作 [HashMap] 类型的 key，完整的 `Eq` trait 也是需要实现的（同样还有 `Hash` trait）。
 
@@ -194,7 +194,7 @@ let c = Color {
 
 `derive` 产生的默认实现会按照字段（或 `enum` 的不同 variant）定义的顺序，按照字典序进行比较。如果这不符合预期结果则需要手动实现特征（或者对字段进行重新排序）。
 
-跟 `PartialEq` 不同的是，`PartialOrd` trait 确实对应各种真实发生的场景。比如说，它可以用于表示集合之间的子集关系(#footnote-2)：`{1, 2}` 是 `{1, 2, 4}` 的子集，但 `{1, 3}` 不是 `{2, 4}` 的子集，反之亦然。
+跟 `PartialEq` 不同的是，`PartialOrd` trait 确实对应各种真实发生的场景。比如说，它可以用于表示集合之间的子集关系 [^2]：`{1, 2}` 是 `{1, 2, 4}` 的子集，但 `{1, 3}` 不是 `{2, 4}` 的子集，反之亦然。
 
 但是，即使偏序关系准确地描述了你的类型的行为，**要小心仅仅实现了 `PartialOrd` 而没有实现 `Ord` 的场景**（这种情况很少见，它与 [第 2 条] 中将行为编码到类型系统中的建议相违背）——它可能会导致令人惊讶的结果：
 
@@ -302,7 +302,7 @@ if x <= y {
 | [Debug]      | `format!("{:?}", x)` |                     | [fmt]         |
 | [Display]    |  `format!("{}", x)`  |                     | [fmt]         |
 
-运算符重载相关的 trait 在表格 2-2 (#footnote-3) 中总结了。它们都不能通过 `derive` 获得。
+运算符重载相关的 trait 在表格 2-2 [^3] 中总结了。它们都不能通过 `derive` 获得。
 
 *表格 2-2. 运算符重载 trait*
 
@@ -365,11 +365,18 @@ if x <= y {
 | [Send]                | [第 17 条] |     跨线程传递      |                     | 标记 trait      |
 | [Sync]                | [第 17 条] |     跨线程使用      |                     | 标记 trait      |
 
-<a id="footnote-1">1</a>:当然，比较浮点数总是一个危险的游戏，因为通常情况下没法保证精度舍入计算会产生跟最初设想的数字（按比特值存储）完全相同的结果。
+---
 
-<a id="footnote-2">2</a>:更一般地说，任何序论中的“格” [lattice structure] 都具有偏序性质。
+#### 注释
 
-<a id="footnote-3">3</a>:这里的一些名称有点隐晦——例如 `Rem` 是求余数，`Shl` 是按位左移——但是 [std::ops] 的文档清楚第说明了它们的预期行为。
+[^1]: 当然，比较浮点数总是一个危险的游戏，因为通常情况下没法保证精度舍入计算会产生跟最初设想的数字（按比特值存储）完全相同的结果。
+
+[^2]: 更一般地说，任何序论中的“格” [lattice structure] 都具有偏序性质。
+
+[^3]: 这里的一些名称有点隐晦——例如 `Rem` 是求余数，`Shl` 是按位左移——但是 [std::ops] 的文档清楚第说明了它们的预期行为。
+
+原文[点这里](https://www.lurklurk.org/effective-rust/std-traits.html)查看
+
 
 [第 2 条]: ../chapter_1/item2-use-types-2.md
 [第 4 条]: ../chapter_1/item4-errors.md
@@ -383,121 +390,122 @@ if x <= y {
 [第 17 条]: ../chapter_3/item17-deadlock.md
 [第 29 条]: ../chapter_5/item29-listen-to-clippy.md
 
-[`derive` macros]:https://doc.rust-lang.org/reference/procedural-macros.html#derive-macros
-[add_assign]:https://doc.rust-lang.org/std/ops/trait.AddAssign.html#tymethod.add_assign
-[Add]:https://doc.rust-lang.org/std/ops/trait.Add.html
-[AddAssign]:https://doc.rust-lang.org/std/ops/trait.AddAssign.html
-[as_mut]:https://doc.rust-lang.org/std/convert/trait.AsMut.html#tymethod.as_mut
-[as_ref]:https://doc.rust-lang.org/std/convert/trait.AsRef.html#tymethod.as_ref
-[AsMut]:https://doc.rust-lang.org/std/convert/trait.AsMut.html
-[AsRef]:https://doc.rust-lang.org/std/convert/trait.AsRef.html
-[bitand_assign]:https://doc.rust-lang.org/std/ops/trait.BitAndAssign.html#tymethod.bitand_assign
-[BitAnd]:https://doc.rust-lang.org/std/ops/trait.BitAnd.html
-[bitand]:https://doc.rust-lang.org/std/ops/trait.BitAnd.html#tymethod.bitand
-[BitAndAssign]:https://doc.rust-lang.org/std/ops/trait.BitAndAssign.html
-[bitor_assign]:https://doc.rust-lang.org/std/ops/trait.BitOrAssign.html#tymethod.bitor_assign
-[BitOr]:https://doc.rust-lang.org/std/ops/trait.BitOr.html
-[bitor]:https://doc.rust-lang.org/std/ops/trait.BitOr.html#tymethod.bitor
-[BitOrAssign]:https://doc.rust-lang.org/std/ops/trait.BitOrAssign.html
-[bitxor_assign]:https://doc.rust-lang.org/std/ops/trait.BitXorAssign.html#tymethod.bitxor_assign
-[BitXor]:https://doc.rust-lang.org/std/ops/trait.BitXor.html
-[bitxor]:https://doc.rust-lang.org/std/ops/trait.BitXor.html#tymethod.bitxor
-[BitXorAssign]:https://doc.rust-lang.org/std/ops/trait.BitXorAssign.html
-[borrow_mut]:https://doc.rust-lang.org/std/borrow/trait.BorrowMut.html#tymethod.borrow_mut
-[Borrow]:https://doc.rust-lang.org/std/borrow/trait.Borrow.html
-[borrow]:https://doc.rust-lang.org/std/borrow/trait.Borrow.html#tymethod.borrow
-[BorrowMut]:https://doc.rust-lang.org/std/borrow/trait.BorrowMut.html
-[call_mut]:https://doc.rust-lang.org/std/ops/trait.FnMut.html#tymethod.call_mut
-[call_once]:https://doc.rust-lang.org/std/ops/trait.FnOnce.html#tymethod.call_once
-[call]:https://doc.rust-lang.org/std/ops/trait.Fn.html#tymethod.call
-[clone()]:https://doc.rust-lang.org/std/clone/trait.Clone.html#tymethod.clone
-[Clone]:https://doc.rust-lang.org/std/clone/trait.Clone.html
-[clone]:https://doc.rust-lang.org/std/clone/trait.Clone.html#tymethod.clone
-[cmp]:https://doc.rust-lang.org/std/cmp/trait.Ord.html#tymethod.cmp
-[Copy]:https://doc.rust-lang.org/std/marker/trait.Copy.html
-[Debug]:https://doc.rust-lang.org/std/fmt/trait.Debug.html
-[default()]:https://doc.rust-lang.org/std/default/trait.Default.html#tymethod.default
-[Default]:https://doc.rust-lang.org/std/default/trait.Default.html
-[default]:https://doc.rust-lang.org/std/default/trait.Default.html#tymethod.default
-[deref_mut]:https://doc.rust-lang.org/std/ops/trait.DerefMut.html#tymethod.deref_mut
-[Deref]:https://doc.rust-lang.org/std/ops/trait.Deref.html
-[DerefMut]:https://doc.rust-lang.org/std/ops/trait.DerefMut.html
-[Display]:https://doc.rust-lang.org/std/fmt/trait.Display.html
-[div_assign]:https://doc.rust-lang.org/std/ops/trait.DivAssign.html#tymethod.div_assign
-[Div]:https://doc.rust-lang.org/std/ops/trait.Div.html
-[div]:https://doc.rust-lang.org/std/ops/trait.Div.html#tymethod.div
-[DivAssign]:https://doc.rust-lang.org/std/ops/trait.DivAssign.html
-[DoubleEndedIterator]:https://doc.rust-lang.org/core/iter/trait.DoubleEndedIterator.html
-[Drop]:https://doc.rust-lang.org/std/ops/trait.Drop.html
-[Eq]:https://doc.rust-lang.org/std/cmp/trait.Eq.html
-[equivalence relation]:https://en.wikipedia.org/wiki/Equivalence_relation
-[Error]:https://doc.rust-lang.org/std/error/trait.Error.html
-[ExactSizeIterator]:https://doc.rust-lang.org/core/iter/trait.ExactSizeIterator.html
-[fmt]:https://doc.rust-lang.org/std/fmt/trait.Debug.html#tymethod.fmt
-[Fn]:https://doc.rust-lang.org/std/ops/trait.Fn.html
-[FnMut]:https://doc.rust-lang.org/std/ops/trait.FnMut.html
-[FnOnce]:https://doc.rust-lang.org/std/ops/trait.FnOnce.html
-[from_iter]:https://doc.rust-lang.org/core/iter/trait.FromIterator.html#tymethod.from_iter
-[From]:https://doc.rust-lang.org/std/convert/trait.From.html
-[FromIterator]:https://doc.rust-lang.org/core/iter/trait.FromIterator.html
-[Hash]:https://doc.rust-lang.org/std/hash/trait.Hash.html
-[HashMap]:https://doc.rust-lang.org/std/collections/struct.HashMap.html
-[HashSet]:https://doc.rust-lang.org/std/collections/struct.HashMap.html
-[index_mut]:https://doc.rust-lang.org/std/ops/trait.IndexMut.html#tymethod.index_mut
-[Index]:https://doc.rust-lang.org/std/ops/trait.Index.html
-[index]:https://doc.rust-lang.org/std/ops/trait.Index.html#tymethod.index
-[IndexMut]:https://doc.rust-lang.org/std/ops/trait.IndexMut.html
-[into_iter]:https://doc.rust-lang.org/core/iter/trait.IntoIterator.html#tymethod.into_iter
-[Into]:https://doc.rust-lang.org/std/convert/trait.Into.html
-[into]:https://doc.rust-lang.org/std/convert/trait.Into.html#tymethod.into
-[IntoIterator]:https://doc.rust-lang.org/core/iter/trait.IntoIterator.html
-[Iterator]:https://doc.rust-lang.org/core/iter/trait.Iterator.html
-[lattice structure]:https://en.wikipedia.org/wiki/Lattice_(order)
-[missing_copy_implementations]:https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#missing-copy-implementations
-[missing_debug_implementations]:https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#missing-debug-implementations
-[mul_assign]:https://doc.rust-lang.org/std/ops/trait.MulAssign.html#tymethod.mul_assign
-[Mul]:https://doc.rust-lang.org/std/ops/trait.Mul.html
-[mul]:https://doc.rust-lang.org/std/ops/trait.Mul.html#tymethod.mul
-[MulAssign]:https://doc.rust-lang.org/std/ops/trait.MulAssign.html
-[Mutex]:https://doc.rust-lang.org/std/sync/struct.Mutex.html
-[MutexGuard]:https://doc.rust-lang.org/std/sync/struct.MutexGuard.html
-[Neg]:https://doc.rust-lang.org/std/ops/trait.Neg.html
-[next_back]:https://doc.rust-lang.org/core/iter/trait.DoubleEndedIterator.html#tymethod.next_back
-[next]:https://doc.rust-lang.org/core/iter/trait.Iterator.html#tymethod.next
-[Not]:https://doc.rust-lang.org/std/ops/trait.Not.html
-[not]:https://doc.rust-lang.org/std/ops/trait.Not.html#tymethod.not
-[Ord]:https://doc.rust-lang.org/std/cmp/trait.Ord.html
-[partial equivalence relation]:https://en.wikipedia.org/wiki/Partial_equivalence_relation
-[partial_cmp]:https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html#tymethod.partial_cmp
-[PartialEq]:https://doc.rust-lang.org/std/cmp/trait.PartialEq.html
-[PartialOrd]:https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html
-[plain old data]:https://en.wikipedia.org/wiki/Passive_data_structure
-[Pointer]:https://doc.rust-lang.org/std/fmt/trait.Pointer.html
-[rem_assign]:https://doc.rust-lang.org/std/ops/trait.RemAssign.html#tymethod.rem_assign
-[Rem]:https://doc.rust-lang.org/std/ops/trait.Rem.html
-[rem]:https://doc.rust-lang.org/std/ops/trait.Rem.html#tymethod.rem
-[RemAssign]:https://doc.rust-lang.org/std/ops/trait.RemAssign.html
-[Send]:https://doc.rust-lang.org/std/marker/trait.Send.html
-[shl_assign]:https://doc.rust-lang.org/std/ops/trait.ShlAssign.html#tymethod.shl_assign
-[Shl]:https://doc.rust-lang.org/std/ops/trait.Shl.html
-[shl]:https://doc.rust-lang.org/std/ops/trait.Shl.html#tymethod.shl
-[ShlAssign]:https://doc.rust-lang.org/std/ops/trait.ShlAssign.html
-[shr_assign]:https://doc.rust-lang.org/std/ops/trait.ShrAssign.html#tymethod.shr_assign
-[Shr]:https://doc.rust-lang.org/std/ops/trait.Shr.html
-[shr]:https://doc.rust-lang.org/std/ops/trait.Shr.html#tymethod.shr
-[ShrAssign]:https://doc.rust-lang.org/std/ops/trait.ShrAssign.html
-[size_hint]:https://doc.rust-lang.org/core/iter/trait.Iterator.html#method.size_hint
-[Sized]:https://doc.rust-lang.org/std/marker/trait.Sized.html
-[source]:https://doc.rust-lang.org/std/error/trait.Error.html#method.source
-[std::ops]:https://doc.rust-lang.org/std/ops/index.html
-[struct update syntax]:https://doc.rust-lang.org/reference/expressions/struct-expr.html#functional-update-syntax
-[sub_assign]:https://doc.rust-lang.org/std/ops/trait.SubAssign.html#tymethod.sub_assign
-[Sub]:https://doc.rust-lang.org/std/ops/trait.Sub.html
-[SubAssign]:https://doc.rust-lang.org/std/ops/trait.SubAssign.html
-[Sync]:https://doc.rust-lang.org/std/marker/trait.Sync.html
-[to_owned]:https://doc.rust-lang.org/std/borrow/trait.ToOwned.html#tymethod.to_owned
-[ToOwned]:https://doc.rust-lang.org/std/borrow/trait.ToOwned.html
-[try_from]:https://doc.rust-lang.org/std/convert/trait.TryFrom.html#tymethod.try_from
-[try_into]:https://doc.rust-lang.org/std/convert/trait.TryInto.html#tymethod.try_into
-[TryFrom]:https://doc.rust-lang.org/std/convert/trait.TryFrom.html
-[TryInto]:https://doc.rust-lang.org/std/convert/trait.TryInto.html
+[`derive` macros]: https://doc.rust-lang.org/reference/procedural-macros.html#derive-macros
+[add_assign]: https://doc.rust-lang.org/std/ops/trait.AddAssign.html#tymethod.add_assign
+[Add]: https://doc.rust-lang.org/std/ops/trait.Add.html
+[AddAssign]: https://doc.rust-lang.org/std/ops/trait.AddAssign.html
+[as_mut]: https://doc.rust-lang.org/std/convert/trait.AsMut.html#tymethod.as_mut
+[as_ref]: https://doc.rust-lang.org/std/convert/trait.AsRef.html#tymethod.as_ref
+[AsMut]: https://doc.rust-lang.org/std/convert/trait.AsMut.html
+[AsRef]: https://doc.rust-lang.org/std/convert/trait.AsRef.html
+[bitand_assign]: https://doc.rust-lang.org/std/ops/trait.BitAndAssign.html#tymethod.bitand_assign
+[BitAnd]: https://doc.rust-lang.org/std/ops/trait.BitAnd.html
+[bitand]: https://doc.rust-lang.org/std/ops/trait.BitAnd.html#tymethod.bitand
+[BitAndAssign]: https://doc.rust-lang.org/std/ops/trait.BitAndAssign.html
+[bitor_assign]: https://doc.rust-lang.org/std/ops/trait.BitOrAssign.html#tymethod.bitor_assign
+[BitOr]: https://doc.rust-lang.org/std/ops/trait.BitOr.html
+[bitor]: https://doc.rust-lang.org/std/ops/trait.BitOr.html#tymethod.bitor
+[BitOrAssign]: https://doc.rust-lang.org/std/ops/trait.BitOrAssign.html
+[bitxor_assign]: https://doc.rust-lang.org/std/ops/trait.BitXorAssign.html#tymethod.bitxor_assign
+[BitXor]: https://doc.rust-lang.org/std/ops/trait.BitXor.html
+[bitxor]: https://doc.rust-lang.org/std/ops/trait.BitXor.html#tymethod.bitxor
+[BitXorAssign]: https://doc.rust-lang.org/std/ops/trait.BitXorAssign.html
+[borrow_mut]: https://doc.rust-lang.org/std/borrow/trait.BorrowMut.html#tymethod.borrow_mut
+[Borrow]: https://doc.rust-lang.org/std/borrow/trait.Borrow.html
+[borrow]: https://doc.rust-lang.org/std/borrow/trait.Borrow.html#tymethod.borrow
+[BorrowMut]: https://doc.rust-lang.org/std/borrow/trait.BorrowMut.html
+[call_mut]: https://doc.rust-lang.org/std/ops/trait.FnMut.html#tymethod.call_mut
+[call_once]: https://doc.rust-lang.org/std/ops/trait.FnOnce.html#tymethod.call_once
+[call]: https://doc.rust-lang.org/std/ops/trait.Fn.html#tymethod.call
+[clone()]: https://doc.rust-lang.org/std/clone/trait.Clone.html#tymethod.clone
+[Clone]: https://doc.rust-lang.org/std/clone/trait.Clone.html
+[clone]: https://doc.rust-lang.org/std/clone/trait.Clone.html#tymethod.clone
+[cmp]: https://doc.rust-lang.org/std/cmp/trait.Ord.html#tymethod.cmp
+[Copy]: https://doc.rust-lang.org/std/marker/trait.Copy.html
+[Debug]: https://doc.rust-lang.org/std/fmt/trait.Debug.html
+[default()]: https://doc.rust-lang.org/std/default/trait.Default.html#tymethod.default
+[Default]: https://doc.rust-lang.org/std/default/trait.Default.html
+[default]: https://doc.rust-lang.org/std/default/trait.Default.html#tymethod.default
+[deref_mut]: https://doc.rust-lang.org/std/ops/trait.DerefMut.html#tymethod.deref_mut
+[Deref]: https://doc.rust-lang.org/std/ops/trait.Deref.html
+[DerefMut]: https://doc.rust-lang.org/std/ops/trait.DerefMut.html
+[Display]: https://doc.rust-lang.org/std/fmt/trait.Display.html
+[div_assign]: https://doc.rust-lang.org/std/ops/trait.DivAssign.html#tymethod.div_assign
+[Div]: https://doc.rust-lang.org/std/ops/trait.Div.html
+[div]: https://doc.rust-lang.org/std/ops/trait.Div.html#tymethod.div
+[DivAssign]: https://doc.rust-lang.org/std/ops/trait.DivAssign.html
+[DoubleEndedIterator]: https://doc.rust-lang.org/core/iter/trait.DoubleEndedIterator.html
+[Drop]: https://doc.rust-lang.org/std/ops/trait.Drop.html
+[Eq]: https://doc.rust-lang.org/std/cmp/trait.Eq.html
+[equivalence relation]: https://en.wikipedia.org/wiki/Equivalence_relation
+[Error]: https://doc.rust-lang.org/std/error/trait.Error.html
+[ExactSizeIterator]: https://doc.rust-lang.org/core/iter/trait.ExactSizeIterator.html
+[floating point numbers]: https://en.wikipedia.org/wiki/Single-precision_floating-point_format
+[fmt]: https://doc.rust-lang.org/std/fmt/trait.Debug.html#tymethod.fmt
+[Fn]: https://doc.rust-lang.org/std/ops/trait.Fn.html
+[FnMut]: https://doc.rust-lang.org/std/ops/trait.FnMut.html
+[FnOnce]: https://doc.rust-lang.org/std/ops/trait.FnOnce.html
+[from_iter]: https://doc.rust-lang.org/core/iter/trait.FromIterator.html#tymethod.from_iter
+[From]: https://doc.rust-lang.org/std/convert/trait.From.html
+[FromIterator]: https://doc.rust-lang.org/core/iter/trait.FromIterator.html
+[Hash]: https://doc.rust-lang.org/std/hash/trait.Hash.html
+[HashMap]: https://doc.rust-lang.org/std/collections/struct.HashMap.html
+[HashSet]: https://doc.rust-lang.org/std/collections/struct.HashMap.html
+[index_mut]: https://doc.rust-lang.org/std/ops/trait.IndexMut.html#tymethod.index_mut
+[Index]: https://doc.rust-lang.org/std/ops/trait.Index.html
+[index]: https://doc.rust-lang.org/std/ops/trait.Index.html#tymethod.index
+[IndexMut]: https://doc.rust-lang.org/std/ops/trait.IndexMut.html
+[into_iter]: https://doc.rust-lang.org/core/iter/trait.IntoIterator.html#tymethod.into_iter
+[Into]: https://doc.rust-lang.org/std/convert/trait.Into.html
+[into]: https://doc.rust-lang.org/std/convert/trait.Into.html#tymethod.into
+[IntoIterator]: https://doc.rust-lang.org/core/iter/trait.IntoIterator.html
+[Iterator]: https://doc.rust-lang.org/core/iter/trait.Iterator.html
+[lattice structure]: https://en.wikipedia.org/wiki/Lattice_(order)
+[missing_copy_implementations]: https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#missing-copy-implementations
+[missing_debug_implementations]: https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#missing-debug-implementations
+[mul_assign]: https://doc.rust-lang.org/std/ops/trait.MulAssign.html#tymethod.mul_assign
+[Mul]: https://doc.rust-lang.org/std/ops/trait.Mul.html
+[mul]: https://doc.rust-lang.org/std/ops/trait.Mul.html#tymethod.mul
+[MulAssign]: https://doc.rust-lang.org/std/ops/trait.MulAssign.html
+[Mutex]: https://doc.rust-lang.org/std/sync/struct.Mutex.html
+[MutexGuard]: https://doc.rust-lang.org/std/sync/struct.MutexGuard.html
+[Neg]: https://doc.rust-lang.org/std/ops/trait.Neg.html
+[next_back]: https://doc.rust-lang.org/core/iter/trait.DoubleEndedIterator.html#tymethod.next_back
+[next]: https://doc.rust-lang.org/core/iter/trait.Iterator.html#tymethod.next
+[Not]: https://doc.rust-lang.org/std/ops/trait.Not.html
+[not]: https://doc.rust-lang.org/std/ops/trait.Not.html#tymethod.not
+[Ord]: https://doc.rust-lang.org/std/cmp/trait.Ord.html
+[partial equivalence relation]: https://en.wikipedia.org/wiki/Partial_equivalence_relation
+[partial_cmp]: https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html#tymethod.partial_cmp
+[PartialEq]: https://doc.rust-lang.org/std/cmp/trait.PartialEq.html
+[PartialOrd]: https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html
+[plain old data]: https://en.wikipedia.org/wiki/Passive_data_structure
+[Pointer]: https://doc.rust-lang.org/std/fmt/trait.Pointer.html
+[rem_assign]: https://doc.rust-lang.org/std/ops/trait.RemAssign.html#tymethod.rem_assign
+[Rem]: https://doc.rust-lang.org/std/ops/trait.Rem.html
+[rem]: https://doc.rust-lang.org/std/ops/trait.Rem.html#tymethod.rem
+[RemAssign]: https://doc.rust-lang.org/std/ops/trait.RemAssign.html
+[Send]: https://doc.rust-lang.org/std/marker/trait.Send.html
+[shl_assign]: https://doc.rust-lang.org/std/ops/trait.ShlAssign.html#tymethod.shl_assign
+[Shl]: https://doc.rust-lang.org/std/ops/trait.Shl.html
+[shl]: https://doc.rust-lang.org/std/ops/trait.Shl.html#tymethod.shl
+[ShlAssign]: https://doc.rust-lang.org/std/ops/trait.ShlAssign.html
+[shr_assign]: https://doc.rust-lang.org/std/ops/trait.ShrAssign.html#tymethod.shr_assign
+[Shr]: https://doc.rust-lang.org/std/ops/trait.Shr.html
+[shr]: https://doc.rust-lang.org/std/ops/trait.Shr.html#tymethod.shr
+[ShrAssign]: https://doc.rust-lang.org/std/ops/trait.ShrAssign.html
+[size_hint]: https://doc.rust-lang.org/core/iter/trait.Iterator.html#method.size_hint
+[Sized]: https://doc.rust-lang.org/std/marker/trait.Sized.html
+[source]: https://doc.rust-lang.org/std/error/trait.Error.html#method.source
+[std::ops]: https://doc.rust-lang.org/std/ops/index.html
+[struct update syntax]: https://doc.rust-lang.org/reference/expressions/struct-expr.html#functional-update-syntax
+[sub_assign]: https://doc.rust-lang.org/std/ops/trait.SubAssign.html#tymethod.sub_assign
+[Sub]: https://doc.rust-lang.org/std/ops/trait.Sub.html
+[SubAssign]: https://doc.rust-lang.org/std/ops/trait.SubAssign.html
+[Sync]: https://doc.rust-lang.org/std/marker/trait.Sync.html
+[to_owned]: https://doc.rust-lang.org/std/borrow/trait.ToOwned.html#tymethod.to_owned
+[ToOwned]: https://doc.rust-lang.org/std/borrow/trait.ToOwned.html
+[try_from]: https://doc.rust-lang.org/std/convert/trait.TryFrom.html#tymethod.try_from
+[try_into]: https://doc.rust-lang.org/std/convert/trait.TryInto.html#tymethod.try_into
+[TryFrom]: https://doc.rust-lang.org/std/convert/trait.TryFrom.html
+[TryInto]: https://doc.rust-lang.org/std/convert/trait.TryInto.html
