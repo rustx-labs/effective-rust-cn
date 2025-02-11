@@ -230,7 +230,9 @@ impl fmt::Display for NewType {
 #### 注释
 
 [^1]: 具体来说，是火星气候轨道器。
+
 [^2]: 参见维基百科上的“火星气候轨道器”[条目](https://en.wikipedia.org/wiki/Mars_Climate_Orbiter)，了解更多关于失败原因的信息。译者注:这句话 "Ruh-roh" 通常用来表达轻微的麻烦或问题即将出现。它起源于美国动画片《史酷比》(Scooby-Doo)，是其中角色 Shaggy Rogers 的口头禅，用来表达他们遇到了一些麻烦或即将面临挑战。
+
 [^3]: 对于serde来说，这是一个足够常见的问题，因此它包含了一种帮助机制。
 
 

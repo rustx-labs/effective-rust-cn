@@ -271,7 +271,7 @@ struct DisplayProperties {
 
 #### 注释
 
-[^1]: 如果涉及到文件系统，情况会更加复杂，因为在流行各种平台上，文件名介于任意字节和 UTF-8 序列之间：请参阅 [std::ffi::OsString][std::ffi::OsString] 文档。
+[^1]: 如果涉及到文件系统，情况会更加复杂，因为在流行各种平台上，文件名介于任意字节和 UTF-8 序列之间：请参阅 [`std::ffi::OsString`][std::ffi::OsString] 文档。
 
 [^2]: 技术上，是一个 *Unicode 标量值*，而不是代码点。
 
