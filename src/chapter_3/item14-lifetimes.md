@@ -700,7 +700,7 @@ pub trait Debug {
 - 生命周期标签只能指示生命周期是“相同的”，这意味着输出的生命周期被包含在输入的一个（或更多）生命周期内。
 - 匿名生命周期`'_`可以用在不需要特定生命周期标签的地方。
 
-#### 注释
+## 注释
 
 [^1]: 例如，Chromium 项目估计[70%的安全 bug 都归咎于内存安全。](https://www.chromium.org/Home/chromium-security/memory-safety/)
 

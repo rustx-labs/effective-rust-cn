@@ -94,13 +94,11 @@ CI 系统中不是所有的步骤都需要和 Cargo 或者其他 Rust 工具链�
 - 所使用的任何外部脚本，都固定到可信的版本，或者，更优的做法是固定到已知的脚本哈希值。
 - 密切关注任何对代码库超出读取权限的集成步骤。
 
-原文[点这里][origin]查看
-
------
-
 ## 注释
 
 [^1]: 如果你的代码确实依赖一些仅在每日构建版本的编译器中提供的特征，可以通过 *rust-toolchain.toml* 文件来清晰指明该工具链的依赖。
+
+原文[点这里](https://www.lurklurk.org/effective-rust/ci.html)查看
 
 <!-- 参考链接 -->
 
@@ -114,7 +112,6 @@ CI 系统中不是所有的步骤都需要和 Cargo 或者其他 Rust 工具链�
 [第 31 条]: item31-use-tools.md
 [第 33 条]: ../chapter_6/item33-no-std.md
 
-[origin]: https://www.lurklurk.org/effective-rust/ci.html
 [rust-toolchain.toml]: https://rust-lang.github.io/rustup/overrides.html#the-toolchain-file
 [cargo-tarpaulin]: https://docs.rs/cargo-tarpaulin
 [prost]: https://docs.rs/prost

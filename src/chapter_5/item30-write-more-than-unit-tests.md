@@ -245,10 +245,11 @@ stack backtrace:
 * 如果代码对性能有很明确的要求，编写基准测试来确认代码的性能表现。通过`cargo bench`来执行它们。
 * 如果代码会暴露在未被信任的输入中，编写模糊测试来确认对输入的参数的约束。通过`cargo fuzz`来（持续地）运行它们。
 
-### 注释
+## 注释
+
 [^1]: 如果你的代码是一个被广泛运用的开源包，[Google OSS-Fuzz program]可以为你的项目进行模糊测试。
 
-原文[点这里]查看
+原文[点这里](https://www.lurklurk.org/effective-rust/testing.html)查看
 
 
 <!-- 参考链接 -->
@@ -281,4 +282,3 @@ stack backtrace:
 [crates.io]: https://crates.io/
 [移除]: https://doc.rust-lang.org/cargo/reference/manifest.html#the-exclude-and-include-fields
 [Google OSS-Fuzz program]: https://google.github.io/oss-fuzz/getting-started/accepting-new-projects/
-[点这里]: https://www.lurklurk.org/effective-rust/testing.html

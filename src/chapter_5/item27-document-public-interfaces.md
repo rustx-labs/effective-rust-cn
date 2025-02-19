@@ -162,16 +162,16 @@ pub fn intersection(
 * 不要给可以从代码中明确看出的内容重复描述。
 * 通过交叉引用及添加标志符来让导航变得明确。
 
----
-
-### 注释
+## 注释
 
 [^1]: 这个配置也曾称成为`intra_doc_link_resolution_failure`。
+
 [^2]: 包含 *README.md* 的引用动作可以被[Cargo.toml 中的 readme 字段]覆盖。
+
 [^3]: Scott Meyers，More Effective C++ (Addison-Wesley)，第 32 条。
 
 
-原文[点这里]查看。
+原文[点这里](https://www.lurklurk.org/effective-rust/documentation.html)查看。
 
 <!-- 参考链接 -->
 
@@ -187,5 +187,4 @@ pub fn intersection(
 [标准库]: https://doc.rust-lang.org/std/index.html
 [docs.rs]: https://docs.rs/
 [最小惊讶原则]: https://en.wikipedia.org/wiki/Principle_of_least_astonishment
-[点这里]: https://www.lurklurk.org/effective-rust/documentation.html
 [Cargo.toml 中的 readme 字段]: https://doc.rust-lang.org/cargo/reference/manifest.html#the-readme-field

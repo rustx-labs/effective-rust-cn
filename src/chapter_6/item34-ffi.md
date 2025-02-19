@@ -467,16 +467,17 @@ pub extern "C" fn free_struct_raw(p: *mut FfiStruct) {
   - 使用标准库中提供的 FFI 相关助手函数或者类型
   - 防止 `panic!` 跨越 FFI 边界
 
-原文[点这里][origin]查看
-
-----
-
 ## 注释
 
 [^1]: 如果所用的 FFI 函数来自 C 标准库， [`libc`][libc] crate 已经具备这些声明了，无需重复编写。
+
 [^2]: 在 *Cargo.toml* 中使用 [`links`][links] 键可以让这个依赖对 Cargo 可见。
+
 [^3]: Rust 中用来将重整后的名称变回阅读友好名称的工具叫做 [`rustfilt`][rustfilt]，这个工具基于 [`rustc-demangle`][rustc-demangle] 命令构建，类似于 `c++filt` 工具。
+
 [^4]: Rust 1.71 版本中包含 [C-unwind ABI][c-unwind]，可以实现跨语言的错误回退功能。
+
+原文[点这里](https://www.lurklurk.org/effective-rust/ffi.html)查看
 
 <!-- 参考链接 -->
 
@@ -487,7 +488,6 @@ pub extern "C" fn free_struct_raw(p: *mut FfiStruct) {
 [第 17 条]: ../chapter_3/item17-deadlock.md
 [第 35 条]: item35-bindgen.md
 
-[origin]: https://www.lurklurk.org/effective-rust/ffi.html
 [standard library]: https://doc.rust-lang.org/std/index.html
 [crate eco]: https://crates.io/
 [Rustonomicon]: https://doc.rust-lang.org/nomicon/
@@ -517,12 +517,3 @@ pub extern "C" fn free_struct_raw(p: *mut FfiStruct) {
 [rustfilt]: https://crates.io/crates/rustfilt
 [rust-demangle]: https://github.com/rust-lang/rustc-demangle
 [c-unwind]: https://github.com/rust-lang/rfcs/pull/2945
-
-
-
-
-
-
-
-
-

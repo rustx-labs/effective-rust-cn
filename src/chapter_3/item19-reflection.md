@@ -188,6 +188,7 @@ _图 3-5. 用于 trait 约束的 trait 对象，用于 `Draw` 和 `Shape` 的不
 [第 12 条]: ../chapter_2/item12-generics&trait-objects.md
 [第 25 条]: ../chapter_4/item25-dep-graph.md
 [第 28 条]: ../chapter_5/item28-use-macros-judiciously.md
+
 [Python]: https://docs.python.org/3/library/types.html#module-types
 [Java]: https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/package-summary.html
 [Go]: https://golang.org/pkg/reflect/

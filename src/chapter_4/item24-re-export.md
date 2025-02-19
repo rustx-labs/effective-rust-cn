@@ -118,20 +118,19 @@ let choice = dep_lib::pick_number_with(&mut prev_rng, max);
 
 结合这个例子，标题中给出的建议现在应该不那么晦涩难懂了：**重新导出在你 API 中的所用的依赖类型**。这样可以减少用户在版本冲突或依赖管理方面的困扰，并提高库的易用性和兼容性。
 
-原文[点这里][original]查看
-
 ## 注释
 
 [^1]: 本示例（包含其中所用的类型），及其解决方法，受 [RustCrypto crates] 启发
 
 [^2]: 还有一些场景也可能引发类似的错误：在项目的依赖图中，针对一个 crate 的*同一个版本*有多个不同的替代项时，以及使用 [path][path] 而不是 `crates.io` 来导入依赖项时
 
+原文[点这里](https://www.lurklurk.org/effective-rust/re-export.html)查看
+
 <!-- 参考链接 -->
 
 [第 21 条]: item21-semver.md
 [第 25 条]: item25-dep-graph.md
 
-[original]: https://www.lurklurk.org/effective-rust/re-export.html
 [RustCrypto crates]: https://docs.rs/signature/1.3.0/signature/index.html#reexports
 [path mechanism]: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-path-dependencies
 [rand-gen-range-0.7]: https://docs.rs/rand/0.7.3/rand/trait.Rng.html#method.gen_range
@@ -140,18 +139,3 @@ let choice = dep_lib::pick_number_with(&mut prev_rng, max);
 [very helpful]: https://github.com/rust-lang/rust/issues/22750
 [path]: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-path-dependencies
 [re-exporting]: https://doc.rust-lang.org/reference/items/use-declarations.html#use-visibility
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

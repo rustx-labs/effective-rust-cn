@@ -42,13 +42,14 @@ where
 原文[点这里](https://www.lurklurk.org/effective-rust/default-impl.html)查看
 
 <!-- 参考链接 -->
+
 [第 9 条]: ../chapter_1/item9-iterators.md
 [第 21 条]: ../chapter_4/item21-semver.md
 
-[is_empty()]:https://doc.rust-lang.org/std/iter/trait.ExactSizeIterator.html#method.is_empty
-[ExactSizeIterator]:https://doc.rust-lang.org/std/iter/trait.ExactSizeIterator.html
-[len()]:https://doc.rust-lang.org/std/iter/trait.ExactSizeIterator.html#method.len
-[Iterator]:https://doc.rust-lang.org/std/iter/trait.Iterator.html
-[next()]:https://doc.rust-lang.org/std/iter/trait.Iterator.html#tymethod.next
-[cloned()]:https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.cloned
-[Clone]:https://doc.rust-lang.org/std/clone/trait.Clone.html
+[is_empty()]: https://doc.rust-lang.org/std/iter/trait.ExactSizeIterator.html#method.is_empty
+[ExactSizeIterator]: https://doc.rust-lang.org/std/iter/trait.ExactSizeIterator.html
+[len()]: https://doc.rust-lang.org/std/iter/trait.ExactSizeIterator.html#method.len
+[Iterator]: https://doc.rust-lang.org/std/iter/trait.Iterator.html
+[next()]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#tymethod.next
+[cloned()]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.cloned
+[Clone]: https://doc.rust-lang.org/std/clone/trait.Clone.html

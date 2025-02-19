@@ -151,16 +151,17 @@ fn try_build_a_vec() -> Result<Vec<u8>, String> {
 - 通过在 CI 中检查 `no_std` 代码来确认 `no_std` 代码保持 `no_std` 兼容。
 - 注意，当前支持在有限堆环境中工作的库十分有限。
 
----
-
-#### 注释
+## 注释
 
 [^1]: 有关创建 `no_std` 可执行文件所涉及的内容，请参阅 [The Embedonomicon] 或 Philipp Opperamann 的[早期博客文章]。
+
 [^2]: 注意，该方法不一定正确。例如在撰写本文时，`Error` trait 在 `[core::]` 中定义，但被标记为不稳定（unstable），只有 [`std::` 版本]是稳定的（stable）
+
 [^3]: 在 Rust 2018 之前，`extern crate` 声明用来引入依赖项。现在这些依赖完全由 `Cargo.toml` 处理，但仍使用 `extern crate` 机制引入那些 `no_std` 环境中 Rust 标准库的可选部分（即 *[sysroot crates]*）。
+
 [^4]: 还可以为 `new` 调用添加 [`std::nothrow`] 重载，并检查是否返回 `nullptr`。但一些容器方法比如 [`vector<T>::push_back`]，在内部进行分配，因此只能通过抛出异常来表示分配失败。
 
-原文[点这里]查看
+原文[点这里](https://www.lurklurk.org/effective-rust/no-std.html)查看
 
 <!-- 参考链接 -->
 
@@ -205,4 +206,3 @@ fn try_build_a_vec() -> Result<Vec<u8>, String> {
 [`Box::try_new`]: https://doc.rust-lang.org/std/boxed/struct.Box.html#method.try_new
 [`Box::new`]: https://doc.rust-lang.org/std/boxed/struct.Box.html#method.new
 [`no_global_oom_handling`]: https://github.com/rust-lang/rust/pull/84266
-[点这里]: https://www.lurklurk.org/effective-rust/no-std.html

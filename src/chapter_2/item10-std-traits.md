@@ -370,6 +370,7 @@ if x <= y {
 
 原文[点这里](https://www.lurklurk.org/effective-rust/std-traits.html)查看
 
+<!-- 参考链接 -->
 
 [第 2 条]: ../chapter_1/item2-use-types-2.md
 [第 4 条]: ../chapter_1/item4-errors.md

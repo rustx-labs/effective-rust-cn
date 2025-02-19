@@ -289,6 +289,7 @@ struct DisplayProperties {
 [第 16 条]: ../chapter_3/item16-unsafe.md
 [第 18 条]: ../chapter_3/item18-panic.md
 [第 21 条]: ../chapter_4/item21-semver.md
+
 [i8]: https://doc.rust-lang.org/std/primitive.i8.html
 [i16]: https://doc.rust-lang.org/std/primitive.i16.html
 [i32]: https://doc.rust-lang.org/std/primitive.i32.html
@@ -309,7 +310,7 @@ struct DisplayProperties {
 [char]: https://doc.rust-lang.org/std/primitive.char.html
 [char::from_u32]: https://doc.rust-lang.org/std/primitive.char.html#method.from_u32
 [char::from_u32_unchecked]: https://doc.rust-lang.org/std/primitive.char.html#method.from_u32_unchecked
-[Joel Spolsky 的著名博客]:https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/
+[Joel Spolsky 的著名博客]: https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/
 [Unicode]: http://www.unicode.org/glossary/#unicode_scalar_value
 [rune]: https://golang.org/doc/go1#rune
 [Array]: https://doc.rust-lang.org/std/primitive.array.html

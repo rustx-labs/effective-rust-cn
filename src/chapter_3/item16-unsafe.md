@@ -44,7 +44,7 @@ Rust 标准库包含大量 `unsafe` 代码；快速查找发现 `alloc` 库中�
 
 添加 `unsafe` 标记并不意味着不再有任何规则适用，这意味着*你*（程序员）现在负责维护 Rust 的安全保证，而不是编译器负责。
 
-#### 注释
+## 注释
 
 [^1]: 实际上，大多数 `std` 功能实际上都由 `core` 提供，因此可用于 `no_std` 代码，如[第 33 条]所述。
 
@@ -62,6 +62,7 @@ Rust 标准库包含大量 `unsafe` 代码；快速查找发现 `alloc` 库中�
 [第 33 条]: ../chapter_6/item33-no-std.md
 [第 34 条]: ../chapter_6/item34-ffi.md
 [第 35 条]: ../chapter_6/item35-bindgen.md
+
 [《Rust Atomics and Locks》]: https://marabos.nl/atomics/
 [`std::pin::Pin`]: https://doc.rust-lang.org/std/pin/struct.Pin.html
 [bête noire]: https://rust-unofficial.github.io/too-many-lists/

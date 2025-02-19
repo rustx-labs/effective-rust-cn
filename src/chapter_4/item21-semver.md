@@ -127,12 +127,10 @@ Cargo 在选择依赖项的版本时，会在符合条件的版本中选择最�
 
 [^1]: 例如：[`cargo-semver-checks`](https://github.com/obi1kenobi/cargo-semver-checks) 就可以帮你做一些检查工作
 
-原文[点这里]查看
+原文[点这里](https://www.lurklurk.org/effective-rust/semver.html)查看
 
 <!-- 参考链接 -->
 
-[点这里]: https://www.lurklurk.org/effective-rust/semver.html
-[《Google 软件工程》（O'Reilly）]: https://abseil.io/resources/swe-book/html/ch21.html#the_limitations_of_semver
 [第 12 条]: ../chapter_2/item12-generics&trait-objects.md
 [第 13 条]: ../chapter_2/item13-use-default-impl.md
 [第 22 条]: ./item22-visibility.md
@@ -142,7 +140,9 @@ Cargo 在选择依赖项的版本时，会在符合条件的版本中选择最�
 [第 31 条]: ../chapter_5/item31-use-tools.md
 [第 32 条]: ../chapter_5/item32-ci.md
 [第 35 条]: ../chapter_6/item35-bindgen.md
-[官方文档]:https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html
+
+[《Google 软件工程》（O'Reilly）]: https://abseil.io/resources/swe-book/html/ch21.html#the_limitations_of_semver
+[官方文档]: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html
 [官方文档_semver_summary]: https://semver.org/#summary
 [细则_semver]: https://semver.org/#spec-item-3
 [semver_item4]: https://semver.org/#spec-item-4

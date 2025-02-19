@@ -73,10 +73,11 @@ include!("generated.rs");
 
 `bindgen` 工具能够处理一些 `C++` 结构，但只是有限的一部分，并且方式有限。为了更好的（尽管仍然有限）集成，可以考虑使用 `cxx crate` 进行 `C++/Rust` 交互操作。`cxx` 不是从 `C++` 声明生成 `Rust` 代码，而是采用从公共模式自动生成 `Rust` 和 `C++` 代码的方法，允许更紧密的集成。
 
-#### 注释
+## 注释
+
 [^1]: 示例还使用了 `--no-layout-tests` 选项以保持输出简单；默认情况下，生成的代码将包含 `#[test]` 代码，以检查结构体确实正确布局。
 
-
+原文[点这里](https://www.lurklurk.org/effective-rust/bindgen.html)查看
 
 <!-- 参考链接 -->
 

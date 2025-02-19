@@ -173,17 +173,15 @@ pub trait AsCbor: Sized {
 - 在公开暴露的结构体或者 trait 上，避免使用特征隔离的字段或方法
 - 拥有很多相对独立的特征会导致可能的构建配置组合数量过于庞大
 
-原文[点这里][origin]查看
-
------
-
 ## 注释
 
 [^1]: 这种默认行为可以通过在 `features` 节的其他地方使用 `"dep:<crate>"` 来禁用。详细信息请参考[文档][dep-crate-doc]。
+
 [^2]: `cargo tree --edges features` 命令可以帮助你检测哪个 crate 启用了哪些特征，以及为什么要启用。
+
 [^3]: 一个特征可以强制启用另外的特征，在最上面的例子中，`featureAB` 特征同时启用了 `featureA` 和 `featureB` 。
 
-
+原文[点这里](https://www.lurklurk.org/effective-rust/features.html)查看
 
 <!-- 参考链接 -->
 
@@ -193,7 +191,6 @@ pub trait AsCbor: Sized {
 [第 32 条]: ../chapter_5/item32-ci.md
 [第 33 条]: ../chapter_6/item33-no-std.md
 
-[origin]: https://www.lurklurk.org/effective-rust/features.html
 [dep-crate-doc]: https://doc.rust-lang.org/cargo/reference/features.html#optional-dependencies
 [conditional compilation]: https://doc.rust-lang.org/reference/conditional-compilation.html
 [cfg]: https://doc.rust-lang.org/reference/conditional-compilation.html#the-cfg-attribute

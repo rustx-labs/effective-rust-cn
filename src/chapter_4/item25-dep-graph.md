@@ -4,7 +4,7 @@
 
 默认情况下，对于 *Cargo.toml* 文件里 `[dependencies]` 节中的 crate，Cargo 会从 [`crates.io`][crates.io] 查找满足需求的版本并下载。
 
-在这个简单的模式之下隐藏着一些微妙之处。首先要注意的是，来自 `crates.io` 的 crate 名称构成了一个扁平的明明空间 —— 并且，全局命名空间也会和 crate 中*特征* （features）的命名产生重叠（见 [第 26 条]）[^1]。
+在这个简单的模式之下隐藏着一些微妙之处。首先要注意的是，来自 `crates.io` 的 crate 名称构成了一个扁平的明明空间 —— 并且，全局命名空间也会和 crate 中*特征* （features）的命名产生重叠（见[第 26 条]）[^1]。
 
 关于 crate 的名字，`crates.io` 采用“先到先得”的机制。所以，如果你计划将自己的 crate *发布*到 `crates.io` ，那么请先查找一下要使用的名字是否已经被占用。然而，也[不赞成][frowned upon]发布一个空的 crate 来预占一个名字，除非你可以在短时间内发布代码。
 
@@ -134,14 +134,13 @@ dep-graph v0.1.0
 - 使用工具协助解决依赖项问题，例如：`cargo truee` ，`cargo deny` ， `cargo udep` 等。
 - 要理解，相比自己开发而言，使用现成的依赖项相可以节约时间，但是也有一定的附加成本
 
-原文[点这里][origin]查看
-
------
-
 ## 注释
 
 [^1]: 除 [crates.io][crates.io] 之外，也可以配置[备用注册中心][alternate registry]（例如公司内部的注册中心）。*Cargo.toml* 中的每个依赖项都可以设置 `registry` 键来表明其来源注册中心。
+
 [^2]: 如果你的目标是 `no_std` 环境，也没有太多其他选择了，因为很多 crate 都未适配 `no_std` 环境，尤其是当 `alloc` 也不可用的时候（见[第 33 条]）。
+
+原文[点这里](https://www.lurklurk.org/effective-rust/dep-graph.html)查看
 
 <!-- 参考链接 -->
 
@@ -153,7 +152,6 @@ dep-graph v0.1.0
 [第 33 条]: ../chapter_6/item33-no-std.md
 [第 34 条]: ../chapter_6/item34-ffi.md
 
-[origin]: https://www.lurklurk.org/effective-rust/dep-graph.html
 [crates.io]: https://crates.io/
 [alternate registry]: https://doc.rust-lang.org/cargo/reference/registries.html
 [frowned upon]: https://rust-lang.github.io/rfcs/3463-crates-io-policy-update.html

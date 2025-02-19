@@ -331,14 +331,16 @@ for shape in shapes {
 
 当编译时还不知道可用类型时，特征对象的潜在优势就显得模糊得多。如果新代码在运行时被动态加载（例如通过[dlopen(3)]），那么在新代码中实现特征的项目只能通过特征对象调用，因为没有源代码可以单态化。
 
-原文[点这里](https://www.lurklurk.org/effective-rust/generics.html)查看
-
-#### 注释
+## 注释
 
 [^1]: 使用["impl Trait in argument position"](https://doc.rust-lang.org/reference/types/impl-trait.html#anonymous-type-parameters)并不完全等同于前两个版本，因为它取消了调用者通过类似`on_screen::<Circle>(&c)`这样的方式明确指定类型参数的功能。
+
 [^2]: 在撰写本文时，对返回 `Self` 的方法的限制包括像 `Box<Self> ` 这样可以安全地存储在堆栈中的类型；这一限制将来可能会放宽。
 
+原文[点这里](https://www.lurklurk.org/effective-rust/generics.html)查看
+
 <!-- 参考链接 -->
+
 [第 2 条]: ../chapter_1/item2-use-types-2.md
 [第 8 条]: ../chapter_1/item8-references&pointer.md
 [第 10 条]: ../chapter_2/item10-std-traits.md

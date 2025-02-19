@@ -48,11 +48,14 @@ Rust 工具链的可扩展性不仅限于包元数据；编译器的抽象语法
 * [第 30 条]还提到了其他测试工具，例如用于模糊测试的 `cargo-fuzz` 和用于基准测试的 `criterion`。
 * [第 35 条]涵盖了使用 `bindgen` 从 `C` 代码自动生成 `Rust FFI` 包装器的使用。
 
-#### 注释
+## 注释
 
 [^1]: 在某些环境中，这个列表可能会减少。例如，在 `Android` 上进行 `Rust` 开发有一个集中控制的工具链（所以没有 `rustup`），并与 `Android` 的 `Soong` 构建系统集成（所以没有 `cargo`）。
 
+原文[点这里](https://www.lurklurk.org/effective-rust/use-tools.html)查看
+
 <!-- 参考链接 -->
+
 [第 16 条]: ../chapter_3/item16-unsafe.md
 [第 21 条]: ../chapter_4/item21-semver.html
 [第 25 条]: ../chapter_4/item25-dep-graph.md

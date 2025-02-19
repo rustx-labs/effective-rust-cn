@@ -786,11 +786,14 @@ struct SelfRefIdx {
 - Rust 的智能指针提供了绕过借用检查器规则的方法，并且对于互联的结构体非常有用。
 - 然而，自引用结构体在 Rust 中仍难以处理。
 
-#### 注释
+## 注释
 
 [^1]: 注意，上述提到的可能在这样的表达式失效，比如`m!(value)`，因为这涉及宏（[第 28 条]），因为宏可以扩展出任意代码。
+
 [^2]: 编译器的建议在这里没有任何用处，因为后续行需要 `item`。
+
 [^3]: `Cow` 意思是写时克隆 (clone-on-write)；仅当数据需要对其更改（写入）时才克隆底层数据。
+
 [^4]: 处理 `async` 代码已经超出本书的范围；要了解更多关于自引用(self-referential)结构体的更多信息，参考 Jon Gjengset (No Starch Press) 编写的[《Rust for Rustaceans》](https://rust-for-rustaceans.com/)的第 8 章节。
 
 原文[点这里](https://www.lurklurk.org/effective-rust/borrows.html)查看
@@ -805,6 +808,7 @@ struct SelfRefIdx {
 [第 16 条]: ../chapter_3/item16-unsafe.md
 [第 17 条]: ../chapter_3/item17-deadlock.md
 [第 28 条]: ../chapter_5/item28-use-macros-judiciously.md
+
 [`Copy`]: https://doc.rust-lang.org/std/marker/trait.Copy.html
 [CRUD]: https://en.wikipedia.org/wiki/Create,_read,_update_and_delete
 [`std::mem::replace`]: https://doc.rust-lang.org/std/mem/fn.replace.html

@@ -360,5 +360,5 @@ pub fn build(&self) -> Details {
 [第 25 条]: ../chapter_4/item25-dep-graph.md
 [第 28 条]: ../chapter_5/item28-use-macros-judiciously.md
 
-[Default]:https://doc.rust-lang.org/std/default/trait.Default.html
-[derive_builder]:https://docs.rs/derive_builder/latest/derive_builder/
+[Default]: https://doc.rust-lang.org/std/default/trait.Default.html
+[derive_builder]: https://docs.rs/derive_builder/latest/derive_builder/
