@@ -10,7 +10,7 @@ Rust 的类型系统的强大和一致性意味着，如果一个 Rust 程序能
 
 ## 本书面向的读者
 
-本书试图为在这些领域挣扎的程序员提供帮助，即使他们已经具有像 C++ 这样的现有编译语言的经验。因此，与其他 Effective <Language> 书籍一样，这本书旨在成为 Rust 新手的第二本所需书籍，在他们已经在其他地方遇到基础知识之后 —— 例如，在《[Rust 编程语言]》（Steve Klabnik和Carol Nichols，No Starch Press）或《[Rust 程序设计]》（Jim Blandy等，O'Reilly）中。
+本书试图为在这些领域挣扎的程序员提供帮助，即使他们已经具有像 C++ 这样的现有编译语言的经验。因此，与其他 Effective <Language> 书籍一样，这本书旨在成为 Rust 新手的第二本所需书籍，在他们已经在其他地方遇到基础知识之后 —— 例如，在《[Rust 编程语言]》（Steve Klabnik 和 Carol Nichols，No Starch Press）或《[Rust 程序设计]》（Jim Blandy 等，O'Reilly）中。
 
 然而，Rust 的安全性导致这里的条目有一些不同的侧重点，特别是与 Scott Meyers 的原始 Effective C++ 系列相比。C++ 语言充满了陷阱，所以 Effective C++ 专注于避免这些陷阱的一组建议，这些建议基于在 C++ 中创建软件的实际经验。重要的是，它包含的是指导原则而不是规则，因为指导原则有例外 —— 提供指导原则形成及使用的理由，允许读者自行决定特定情况下是否值得违反规则。
 
@@ -20,7 +20,7 @@ Rust 的安全性也导致完全没有标题为“永远不要…”的条目。
 
 ## Rust 版本
 
-文本是为2018版的 Rust 编写的，使用稳定工具链。Rust 的后向兼容性承诺意味着任何更高版本的 Rust，包括2021版，仍然会支持为2018版编写的代码，即使那个更高版本引入了破坏性更改。Rust 现在也足够稳定，以至于2018版和2021版之间的差异很小；书中没有任何代码需要更改才能符合2021版（但是[第 19 条]包括一个例外，其中较晚版本的 Rust 允许以前不可能的新行为）。
+文本是为 2018 版的 Rust 编写的，使用稳定工具链。Rust 的后向兼容性承诺意味着任何更高版本的 Rust，包括 2021 版，仍然会支持为 2018 版编写的代码，即使那个更高版本引入了破坏性更改。Rust 现在也足够稳定，以至于 2018 版和 2021 版之间的差异很小；书中没有任何代码需要更改才能符合 2021 版（但是[第 19 条]包括一个例外，其中较晚版本的 Rust 允许以前不可能的新行为）。
 
 这里的条目没有涵盖 Rust 的任何异步功能方面，因为这涉及到更高级的概念和不那么稳定的工具链支持 —— 使用同步 Rust 已经有足够多的内容要介绍了。也许将来会出现一本《有效的异步Rust》…
 
@@ -32,7 +32,7 @@ Rust 的安全性也导致完全没有标题为“永远不要…”的条目。
 
 本书的章节构成分为六章：
 - 第一章 —— 类型：围绕 Rust 核心类型系统的建议
-- 第二章 —— 特征：关于使用 Rust 特征的建议
+- 第二章 —— Trait：关于使用 Rust Trait 的建议
 - 第三章 —— 概念：构成 Rust 设计核心思想的观念
 - 第四章 —— 依赖性：关于使用 Rust 包生态系统的建议
 - 第五章 —— 工具：通过超越 Rust 编译器来改进代码库的建议
@@ -59,15 +59,15 @@ Rust 的安全性也导致完全没有标题为“永远不要…”的条目。
 ## 致谢
 
 我要感谢那些帮助使这本书成为可能的人们：
-- 技术审阅者们对文本的所有方面提供了专业和详细的反馈：Pietro Albini, Jess Males, Mike Capp，尤其是Carol Nichols。
-- 我在O'Reilly的编辑们：Jeff Bleiel, Brian Guerin, 和 Katie Tozer。
-- Tiziano Santoro，我从他那里最初学到了许多关于Rust的知识。
-- Danny Elfanbaum，他提供了处理书籍AsciiDoc格式化的重要技术支持。
+- 技术审阅者们对文本的所有方面提供了专业和详细的反馈：Pietro Albini, Jess Males, Mike Capp，尤其是 Carol Nichols。
+- 我在 O'Reilly 的编辑们：Jeff Bleiel, Brian Guerin 和 Katie Tozer。
+- Tiziano Santoro，我从他那里最初学到了许多关于 Rust 的知识。
+- Danny Elfanbaum，他提供了处理书籍 AsciiDoc 格式化的重要技术支持。
 
 - 原始网络版书籍的勤奋读者们，特别是：
     - Julian Rosse，他在在线文本中发现了数十个拼写错误和其他错误。
     - Martin Disch，他指出了多个条目中可能的改进和不准确之处。
-    - Chris Fleetwood, Sergey Kaunov, Clifford Matthews, Remo Senekowitsch, Kirill Zaborsky，以及一位匿名Proton Mail用户，他们指出了文本中的错误。
+    - Chris Fleetwood, Sergey Kaunov, Clifford Matthews, Remo Senekowitsch, Kirill Zaborsky，以及一位匿名 Proton Mail s用户，他们指出了文本中的错误。
 - 我的家人，他们忍受了许多我因写作而分心的周末。
 
 原文[点这里](https://www.lurklurk.org/effective-rust/preface.html)查看
