@@ -1,4 +1,4 @@
-# 第 1 条：使用类型系统表达你的数据结构
+# 第 1 条：使用类型系统表达数据结构
 
 > “谁叫他们是程序员，而不是打字员” —— [@thingskatedid](https://twitter.com/thingskatedid/status/1400213496785108997)
 
