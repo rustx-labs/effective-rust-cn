@@ -236,7 +236,7 @@ pub fn first_line(filename: &str) -> Result<String, MyError> {
 
 编写一个完整的错误类型可能涉及相当多的样板代码，这使得它成为通过派生宏（[第 28 条]）自动化的好候选。然而，没有必要自己编写这样的宏：**考虑使用 `David Tolnay` 提供的 [thiserror] crate**，它提供了一个高质量、广泛使用的宏实现。`thiserror` 生成的代码也小心翼翼地避免在生成的 `API` 中使任何 `thiserror` 类型可见，这意味着与[第 24 条]相关的问题不适用。
 
-## `trait` 对象（`Trait Objects`）
+## `Trait` 对象（`Trait Objects`）
 
 第一种处理嵌套错误的方法丢弃了所有子错误的细节，只保留了某些字符串输出（`format!("{:?}", err)`）。
 
@@ -318,7 +318,7 @@ error[E0119]: conflicting implementations of trait `From<WrappedError>` for
 - 决定权在您手中，但无论您决定什么，都要在类型系统中编码它（[第 1 条]）。
 
 
-#### 注释
+## 注释
 
 [^1]: 或者至少是唯一一个非废弃的、稳定的方法。
 

@@ -408,9 +408,8 @@ note: for a trait to be "object safe" it needs to allow building a vtable to all
 
 这两个限制 —— 不能使用 `Self` 和不能有泛型方法 —— 结合成了对象安全的概念。只有对象安全的 `trait` 才能用作 `trait` 对象。
 
----
 
-#### 注释
+## 注释
 
 [^1]: 至少，在撰写本文时的稳定 Rust 中是这样。实验性功能 `unboxed_closures` 和 `fn_traits` 可能在未来改变这一点。
 
