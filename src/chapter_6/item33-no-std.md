@@ -1,6 +1,6 @@
-# 第 33 条： 考虑使库代码与 `no_std` 兼容
+# 第 33 条：考虑使库代码与 no_std 兼容
 
-Rust 附带一个名为 `std` 的标准库，其中包含了从标准数据结构到网络，从多线程支持到文件 I/O 等用于各种常见任务的代码。为了方便使用， `std` 中的一些项目会通过 [prelude] 自动导入到你的程序中，[prelude] 是一组 `use` 语句，可以在不需要指定完整名称的情况下直接使用这些常见类型（例如使用 `Vec` 而不是 `std::vec::Vec`）。
+Rust 附带一个名为 `std` 的标准库，其中包含了从标准数据结构到网络，从多线程支持到文件 I/O 等用于各种常见任务的代码。为了方便使用，`std` 中的一些项目会通过 [prelude] 自动导入到你的程序中，[prelude] 是一组 `use` 语句，可以在不需要指定完整名称的情况下直接使用这些常见类型（例如使用 `Vec` 而不是 `std::vec::Vec`）。
 
 Rust 还支持为无法提供完整标准库的环境构建代码，如引导加载程序、固件或一般的嵌入式平台。通过在 `src/lib.rs` 文件顶部添加 `#![no_std]` 属性，可以指示 crate 在这类受限环境中编译。
 
@@ -70,7 +70,7 @@ extern crate alloc;
 
 如果这些转换并*没有*覆盖 crate 中的所有代码，但未覆盖的只是代码中的一小部分或包装良好的部分，那么可以考虑向 crate 添加一个 feature （[第 26 条]）以控制是否启用这部分代码。
 
-这种允许使用 `std` 特定功能的 feature ，通常会将其命名为 `std`：
+这种允许使用 `std` 特定功能的 feature，通常会将其命名为 `std`：
 
 ```rust
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -151,16 +151,17 @@ fn try_build_a_vec() -> Result<Vec<u8>, String> {
 - 通过在 CI 中检查 `no_std` 代码来确认 `no_std` 代码保持 `no_std` 兼容。
 - 注意，当前支持在有限堆环境中工作的库十分有限。
 
----
-
-#### 注释
+## 注释
 
 [^1]: 有关创建 `no_std` 可执行文件所涉及的内容，请参阅 [The Embedonomicon] 或 Philipp Opperamann 的[早期博客文章]。
+
 [^2]: 注意，该方法不一定正确。例如在撰写本文时，`Error` trait 在 `[core::]` 中定义，但被标记为不稳定（unstable），只有 [`std::` 版本]是稳定的（stable）
+
 [^3]: 在 Rust 2018 之前，`extern crate` 声明用来引入依赖项。现在这些依赖完全由 `Cargo.toml` 处理，但仍使用 `extern crate` 机制引入那些 `no_std` 环境中 Rust 标准库的可选部分（即 *[sysroot crates]*）。
+
 [^4]: 还可以为 `new` 调用添加 [`std::nothrow`] 重载，并检查是否返回 `nullptr`。但一些容器方法比如 [`vector<T>::push_back`]，在内部进行分配，因此只能通过抛出异常来表示分配失败。
 
-原文[点这里]查看
+原文[点这里](https://www.lurklurk.org/effective-rust/no-std.html)查看
 
 <!-- 参考链接 -->
 
@@ -205,4 +206,3 @@ fn try_build_a_vec() -> Result<Vec<u8>, String> {
 [`Box::try_new`]: https://doc.rust-lang.org/std/boxed/struct.Box.html#method.try_new
 [`Box::new`]: https://doc.rust-lang.org/std/boxed/struct.Box.html#method.new
 [`no_global_oom_handling`]: https://github.com/rust-lang/rust/pull/84266
-[点这里]: https://www.lurklurk.org/effective-rust/no-std.html

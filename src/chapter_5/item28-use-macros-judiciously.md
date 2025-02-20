@@ -31,7 +31,7 @@ int main(void)
     return 0;
 }
 
-/* 最终的结果会输出如下。 
+/* 最终的结果会输出如下。
  *
  * a is now 4, b is now 9
  *
@@ -293,7 +293,7 @@ Rust 也支持了*过程宏*，也被称为`proc macros`。和声明宏类似，
 
 ### 类函数宏
 
-函数式的宏会通过传递参数来调用，宏的实现中可以访问参数的解析符号（parsed tokens），并且返回任意的符号。注意在先前的表述中，我们使用的是单数的参数， —— 即使函数式的宏调用的时候看起来传入了很多参数：
+函数式的宏会通过传递参数来调用，宏的实现中可以访问参数的解析符号（parsed tokens），并且返回任意的符号。注意在先前的表述中，我们使用的是单数的参数 —— 即使函数式的宏调用的时候看起来传入了很多参数：
 
 ```rust
 my_func_macro!(15, x + y, f32::consts::PI);
@@ -593,16 +593,14 @@ let y = log_failure!(std::str::from_utf8(b"\xc3\x28")); // invalid UTF-8
 
 然而，如果要添加的派生宏并非是项目中所独有的功能，可以检查下外部的库中是否已经提供了所需要的宏（参照[第 25 条]）。比如，类似将数值类型转换为合适的 C 风格的枚举值的需求：在[enumn::N]、[num\_enum::TryFromPrimitive]、[num\_derive::FromPrimitive]以及[strum::FromRepr]中都一定程度的实现了这个需求。
 
----
-
-### 注释
+## 注释
 
 [^1]: 眼神儿好的读者可能已经注意到了`format_arg!`仍然像是一个宏的调用，尽管它在`println!`宏的展开代码里。这是因为它是编译器的内建宏。
+
 [^2]: 在[std::fmt 模块]中也包含了很多其他展示特定格式数据是会使用的特性。比如，当需要一个 x 格式的特殊说明符来输出小写的十六进制输出时，就会使用[LowerHex]特性。
 
 
-
-原文[点这里]查看。
+原文[点这里](https://www.lurklurk.org/effective-rust/macros.html)查看。
 
 <!-- 参考链接 -->
 
@@ -620,7 +618,6 @@ let y = log_failure!(std::str::from_utf8(b"\xc3\x28")); // invalid UTF-8
 [serd 库]: https://docs.rs/serde/latest/serde/
 [Deserialize]: https://docs.rs/serde/latest/serde/derive.Deserialize.html
 [syn 包]: https://docs.rs/syn/latest/syn/
-[点这里]: https://www.lurklurk.org/effective-rust/macros.html
 [syn::parse\_macro\_input!]: https://docs.rs/syn/latest/syn/macro.parse_macro_input.html
 [syn::DeriveInput]: https://docs.rs/syn/latest/syn/struct.DeriveInput.html
 [file!()]: https://doc.rust-lang.org/std/macro.file.html

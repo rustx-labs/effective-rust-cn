@@ -373,7 +373,7 @@ pub fn smaller<'a>(left: &'a Item, right: &'a Item) -> &'a Item {
         let needle = b"234"; // 生命周期 'b 开始
         find(haystack, needle)
     }; // 生命周期 'b 结束
-    println!("found={:?}", found); // `found` 在 'a 内部， 在 'b 外部使用
+    println!("found={:?}", found); // `found` 在 'a 内部，在 'b 外部使用
 } // 声明周期 'a 结束
 ```
 
@@ -652,7 +652,7 @@ pub fn find_repeat<'a>(s: &'a str) -> Option<RepeatedSubstring<'a>> {
 
 然而，这也意味着涉及引用的结构体更难使用——结构体的所有者必须保证生命周期全部一致。因此，**尽可能选择拥有其内部数据所有权的结构体**，特别是在代码不需要高度优化([第 20 条])的情况下。如果做不到这一点，[第 8 条]描述的各种智能指针类型(例如[`Rc`])可以让你生命周期约束中解放出来。
 
-# 匿名生命周期
+## 匿名生命周期
 
 当不能保证一个结构体拥有其数据的所有权时，结构体必然会以生命周期参数结束，如上一节所述。这可能会与本条之前说的生命周期省略规则产生一些不幸。
 
@@ -700,7 +700,7 @@ pub trait Debug {
 - 生命周期标签只能指示生命周期是“相同的”，这意味着输出的生命周期被包含在输入的一个（或更多）生命周期内。
 - 匿名生命周期`'_`可以用在不需要特定生命周期标签的地方。
 
-#### 注释
+## 注释
 
 [^1]: 例如，Chromium 项目估计[70%的安全 bug 都归咎于内存安全。](https://www.chromium.org/Home/chromium-security/memory-safety/)
 

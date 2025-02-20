@@ -1,4 +1,4 @@
-# 第 7 条：对于复杂的类型，使用构造器
+# 第 7 条：对复杂的类型使用构造器
 
 这条款项描述了构造器模式：对于复杂的数据类型提供对应的构造器类型，使得用户可以方便地创造该数据类型的实例。
 
@@ -360,5 +360,5 @@ pub fn build(&self) -> Details {
 [第 25 条]: ../chapter_4/item25-dep-graph.md
 [第 28 条]: ../chapter_5/item28-use-macros-judiciously.md
 
-[Default]:https://doc.rust-lang.org/std/default/trait.Default.html
-[derive_builder]:https://docs.rs/derive_builder/latest/derive_builder/
+[Default]: https://doc.rust-lang.org/std/default/trait.Default.html
+[derive_builder]: https://docs.rs/derive_builder/latest/derive_builder/

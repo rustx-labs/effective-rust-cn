@@ -1,8 +1,8 @@
-# 第 3 条：优先选择Option和Result转换，而非显式match表达式
+# 第 3 条：优先选择 Option 和 Result 转换，而非显式 match 表达式
 
-[第 1 条] 阐述了枚举（`enum`）的优点，并展示了 `match` 表达式如何强制程序员考虑所有可能性；这个方法探讨了在某些情况下，你应尽量避免使用 `match` 表达式 —— 至少是显式地。
+[第 1 条]阐述了枚举（`enum`）的优点，并展示了 `match` 表达式如何强制程序员考虑所有可能性；这个方法探讨了在某些情况下，你应尽量避免使用 `match` 表达式 —— 至少是显式地。
 
-[第 1 条] 还介绍了 Rust 标准库提供的两个无处不在的枚举：
+[第 1 条]s还介绍了 Rust 标准库提供的两个无处不在的枚举：
 - `Option<T>`，表示一个值（类型为 `T`）可能存在也可能不存在。
 - `Result<T, E>`，用于当尝试返回一个值（类型为 `T`）的操作可能失败，并可能返回一个错误（类型为 `E`）。
 
@@ -42,7 +42,7 @@ let f = match result {
 };
 ```
 
-`Option` 和 `Result` 都提供了一对方法来提取它们的内部值并在值不存在时执行 `panic!`，它们分别是 [unwrap](https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap) 和 [expect](https://doc.rust-lang.org/std/result/enum.Result.html#method.expect) 。后者允许个性化失败时的错误消息，并将错误处理委托给 `.unwrap()` 后缀，但无论哪种情况，生成的代码都更短、更简单：
+`Option` 和 `Result` 都提供了一对方法来提取它们的内部值并在值不存在时执行 `panic!`，它们分别是 [unwrap](https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap) 和 [expect](https://doc.rust-lang.org/std/result/enum.Result.html#method.expect)。后者允许个性化失败时的错误消息，并将错误处理委托给 `.unwrap()` 后缀，但无论哪种情况，生成的代码都更短、更简单：
 
 ```rust
 let f = std::fs::File::open("/etc/passwd").unwrap();

@@ -131,7 +131,7 @@ error[E0133]: call to unsafe function is unsafe and requires unsafe function
 
 链接器通过简单的名称匹配机制来查找占位符和定义之间的关系，这就意味着所有的关联关系都存在于一个全局命名空间中。
 
-这种方式对于链接 C 程序来说是没有问题的，因为一个名字不能以任何方式来重用 —— 函数的名字就是它在目标文件中的名字。因此，C 库的一个常见的约定是，通过在符号前增加前缀以避免命名冲突，例如：`lib1_process` 和 `lib2_process` 。
+这种方式对于链接 C 程序来说是没有问题的，因为一个名字不能以任何方式来重用 —— 函数的名字就是它在目标文件中的名字。因此，C 库的一个常见的约定是，通过在符号前增加前缀以避免命名冲突，例如：`lib1_process` 和 `lib2_process`。
 
 但是，对于允许重载定义的 C++ 语言来说，这样是行不通的：
 
@@ -347,7 +347,7 @@ wrapper.as_mut().byte = 12;
 将 Rust 库导出给 C 的基本原理类似，只不过是相反方向的：
 
 - Rust 中导出的函数需要 `extern "C"` 标记来确保和 C 兼容。
-- 默认情况下，Rust 中的符号名称会被重整，类似 C++ 的行为 [^3] ，所以，在函数定义上也需要 `#[no_mangle]` 属性来保持原始名字。但是这同样意味着函数名称作为全局命名空间的一部分，可能和其他程序中的其他符号冲突。所以，**建议在导出的名称前增加前缀**避免混淆，例如：`mylib_...`。
+- 默认情况下，Rust 中的符号名称会被重整，类似 C++ 的行为 [^3]，所以，在函数定义上也需要 `#[no_mangle]` 属性来保持原始名字。但是这同样意味着函数名称作为全局命名空间的一部分，可能和其他程序中的其他符号冲突。所以，**建议在导出的名称前增加前缀**避免混淆，例如：`mylib_...`。
 - 给需要导出的结构体增加 `#[repr(C)]` 标记来确保其内存布局和 C 数据类型相同。
 
 同样的，当处理指针、引用或者生命周期的时候，也会有一些潜在的问题。毕竟，C 指针和 Rust 的引用是有所不同的，如果忘记这一点，可能会引发严重问题。
@@ -467,16 +467,17 @@ pub extern "C" fn free_struct_raw(p: *mut FfiStruct) {
   - 使用标准库中提供的 FFI 相关助手函数或者类型
   - 防止 `panic!` 跨越 FFI 边界
 
-原文[点这里][origin]查看
-
-----
-
 ## 注释
 
-[^1]: 如果所用的 FFI 函数来自 C 标准库， [`libc`][libc] crate 已经具备这些声明了，无需重复编写。
+[^1]: 如果所用的 FFI 函数来自 C 标准库，[`libc`][libc] crate 已经具备这些声明了，无需重复编写。
+
 [^2]: 在 *Cargo.toml* 中使用 [`links`][links] 键可以让这个依赖对 Cargo 可见。
+
 [^3]: Rust 中用来将重整后的名称变回阅读友好名称的工具叫做 [`rustfilt`][rustfilt]，这个工具基于 [`rustc-demangle`][rustc-demangle] 命令构建，类似于 `c++filt` 工具。
+
 [^4]: Rust 1.71 版本中包含 [C-unwind ABI][c-unwind]，可以实现跨语言的错误回退功能。
+
+原文[点这里](https://www.lurklurk.org/effective-rust/ffi.html)查看
 
 <!-- 参考链接 -->
 
@@ -487,7 +488,6 @@ pub extern "C" fn free_struct_raw(p: *mut FfiStruct) {
 [第 17 条]: ../chapter_3/item17-deadlock.md
 [第 35 条]: item35-bindgen.md
 
-[origin]: https://www.lurklurk.org/effective-rust/ffi.html
 [standard library]: https://doc.rust-lang.org/std/index.html
 [crate eco]: https://crates.io/
 [Rustonomicon]: https://doc.rust-lang.org/nomicon/
@@ -517,12 +517,3 @@ pub extern "C" fn free_struct_raw(p: *mut FfiStruct) {
 [rustfilt]: https://crates.io/crates/rustfilt
 [rust-demangle]: https://github.com/rust-lang/rustc-demangle
 [c-unwind]: https://github.com/rust-lang/rfcs/pull/2945
-
-
-
-
-
-
-
-
-

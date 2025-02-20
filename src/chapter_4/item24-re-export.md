@@ -48,7 +48,7 @@ pub fn pick_number(n: usize) -> usize {
 - `dep-lib` 所使用的 0.7 版本的 `rand` 中的 [`rand::gen_range()`][rand-gen-range-0.7] 方法有  `low` 和 `high` 2 个参数。
 - 在示例项目中所用的 0.8 版本的 `rand` 中的 [`rand::gen_range()`][rand-gen-range-0.8] 方法只有 `range` 1 个参数。
 
-这种差异属于不兼容的变更，所以根据语义化版本控制的指导原则， `rand` 升级了最左非零版本号（见[第 21 条]）。虽然如此，基于 `cargo` 强大的能力，它仍然能这两个不兼容的版本合并到最终输出的二进制可执行文件中。
+这种差异属于不兼容的变更，所以根据语义化版本控制的指导原则，`rand` 升级了最左非零版本号（见[第 21 条]）。虽然如此，基于 `cargo` 强大的能力，它仍然能这两个不兼容的版本合并到最终输出的二进制可执行文件中。
 
 如果 `dep-lib` 的公共 API 中暴露了它所使用的依赖项中的类型的话，情况就会变得糟糕了，因为这会导致 `rand` 成为[*公共依赖项*][public dependency]。
 
@@ -118,20 +118,19 @@ let choice = dep_lib::pick_number_with(&mut prev_rng, max);
 
 结合这个例子，标题中给出的建议现在应该不那么晦涩难懂了：**重新导出在你 API 中的所用的依赖类型**。这样可以减少用户在版本冲突或依赖管理方面的困扰，并提高库的易用性和兼容性。
 
-原文[点这里][original]查看
-
 ## 注释
 
 [^1]: 本示例（包含其中所用的类型），及其解决方法，受 [RustCrypto crates] 启发
 
 [^2]: 还有一些场景也可能引发类似的错误：在项目的依赖图中，针对一个 crate 的*同一个版本*有多个不同的替代项时，以及使用 [path][path] 而不是 `crates.io` 来导入依赖项时
 
+原文[点这里](https://www.lurklurk.org/effective-rust/re-export.html)查看
+
 <!-- 参考链接 -->
 
 [第 21 条]: item21-semver.md
 [第 25 条]: item25-dep-graph.md
 
-[original]: https://www.lurklurk.org/effective-rust/re-export.html
 [RustCrypto crates]: https://docs.rs/signature/1.3.0/signature/index.html#reexports
 [path mechanism]: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-path-dependencies
 [rand-gen-range-0.7]: https://docs.rs/rand/0.7.3/rand/trait.Rng.html#method.gen_range
@@ -140,18 +139,3 @@ let choice = dep_lib::pick_number_with(&mut prev_rng, max);
 [very helpful]: https://github.com/rust-lang/rust/issues/22750
 [path]: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-path-dependencies
 [re-exporting]: https://doc.rust-lang.org/reference/items/use-declarations.html#use-visibility
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

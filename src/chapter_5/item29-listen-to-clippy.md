@@ -77,7 +77,7 @@ Clippy 的警告信息在你学习 Rust 时特别重要，因为它们可以揭�
 * [第 9 条]描述了操作`Iterator`实例的诸多方法。Clippy 包含了诸多的可以简化迭代器方法使用的校验器[^1]。
 * [第 10 条]描述了 Rust 的标准特性，并且包含了很多 Clippy 会校验到的实现时的要求：
   * [`Ord` must agree with `PartialOrd`]。
-  * [`PartialEq::ne` should not need a nondefault implementation]（参照 [第 13 条]）。
+  * [`PartialEq::ne` should not need a nondefault implementation]（参照[第 13 条]）。
   * [`Hash` and `Eq` must be consistent]。
   * [`Clone` for `Copy` types should match]。
 * [第 18 条]提供了一些关于减少[`panic!`]或类似[`expect`]的方法，这些建议也会在 Clippy 的校验器中检查到。
@@ -91,10 +91,11 @@ Clippy 的警告信息在你学习 Rust 时特别重要，因为它们可以揭�
 
 上述的信息无疑说明了**阅读 [Clippy 的警告信息]列表**同样是一种有意义的学习方式 —— 包括那些默认被关掉校验的原因，是由于它们太严苛了还是由于它们会产生虚警？尽管你可能并不希望代码中出现这么多的警告信息，领悟这些校验规则出现的原因将会提升你对 Rust 及其风格的理解。
 
-### 注释
+## 注释
+
 [^1]: 部分校验器列举如下。[explicit_counter_loop]，[explicit_iter_loop]，[explicit_into_iter_loop]，[filter_map_identity]，[from_iter_instead_of_collect]，[into_iter_on_ref]，[iter_count]，[iter_next_loop]，[iter_not_returning_iterator]，[manual_filter_map]，[manual_find_map]，[map_clone]，[needless_range_loop]，[search_is_some]，[skip_while_next]，[suspicious_map]，[unnecessary_filter_map]，[unnecessary_fold]。
 
-原文[点这里]查看
+原文[点这里](https://www.lurklurk.org/effective-rust/clippy.html)查看
 
 <!-- 参考链接 -->
 
@@ -163,4 +164,3 @@ Clippy 的警告信息在你学习 Rust 时特别重要，因为它们可以揭�
 [Missing descriptions]: https://rust-lang.github.io/rust-clippy/stable/index.html#/missing_safety_doc
 [`unsafe` concerns]: https://rust-lang.github.io/rust-clippy/stable/index.html#/undocumented_unsafe_blocks
 [Clippy 的警告信息]: https://rust-lang.github.io/rust-clippy/stable/index.html
-[点这里]: https://www.lurklurk.org/effective-rust/clippy.html

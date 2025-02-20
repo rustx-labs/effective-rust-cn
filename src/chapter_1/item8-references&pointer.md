@@ -37,7 +37,7 @@ fn dangle() -> &'static i64 {
     &x
 }
 ```
-```error
+```shell
 error[E0515]: cannot return reference to local variable `x`
    --> src/main.rs:477:5
     |
@@ -314,6 +314,7 @@ let b2 = rc.borrow();
 原文[点这里](https://www.lurklurk.org/effective-rust/references.html)查看
 
 <!-- 参考链接 -->
+
 [第 5 条]: item5-casts.md
 [第 10 条]: ../chapter_2/item10-std-traits.md
 [第 12 条]: ../chapter_2/item12-generics&trait-objects.md

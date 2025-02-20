@@ -101,7 +101,7 @@ Some errors have detailed explanations: E0616, E0624.
 For more information about an error, try `rustc --explain E0616`.
 ```
 
-最常用的控制可见性的标记就是 `pub` 关键字，只要外部可以访问这个模块，那么模块中所有标记为 `pub` 的条目都是对外可见的。这个细节很重要：如果模块（例如：`somecrate::somemodule`）本身对外不可见，那么模块中的条目即使标记为 `pub` ，它们也是对外不可见的。
+最常用的控制可见性的标记就是 `pub` 关键字，只要外部可以访问这个模块，那么模块中所有标记为 `pub` 的条目都是对外可见的。这个细节很重要：如果模块（例如：`somecrate::somemodule`）本身对外不可见，那么模块中的条目即使标记为 `pub`，它们也是对外不可见的。
 
 但是，还有一些 `pub` 关键字的变体形式，可以用来约束可见性生效的范围：
 
@@ -156,29 +156,18 @@ warning: function `inaccessible_fn` is never used
   - 第 18 条：努力让类接口既完整又*精简*（斜体字为原文所加）。
   - 第 20 条：避免在公共接口中使用数据成员。
 
-原文[点这里]查看
+原文[点这里](https://www.lurklurk.org/effective-rust/visibility.html)查看
 
 <!-- 参考链接 -->
 
-[点这里]: https://www.lurklurk.org/effective-rust/visibility.html
+[第 21 条]: ./item21-semver.md
+
 [适配器]: https://doc.rust-lang.org/std/iter/index.html#adapters
 [内部的 `std::iter::adapters` 子模块]: https://doc.rust-lang.org/src/core/iter/adapters/mod.rs.html
 [`std::iter::adapters::map::Map::new`]: https://doc.rust-lang.org/1.70.0/src/core/iter/adapters/map.rs.html#68
 [外部 `std::iter` 模块]: https://doc.rust-lang.org/1.70.0/src/core/iter/mod.rs.html#423-451
-[第 21 条]: ./item21-semver.md
 [Rust API 兼容性指南]: https://doc.rust-lang.org/cargo/reference/semver.html#api-compatibility
 [Rust API 指南]: https://rust-lang.github.io/api-guidelines/future-proofing.html
 [结构体应该具有私有字段]: https://rust-lang.github.io/api-guidelines/future-proofing.html#structs-have-private-fields-c-struct-private
 [Effective Java]: https://www.oreilly.com/library/view/effective-java/9780134686097/
 [Effective C++]: https://en.wikipedia.org/wiki/Special:BookSources?isbn=978-0-201-92488-6
-
-
-
-
-
-
-
-
-
-
-

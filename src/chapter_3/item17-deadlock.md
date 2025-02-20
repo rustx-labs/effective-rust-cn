@@ -580,9 +580,10 @@ Go 语言[内置了](https://go.dev/ref/spec#Channel_types)用于这种操作的
 
 更抽象地说，多线程代码应该应用于以下一般建议的理想场所：倾向于编写明显没有错误的简单代码，而不是编写复杂到不明显有错误的代码。
 
-#### 注释
+## 注释
 
 [^1]: 第三种类的行为是*线程对立（thread-hostile）*的：*即使*对它的所有访问都是对外同步的，代码在多线程环境中也是危险的。
+
 [^2]: Clang C++ 编译器包含一个 [`-Wthread-safety`](https://clang.llvm.org/docs/ThreadSafetyAnalysis.html) 选项，有时也称为*注释*，它允许通过关于哪一个互斥锁保护该数据的信息来注释该数据，并通过关于该函数获取锁的信息来注释该函数。当这些不变量被破坏时，会在编译期产生错误，就像 Rust 一样；然而，并没有强制使用这些注释——例如，当一个线程兼容的库第一个在多线程环境中使用时。
 
 原文[点这里](https://www.lurklurk.org/effective-rust/deadlock.html)查看
@@ -599,6 +600,7 @@ Go 语言[内置了](https://go.dev/ref/spec#Channel_types)用于这种操作的
 [第 18 条]: item18-panic.md
 [第 30 条]: ../chapter_5/item30-write-more-than-unit-tests.md
 [第 32 条]: ../chapter_5/item32-ci.md
+
 [“无畏并发”]: https://doc.rust-lang.org/book/ch16-00-concurrency.html
 [`std::lock_guard`]: https://en.cppreference.com/w/cpp/thread/lock_guard
 [Rust “免费” 获得了线程安全]: https://blog.rust-lang.org/2015/04/10/Fearless-Concurrency.html

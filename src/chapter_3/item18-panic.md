@@ -100,7 +100,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 然而，让机器去持续保持警觉是另一回儿事：向你的系统持续集成（详见[第 32 条]）检查系统，以发现新的，潜在的 panic 代码要可靠的多。一个简单的版本可以是针对最常见的 panic 入点进行简单地 grep（如前所述）；更彻底的检查可以涉及使用 Rust 生态系统中的其他工具（[第 31 条]），例如设置一个构建变体，并引入 [`no_panic`] crate。
 
-#### 注释
+## 注释
 
 [^1]: Tom Cargill 在 1994 年的[文章《C++ Report》](https://ptgmedia.pearsoncmg.com/imprint_downloads/informit/aw/meyerscddemo/DEMO/MAGAZINE/CA_FRAME.HTM)中探讨了保持 C++ 模板代码的异常安全性是多么困难，Herb Sutter 的 [Guru of the Week #8](http://www.gotw.ca/gotw/008.htm) 也有类似的讨论。
 
