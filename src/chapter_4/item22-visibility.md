@@ -101,7 +101,7 @@ Some errors have detailed explanations: E0616, E0624.
 For more information about an error, try `rustc --explain E0616`.
 ```
 
-最常用的控制可见性的标记就是 `pub` 关键字，只要外部可以访问这个模块，那么模块中所有标记为 `pub` 的条目都是对外可见的。这个细节很重要：如果模块（例如：`somecrate::somemodule`）本身对外不可见，那么模块中的条目即使标记为 `pub` ，它们也是对外不可见的。
+最常用的控制可见性的标记就是 `pub` 关键字，只要外部可以访问这个模块，那么模块中所有标记为 `pub` 的条目都是对外可见的。这个细节很重要：如果模块（例如：`somecrate::somemodule`）本身对外不可见，那么模块中的条目即使标记为 `pub`，它们也是对外不可见的。
 
 但是，还有一些 `pub` 关键字的变体形式，可以用来约束可见性生效的范围：
 

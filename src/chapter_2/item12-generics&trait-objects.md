@@ -4,7 +4,7 @@
 
 下面是一个运行示例，请考虑一个涵盖显示图形对象的功能的特征：
 
-```Rust
+```rust
 #[derive(Debug, Copy, Clone)]
 pub struct Point {
     x: i64,
@@ -38,7 +38,7 @@ Rust 的泛型大致等同于 C++ 的模板：它允许程序员编写适用于�
 
 例如，一个使用特征的 `bounds()` 方法的泛型函数具有显式的 `Draw` 特征约束：
 
-```Rust
+```rust
 /// Indicate whether an object is on-screen.
 pub fn on_screen<T>(draw: &T) -> bool
 where
@@ -50,7 +50,7 @@ where
 
 这也可以通过将特征绑定放在泛型参数之后来更紧凑地编写：
 
-```Rust
+```rust
 pub fn on_screen<T: Draw>(draw: &T) -> bool {
     overlap(SCREEN_BOUNDS, draw.bounds()).is_some()
 }
@@ -58,7 +58,7 @@ pub fn on_screen<T: Draw>(draw: &T) -> bool {
 
 或者使用 `impl Trait` 作为参数的类型[^1]：
 
-```Rust
+```rust
 pub fn on_screen(draw: &impl Draw) -> bool {
     overlap(SCREEN_BOUNDS, draw.bounds()).is_some()
 }
@@ -66,7 +66,7 @@ pub fn on_screen(draw: &impl Draw) -> bool {
 
 如果一个类型实现了特征：
 
-```Rust
+```rust
 #[derive(Clone)] // no `Debug`
 struct Square {
     top_left: Point,
@@ -88,7 +88,7 @@ impl Draw for Square {
 
 然后该类型的实例可以传递给泛型函数，通过单例化来产生特定于一种特定类型的代码：
 
-```Rust
+```rust
 let square = Square {
     top_left: Point { x: 1, y: 2 },
     size: 2,
@@ -99,7 +99,7 @@ let visible = on_screen(&square);
 
 如果将相同的泛型函数用于实现相关特征约束的其他类型：
 
-```Rust
+```rust
 #[derive(Clone, Debug)]
 struct Circle {
     center: Point,
@@ -115,7 +115,7 @@ impl Draw for Circle {
 
 然后使用不同的单态化代码：
 
-```Rust
+```rust
 let circle = Circle {
     center: Point { x: 3, y: 4 },
     radius: 1,
@@ -134,13 +134,13 @@ let visible = on_screen(&circle);
 
 这意味着接受特征对象的函数不需要泛型，也不需要单态化：程序员使用特征对象编写函数，编译器只输出该函数的一个版本，它可以接受来自多种输入类型的特征对象：
 
-```Rust
+```rust
 /// Indicate whether an object is on-screen.
 pub fn on_screen(draw: &dyn Draw) -> bool {
     overlap(SCREEN_BOUNDS, draw.bounds()).is_some()
 }
 ```
-```Rust
+```rust
 // Calls `on_screen(&dyn Draw) -> bool`.
 let visible = on_screen(&square);
 // Also calls `on_screen(&dyn Draw) -> bool`.
@@ -158,7 +158,7 @@ let visible = on_screen(&circle);
 
 更重要的区别在于，通用特征约束可用于有条件地提供不同的功能，这取决于类型参数是否实现了*多个*特征：
 
-```Rust
+```rust
 // The `area` function is available for all containers holding things
 // that implement `Draw`.
 fn area<T>(draw: &T) -> i64
@@ -178,7 +178,8 @@ where
     println!("{:?} has bounds {:?}", draw, draw.bounds());
 }
 ```
-```Rust
+
+```rust
 let square = Square {
     top_left: Point { x: 1, y: 2 },
     size: 2,
@@ -201,7 +202,7 @@ show(&circle);
 
 特征对象只对单个特征的实现虚表进行编码，因此要做与之等价的事情就比较麻烦。例如，可以为 `show()` 情况定义一个组合 `DebugDraw` 特征，同时定义一个空白实现，以方便使用：
 
-```Rust
+```rust
 trait DebugDraw: Debug + Draw {}
 
 /// Blanket implementation applies whenever the individual traits
@@ -215,7 +216,7 @@ impl<T: Debug + Draw> DebugDraw for T {}
 
 除了使用特征约束来限制泛型函数可接受的类型参数外，还可以将其应用于特征定义本身：
 
-```Rust
+```rust
 /// Anything that implements `Shape` must also implement `Draw`.
 trait Shape: Draw {
     /// Render that portion of the shape that falls within `bounds`.
@@ -238,7 +239,7 @@ trait Shape: Draw {
 
 从底层来看，那些具有特征约束的特征对象：
 
-```Rust
+```rust
 let square = Square {
     top_left: Point { x: 1, y: 2 },
     size: 2,
@@ -273,7 +274,7 @@ let shape: &dyn Shape = &square;
 
 第二个限制有一个例外。如果 `Self` 对编译时已知大小的类型有明确的限制，即 `Sized` 标记特征作为特征，那么返回某种 `Self` 相关类型的方法就不会影响对象的安全性：
 
-```Rust
+```rust
 /// A `Stamp` can be copied and drawn multiple times.
 trait Stamp: Draw {
     fn make_copy(&self) -> Self
@@ -281,7 +282,8 @@ trait Stamp: Draw {
         Self: Sized;
 }
 ```
-```Rust
+
+```rust
 let square = Square {
     top_left: Point { x: 1, y: 2 },
     size: 2,
@@ -297,11 +299,12 @@ let stamp: &dyn Stamp = &square;
 
 这种特征约束意味着该方法无论如何都不能与特征对象一起使用，因为特征指的是未知大小的东西（`dyn Trait`），所以该方法违背了对象安全：
 
-```Rust
+```rust
 // However, the method can't be invoked via a trait object.
 let copy = stamp.make_copy();
 ```
-```Rust
+
+```shell
 error: the `make_copy` method cannot be invoked on a trait object
    --> src/main.rs:397:22
     |
@@ -322,7 +325,7 @@ error: the `make_copy` method cannot be invoked on a trait object
 
 渲染形状列表的传统面向对象例子就是一个例子：在同一个循环中，可以对正方形、圆形、椭圆形和星形使用相同的 `render()` 方法：
 
-```Rust
+```rust
 let shapes: Vec<&dyn Shape> = vec![&square, &circle];
 for shape in shapes {
     shape.render()

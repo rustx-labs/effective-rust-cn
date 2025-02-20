@@ -373,7 +373,7 @@ pub fn smaller<'a>(left: &'a Item, right: &'a Item) -> &'a Item {
         let needle = b"234"; // 生命周期 'b 开始
         find(haystack, needle)
     }; // 生命周期 'b 结束
-    println!("found={:?}", found); // `found` 在 'a 内部， 在 'b 外部使用
+    println!("found={:?}", found); // `found` 在 'a 内部，在 'b 外部使用
 } // 声明周期 'a 结束
 ```
 

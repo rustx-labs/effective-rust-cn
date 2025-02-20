@@ -130,7 +130,7 @@ let mut item = Item { contents: 42 };
 zero_both(&mut item, &mut item);
 ```
 
-```
+```shell
 error[E0499]: cannot borrow `item` as mutable more than once at a time
    --> src/main.rs:131:26
     |
@@ -155,7 +155,7 @@ let mut item = Item { contents: 42 };
 copy_contents(&mut item, &item);
 ```
 
-```
+```shell
 error[E0502]: cannot borrow `item` as immutable because it is also borrowed
               as mutable
    --> src/main.rs:159:30
@@ -189,7 +189,7 @@ item.contents = 0;
 println!("reference to item is {:?}", r);
 ```
 
-```
+```shell
 error[E0506]: cannot assign to `item.contents` because it is borrowed
    --> src/main.rs:200:5
     |
@@ -223,7 +223,7 @@ let contents = item.contents; // i64 实现了 `Copy`
 r.contents = 0;
 ```
 
-```
+```shell
 error[E0503]: cannot use `item.contents` because it was mutably borrowed
    --> src/main.rs:231:20
     |
@@ -244,7 +244,7 @@ let new_item = item; // 移动
 println!("reference to item is {:?}", r);
 ```
 
-```
+```shell
 error[E0505]: cannot move out of `item` because it is borrowed
    --> src/main.rs:170:20
     |
@@ -280,7 +280,7 @@ Rust 新手（甚至更有经验的人！）常常会觉得他们在与借用检
 <div class="ferris"><img src="../images/ferris/does_not_compile.svg" width="75" height="75" /></div>
 
 ```rust
-/// 如果 `needle` 存在于 `haystack` 中， 返回包含它的切片。
+/// 如果 `needle` 存在于 `haystack` 中，返回包含它的切片。
 pub fn find<'a, 'b>(haystack: &'a str, needle: &'b str) -> Option<&'a str> {
     haystack
         .find(needle)
@@ -295,7 +295,7 @@ if let Some(text) = found {
 }
 ```
 
-```
+```shell
 error[E0716]: temporary value dropped while borrowed
    --> src/main.rs:353:23
     |
@@ -340,7 +340,7 @@ let x = Some(Rc::new(RefCell::new(Item { contents: 42 })));
 check_item(x.as_ref().map(|r| r.borrow().deref()));
 ```
 
-```
+```shell
 error[E0515]: cannot return reference to temporary value
    --> src/main.rs:293:35
     |
@@ -366,7 +366,7 @@ let x3: Option<&Item> = x2.map(|r| r.deref());
 check_item(x3);
 ```
 
-```
+```shell
 error[E0515]: cannot return reference to function parameter `r`
    --> src/main.rs:305:40
     |

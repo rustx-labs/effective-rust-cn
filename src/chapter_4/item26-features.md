@@ -4,7 +4,7 @@
 
 ## 条件编译
 
-通过使用 [`cfg`][cfg] 或者 [`cfg_attr`][cfg_attr] ，Rust 支持[条件编译][conditional compilation] ，可以让你决定函数、代码行、代码块等内容是否包含在编译后的文件中（相对而言，C/C++ 是基于代码行的预处理器）。这里的“条件”可以是一个像 `test` 这种单纯的名字，也可以是类似 `panic = "abort"` 这种名值对的形式。
+通过使用 [`cfg`][cfg] 或者 [`cfg_attr`][cfg_attr]，Rust 支持[条件编译][conditional compilation]，可以让你决定函数、代码行、代码块等内容是否包含在编译后的文件中（相对而言，C/C++ 是基于代码行的预处理器）。这里的“条件”可以是一个像 `test` 这种单纯的名字，也可以是类似 `panic = "abort"` 这种名值对的形式。
 
 注意，名值对的形式下，一个名字的值可以有多个：
 
@@ -80,7 +80,7 @@ pub fn pick_a_number() -> u8 {
 }
 ```
 
-虽然 crate 名字是全局的（由 `crates.io` 管理），而特征名字是本地的，但事实上 *crate 和特征共享命名空间* 。因此，**谨慎选择特征名字**，以避免和可能作为特征存在的 crate 名字冲突。虽然 Cargo 支持通过修改 `package` 键[重命名所引入的 crate][rename] 来避免潜在的冲突问题，但是提前避免冲突总比重命名来的好。
+虽然 crate 名字是全局的（由 `crates.io` 管理），而特征名字是本地的，但事实上 *crate 和特征共享命名空间*。因此，**谨慎选择特征名字**，以避免和可能作为特征存在的 crate 名字冲突。虽然 Cargo 支持通过修改 `package` 键[重命名所引入的 crate][rename] 来避免潜在的冲突问题，但是提前避免冲突总比重命名来的好。
 
 所以你要检查 *Cargo.toml* 中**依赖的crate 的 `[features]`**，同时，还要检查 **`[dependencies]` 中标注为 `optional` 的 crate**  来确认当前 crate 的全部特征名字。如果要启用依赖项的一个特征，需要在 `[dependencies]` 小节增加 `features` 属性：
 
@@ -179,7 +179,7 @@ pub trait AsCbor: Sized {
 
 [^2]: `cargo tree --edges features` 命令可以帮助你检测哪个 crate 启用了哪些特征，以及为什么要启用。
 
-[^3]: 一个特征可以强制启用另外的特征，在最上面的例子中，`featureAB` 特征同时启用了 `featureA` 和 `featureB` 。
+[^3]: 一个特征可以强制启用另外的特征，在最上面的例子中，`featureAB` 特征同时启用了 `featureA` 和 `featureB`。
 
 原文[点这里](https://www.lurklurk.org/effective-rust/features.html)查看
 

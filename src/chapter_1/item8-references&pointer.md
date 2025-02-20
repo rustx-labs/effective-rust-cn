@@ -37,7 +37,7 @@ fn dangle() -> &'static i64 {
     &x
 }
 ```
-```error
+```shell
 error[E0515]: cannot return reference to local variable `x`
    --> src/main.rs:477:5
     |

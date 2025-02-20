@@ -42,7 +42,7 @@ let f = match result {
 };
 ```
 
-`Option` 和 `Result` 都提供了一对方法来提取它们的内部值并在值不存在时执行 `panic!`，它们分别是 [unwrap](https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap) 和 [expect](https://doc.rust-lang.org/std/result/enum.Result.html#method.expect) 。后者允许个性化失败时的错误消息，并将错误处理委托给 `.unwrap()` 后缀，但无论哪种情况，生成的代码都更短、更简单：
+`Option` 和 `Result` 都提供了一对方法来提取它们的内部值并在值不存在时执行 `panic!`，它们分别是 [unwrap](https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap) 和 [expect](https://doc.rust-lang.org/std/result/enum.Result.html#method.expect)。后者允许个性化失败时的错误消息，并将错误处理委托给 `.unwrap()` 后缀，但无论哪种情况，生成的代码都更短、更简单：
 
 ```rust
 let f = std::fs::File::open("/etc/passwd").unwrap();

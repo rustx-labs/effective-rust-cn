@@ -7,7 +7,7 @@
 
 通过涵盖更多方便用户的方法，同时为那些可以从接口上其他更基础的操作构建的方法提供默认实现，可以缓解这种冲突。
 
-来看一个简单的例子， <code>[ExactSizeIterator]</code> 是一个知道确切迭代内容的 `Iterator`，它的 <code>[is_empty()]</code> 方法有一个依赖于 <code>[len()]</code> 方法的默认实现：
+来看一个简单的例子，<code>[ExactSizeIterator]</code> 是一个知道确切迭代内容的 `Iterator`，它的 <code>[is_empty()]</code> 方法有一个依赖于 <code>[len()]</code> 方法的默认实现：
 
 ```rust
 fn is_empty(&self) -> bool {
@@ -23,7 +23,7 @@ Rust 标准库广泛采用了这种方法；<code>[Iterator]</code> trait 就是
 
 trait 方法可以添加 trait 约束，这意味着只有在相关类型实现特定 trait 时，目标方法才可用。这在结合默认方法实现时非常有用，<code>[Iterator]</code> 也印证了这点。例如，<code>[cloned()]</code> 的迭代器方法有一个 trait 约束和一个默认实现：
 
-```Rust
+```rust
 fn cloned<'a, T>(self) -> Cloned<Self>
 where
     T: 'a + Clone,
@@ -33,11 +33,11 @@ where
 }
 ```
 
-换句话说，`cloned()` 方法只有在 `Item` 的类型实现了 <code>[Clone]</code> trait 时才可用；一旦实现 `Clone` trait， `cloned()` 方法也会自动实现。
+换句话说，`cloned()` 方法只有在 `Item` 的类型实现了 <code>[Clone]</code> trait 时才可用；一旦实现 `Clone` trait，`cloned()` 方法也会自动实现。
 
 关于带有默认实现的 trait 方法，最后一个要点是，即使在 trait 的初始版本发布之后，通常也可以安全地向 trait 添加新方法。只要新方法名不与类型实现的其他 trait 方法名冲突，就能保持向后兼容性（详见 [第 21 条]）。
 
-因此，请参照标准库的示例，通过添加带有默认实现的方法（并根据需要添加 trait 约束），为实现者提供最少的 API 接口，但为用户提供方便且全面的 API 。
+因此，请参照标准库的示例，通过添加带有默认实现的方法（并根据需要添加 trait 约束），为实现者提供最少的 API 接口，但为用户提供方便且全面的 API。
 
 原文[点这里](https://www.lurklurk.org/effective-rust/default-impl.html)查看
 

@@ -6,7 +6,7 @@
 
 Rust 文档类型注释的细节 —— 基于 Markdown 格式，以 /// 或者 //! 分割 —— 已经在[Rust book]中介绍了，如下为示例：
 
-```Rust
+```rust
 /// Calculate the [`BoundingBox`] that exactly encompasses a pair
 /// of [`BoundingBox`] objects.
 pub fn union(a: &BoundingBox, b: &BoundingBox) -> BoundingBox {
