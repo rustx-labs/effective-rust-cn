@@ -50,7 +50,7 @@ Rust 工具链的可扩展性不仅限于包元数据；编译器的抽象语法
 
 ## 注释
 
-[^1]: 在某些环境中，这个列表可能会减少。例如，在 `Android` 上进行 `Rust` 开发有一个集中控制的工具链（所以没有 `rustup`），并与 `Android` 的 `Soong` 构建系统集成（所以没有 `cargo`）。
+[^1]: 在某些环境中，这个列表可能会减少。例如，在 `Android` 上进行 Rust 开发有一个集中控制的工具链（所以没有 `rustup`），并与 `Android` 的 `Soong` 构建系统集成（所以没有 `cargo`）。
 
 原文[点这里](https://www.lurklurk.org/effective-rust/use-tools.html)查看
 
