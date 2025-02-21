@@ -145,7 +145,8 @@ fn try_build_a_vec() -> Result<Vec<u8>, String> {
 
 除了增加允许可错分配的入口外，还可以通过关闭默认开启的 [`no_global_oom_handling`] 配置来禁用*可靠*分配操作。在堆内存有限的环境（如 Linux 内核）中，可以显式禁用此标志，以确保不会在代码中无意使用了可靠分配。
 
-## 要记住的事
+## 需要记住的事情
+
 - `std` crate 中的许多项目实际上来自 `core` 或 `alloc`。
 - 因此，使库代码兼容 `no_std` 可能比您想象的更简单。
 - 通过在 CI 中检查 `no_std` 代码来确认 `no_std` 代码保持 `no_std` 兼容。
