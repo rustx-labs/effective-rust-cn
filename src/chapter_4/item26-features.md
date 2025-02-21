@@ -26,7 +26,7 @@ cfg(myname = 'b') is set
 
 另外，标准选项 [`target_has_atomic`][target_has_atomic] 是支持多值的，如果目标平台同时支持 32 位和 64 位架构，则 `[cfg(target_has_atomic = "32")]` 和 `[cfg(target_has_atomic = "64")]` 同时生效。（关于原子性的更多信息，请参考 O'Reilly 出版的，Mara Bos 所著的 《[Rust Atomics and Locks][Rust Atomics and Locks]》一书的第二章。）
 
-## 特征
+## 特性
 
 通过使用基于 `cfg` 的名值对机制，[Cargo][Cargo] 包管理器提供了[*特征（features）*][features] 选择能力：在构建 crate 的时候，可以有选择地启用所需的函数或者对应的 crate。Cargo 将确保对于每个 crate，都使用所配置的 `feature` 值来进行编译。
 
@@ -165,7 +165,7 @@ pub trait AsCbor: Sized {
 
 然而，当需要控制向展开后的依赖图（见[第 25 条]）暴露的内容时，使用可选的特征还是非常有帮助的，尤其是那些可以在 `no_std` 环境（见[第 33 条]）中使用的偏底层的 crate，通常会包含 `std` 或者 `alloc` 特征，来方便你在标准环境中使用它们。
 
-## 牢记
+## 需要记住的事情
 
 - 特征和依赖项共享命名空间
 - 选择特征名字的时候，应该慎重考虑，以避免和依赖项名字冲突

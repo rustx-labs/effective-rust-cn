@@ -265,7 +265,7 @@ impl std::fmt::Display for WrappedError {
 }
 ```
 
-结果是这是可能的，但出奇地微妙。部分困难来自于 `trait` 对象的对象安全约束（[第 12 条]），但 `Rust` 的一致性规则也发挥作用，它们（大致）指出一种类型对于一个 `trait` 最多只能有一个实现。
+结果是这是可能的，但出奇地微妙。部分困难来自于 `trait` 对象的对象安全约束（[第 12 条]），但 Rust 的一致性规则也发挥作用，它们（大致）指出一种类型对于一个 `trait` 最多只能有一个实现。
 
 一个假设的 `WrappedError` 类型可能会天真地预期同时实现以下两个 `trait`：
 - `Error` `trait`，因为它本身就是一个错误。
@@ -322,7 +322,7 @@ error[E0119]: conflicting implementations of trait `From<WrappedError>` for
 
 [^1]: 或者至少是唯一一个非废弃的、稳定的方法。
 
-[^2]: 在撰写本文时，`Error` 已经[被移动到 `core`](https://github.com/rust-lang/rust/issues/103765)，但在稳定版的 `Rust` 中尚不可用。
+[^2]: 在撰写本文时，`Error` 已经[被移动到 `core`](https://github.com/rust-lang/rust/issues/103765)，但在稳定版的 Rust 中尚不可用。
 
 [^3]: 本节灵感来源于 `Nick Groenen` 的文章[《Rust: 2020年在错误处理和结构化》](https://nick.groenen.me/posts/rust-error-handling/)。
 
