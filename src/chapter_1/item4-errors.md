@@ -298,7 +298,7 @@ error[E0119]: conflicting implementations of trait `From<WrappedError>` for
 
 ```
 
-`David Tolnay` 的 [anyhow] 是一个已经解决了这些问题（通过[使用 Box 来添加一个额外的间接层](https://github.com/dtolnay/anyhow/issues/63#issuecomment-582079114)）并增加了其他有用功能（如堆栈跟踪）的 `crate`。因此，它迅速成为了错误处理的推荐标准 —— 在这里也是一样：**考虑在应用程序中使用 `anyhow` crate 进行错误处理。**
+`David Tolnay` 的 [anyhow] 是一个已经解决了这些问题（通过[使用 Box 来添加一个额外的间接层]）并增加了其他有用功能（如堆栈跟踪）的 `crate`。因此，它迅速成为了错误处理的推荐标准 —— 在这里也是一样：**考虑在应用程序中使用 `anyhow` crate 进行错误处理。**
 
 ## 库与应用程序
 
@@ -343,6 +343,7 @@ error[E0119]: conflicting implementations of trait `From<WrappedError>` for
 [第 33 条]: ../chapter_6/item33-no-std.md
 
 [anyhow]: https://docs.rs/anyhow
+[使用 Box 来添加一个额外的间接层]: https://github.com/dtolnay/anyhow/issues/63#issuecomment-582079114
 [thiserror]: https://docs.rs/thiserror
 [类型别名]: https://doc.rust-lang.org/reference/items/type-aliases.html
 [问号运算符]: https://doc.rust-lang.org/reference/expressions/operator-expr.html#the-question-mark-operator

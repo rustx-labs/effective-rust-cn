@@ -2,7 +2,7 @@
 
 > “它看起来非常复杂，这就是为什么它紧凑的塑料盖子上用大大的友好字母写着 DON'T PANIC 的原因之一。”——Douglas Adams
 
-本条的标题应当更准确的描述为**更应该返回 `Result` 而不是使用 `panic!`**（但是**不要 panic** 更吸引人）。
+本条款的标题应当更准确的描述为**更应该返回 `Result` 而不是使用 `panic!`**（但是**不要 panic** 更吸引人）。
 
 Rust 的 panic 机制主要是针对程序中不可恢复的错误而设计的，*默认情况*下会终止发出 `panic!` 的线程。然而，除了默认情况还有其他选择。
 
@@ -85,7 +85,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 标准库中的 [`String::from_utf8_unchecked`] 和 [`String::from_utf8`] 的入点是后者的示例（尽管在这种情况下，panic 实际上被推迟到使用无效输入来构造 `String` 的位置）。
 
-假设你正在尝试遵循本条给出的建议，则需要牢记以下几点。首先，panic 可能以不同形式出现；避免 `panic!` 的同时也要避免以下情况：
+假设你正在尝试遵循本条款给出的建议，则需要牢记以下几点。首先，panic 可能以不同形式出现；避免 `panic!` 的同时也要避免以下情况：
 
 - [`unwrap()`] 和 [`unwrap_err()`]
 - [`expect()`] 和 [`expect_err()`]

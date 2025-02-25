@@ -42,7 +42,7 @@ let f = match result {
 };
 ```
 
-`Option` 和 `Result` 都提供了一对方法来提取它们的内部值并在值不存在时执行 `panic!`，它们分别是 [unwrap](https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap) 和 [expect](https://doc.rust-lang.org/std/result/enum.Result.html#method.expect)。后者允许个性化失败时的错误消息，并将错误处理委托给 `.unwrap()` 后缀，但无论哪种情况，生成的代码都更短、更简单：
+`Option` 和 `Result` 都提供了一对方法来提取它们的内部值并在值不存在时执行 `panic!`，它们分别是 [unwrap] 和 [expect]。后者允许个性化失败时的错误消息，并将错误处理委托给 `.unwrap()` 后缀，但无论哪种情况，生成的代码都更短、更简单：
 
 ```rust
 let f = std::fs::File::open("/etc/passwd").unwrap();
@@ -52,7 +52,7 @@ let f = std::fs::File::open("/etc/passwd").unwrap();
 
 然而，在许多情况下，正确的错误处理是将决策推迟给其他人。这在编写库时尤其如此，因为库的代码可能会在库作者无法预见的各种不同环境中使用。为了使库更易用，优先使用 `Result` 而不是 `Option` 来表示错误，即使这可能涉及不同错误类型之间的转换（[第 4 条]）。
 
-当然，这提出了一个问题：什么算作错误？在此示例中，无法打开文件肯定是一个错误，并且该错误的详细信息（没有此文件？权限被拒绝？）可以帮助用户决定下一步要做什么。另一方面，由于切片为空而未能检索切片的 [first()](https://doc.rust-lang.org/std/primitive.slice.html#method.first) 元素并不是真正的错误，因此它在标准库中表示为 `Option` 返回类型。在两种可能性之间进行选择需要判断，但如果可能通过错误传达任何有用的信息，则倾向于 `Result`。
+当然，这提出了一个问题：什么算作错误？在此示例中，无法打开文件肯定是一个错误，并且该错误的详细信息（没有此文件？权限被拒绝？）可以帮助用户决定下一步要做什么。另一方面，由于切片为空而未能检索切片的 [first()] 元素并不是真正的错误，因此它在标准库中表示为 `Option` 返回类型。在两种可能性之间进行选择需要判断，但如果可能通过错误传达任何有用的信息，则倾向于 `Result`。
 
 `Result` 也有一个 `[#must_use]` 属性，用来引导库用户朝着正确的方向前进 —— 如果使用返回的 `Result` 的代码忽略了它，编译器将生成一个警告：
 
@@ -194,5 +194,9 @@ pub fn encrypted(&self) -> Vec<u8> {
 [第 4 条]: item4-errors.md
 [第 5 条]: item5-casts.md
 [第 18 条]: ../chapter_3/item18-panic.md
+
+[unwrap]: https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap
+[expect]: https://doc.rust-lang.org/std/result/enum.Result.html#method.expect
+[first()]: https://doc.rust-lang.org/std/primitive.slice.html#method.first
 
 [在线版本]: https://tinyurl.com/rust-transform
