@@ -62,7 +62,7 @@ Clippy 的警告信息在你学习 Rust 时特别重要，因为它们可以揭�
   * [Unnecessarily converting `Result` to `Option`]。
   * [Opportunities to use `unwrap_or_default`]。
 * [第 3 条]同样建议了应当将错误返回给调用方。Clippy [指出了应当返回的地方]。
-* [第 5 条]应当实现`From`特征而非`Into`。
+* [第 5 条]应当实现 `From` `trait` 而非 `Into` `trait`。
 * [第 5 条]还描述了一些强制转换，而 Clippy 给出了如下的警告（对应的检查项默认是关掉的）：
   * [`as` casts that could be from instead]。
   * [`as` casts that might truncate]。
@@ -84,7 +84,7 @@ Clippy 的警告信息在你学习 Rust 时特别重要，因为它们可以揭�
 * [第 21 条]表述了引入通过通配符限定的包是不明智的。Clippy 同样对此[进行了校验]。
 * [第 23 条]及[第 25 条]涉及到一种不同版本的包出现在同一个项目的依赖中。Clippy 可以通过配置，[在问题出现时给出警告信息]。
 * [第 26 条]叙述了 Cargo 特性的一些相加性，而 Clippy 会将与此原则相违背特性提示为[“否定”的特性]。
-* [第 26 条]同样表述了一个包的可选依赖项同样是其特征集的一部分。如果存在[需要明确的特性名（如："use-crate-x"形式的命名）]时，Clippy 将会提示直接应当使用明确的特性名，而非模糊的。
+* [第 26 条]同样表述了一个包的可选依赖项同样是其 feature 集的一部分。如果存在[需要明确的 feature 名（如 "use-crate-x" 形式的命名）]时，Clippy 将会提示直接应当使用明确的特性名，而非模糊的。
 * [第 27 条]描述了文档注释的约束，Clippy 同时有如下的提示：
   * [Missing descriptions of `panic!`s]。
   * [Missing descriptions] of [`unsafe` concerns]。
@@ -159,7 +159,7 @@ Clippy 的警告信息在你学习 Rust 时特别重要，因为它们可以揭�
 [进行了校验]: https://rust-lang.github.io/rust-clippy/stable/index.html#/wildcard_dependencies
 [在问题出现时给出警告信息]: https://rust-lang.github.io/rust-clippy/stable/index.html#/multiple_crate_versions
 [“否定”的特性]: https://rust-lang.github.io/rust-clippy/stable/index.html#/negative_feature_names
-[需要明确的特性名（如："use-crate-x"形式的命名）]: https://rust-lang.github.io/rust-clippy/stable/index.html#/redundant_feature_names
+[需要明确的 feature 名（如 "use-crate-x" 形式的命名）]: https://rust-lang.github.io/rust-clippy/stable/index.html#/redundant_feature_names
 [Missing descriptions of `panic!`s]: https://rust-lang.github.io/rust-clippy/stable/index.html#/missing_panics_doc
 [Missing descriptions]: https://rust-lang.github.io/rust-clippy/stable/index.html#/missing_safety_doc
 [`unsafe` concerns]: https://rust-lang.github.io/rust-clippy/stable/index.html#/undocumented_unsafe_blocks
