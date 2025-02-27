@@ -289,7 +289,7 @@ pub struct BankAccount {
 
 更准确地说，`lock()` 实际上返回了一个持有 `MutexGuard` 的 `Result`，以应对 `Mutex` *中毒*的可能性。如果线程在持有锁时失败，就会发生中毒，因为这可能意味着任何被互斥锁保护的不变量已经不再可靠。实际上，锁中毒是非常罕见的（并且当它发生时让程序终止是可取的），因此通常会直接调用 `.unwarp()` 来处理 `Result`（尽管这与[第 18 条]相违背）。
 
-`MutexGuard` 对象还通过实现 `Deref` 和 `DerefMut` `trait`（[第 8 条]）来充当 `Mutex` 所包含数据的代理，允许它可以进行读取操作：
+`MutexGuard` 对象还通过实现 `Deref` 和 `DerefMut` trait（[第 8 条]）来充当 `Mutex` 所包含数据的代理，允许它可以进行读取操作：
 
 ```rust
 impl BankAccount {

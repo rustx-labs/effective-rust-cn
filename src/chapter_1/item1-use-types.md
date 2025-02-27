@@ -100,7 +100,7 @@ let m = TextMatch(12, "needle".to_owned());
 // 使用字段下标索引访问其值
 assert_eq!(m.0, 12);
 ```
-## 枚举（`enum`）
+## 枚举
 
 让我们认识一下 Rust 类型系统中皇冠上的宝石：枚举（`enum`）。
 

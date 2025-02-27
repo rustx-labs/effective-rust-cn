@@ -138,12 +138,12 @@ let s = somecrate::ExposedStruct {
 
 但是，这并不能涵盖所有的情况：当这段代码没有激活 `somecrate/schema` feature，但是所用的其他依赖项启用了这个 feature，就会导致错误。问题的关键在于，只有拥有该 feature 的 crate 能够检测到该 feature；对于 crate 的用户来说，无法确定 Cargo 是否启用了 `somecrate/schema`。因此，你应该**避免在结构体中对公共字段进行 feature 门控（feature-gating）**。
 
-类似的考虑也适用于公共的 `trait`，尤其是暴露出来给其他代码使用的 `trait`。假设一个 `trait` 中包含了 feature 门控的方法：
+类似的考虑也适用于公共的 trait，尤其是暴露出来给其他代码使用的 trait。假设一个 trait 中包含了 feature 门控的方法：
 
 <div class="ferris"><img src="../images/ferris/not_desired_behavior.svg" width="75" height="75" /></div>
 
 ```rust
-/// 为支持 CBOR 序列化的条目设计的 `trait`。
+/// 为支持 CBOR 序列化的条目设计的 trait。
 pub trait AsCbor: Sized {
     /// 将条目序列化成 CORB 数据。
     fn serialize(&self) -> Result<Vec<u8>, Error>;
@@ -157,9 +157,9 @@ pub trait AsCbor: Sized {
 }
 ```
 
-在项目中使用这个 `trait` 的用户同样会面临困惑：到底要不要实现 `cddl(&self)` 方法？外部代码根本没有办法得知是否应该实现 `trait` 中 feature 门控的方法。
+在项目中使用这个 trait 的用户同样会面临困惑：到底要不要实现 `cddl(&self)` 方法？外部代码根本没有办法得知是否应该实现 trait 中 feature 门控的方法。
 
-所以，结论就是：*避免在公共 `trait` 中设计 feature 门控的方法*。包含默认实现的 `trait` 方法是个例外（见[第 13 条]）—— 前提是，外部代码永远不会改写默认实现。
+所以，结论就是：*避免在公共 trait 中设计 feature 门控的方法*。包含默认实现的 trait 方法是个例外（见[第 13 条]）—— 前提是，外部代码永远不会改写默认实现。
 
 Feature 联合也意味着，如果你的 crate 包含了 *N* 个 feature [^3]，那么可能的 feature 组合是 *2<sup>N</sup>* 种。为了避免不必要的问题，应在你的 CI 系统中（见[第 32 条]）通过完备的测试用例（见[第 30 条]）来涵盖所有的 *2<sup>N</sup>*  种 feature 组合。
 
@@ -170,7 +170,7 @@ Feature 联合也意味着，如果你的 crate 包含了 *N* 个 feature [^3]�
 - Feature 和依赖项共享命名空间。
 - 应该慎重考虑 feature 的命名，以避免和依赖项名字冲突。
 - Feature 应该是可累加的。
-- 避免在公开暴露的结构体属性或者 `trait` 方法上使用 feature 门控。
+- 避免在公开暴露的结构体属性或者 trait 方法上使用 feature 门控。
 - 拥有很多相对独立的 feature 会导致可能的构建配置组合数量过于庞大。
 
 ## 注释

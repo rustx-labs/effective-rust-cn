@@ -71,7 +71,7 @@ let even_sum_squares: u64 = values
 
 像这样的迭代器转换表达式可以粗略被分解为三个部分：
 
-- 一个源迭代器，来自于一个实现了 Rust 的任意一种 `iterator` `trait` 的类型实例；
+- 一个源迭代器，来自于一个实现了 Rust 的任意一种 `iterator` trait 的类型实例；
 - 一个由若干迭代器转换组成的操作序列；
 - 一个最终的消费者方法（`consumer method`）将迭代的结果合并为最后的值。
 
@@ -81,9 +81,9 @@ let even_sum_squares: u64 = values
 
 ## 迭代器 Trait
 
-标准库中这个核心的 [Iterator] `trait` 有一个十分简单的接口：一个 [next] 方法用于生成 `Some` 元素，直到没法再继续生成（返回 `None`）。迭代过程中生成元素的类型通过 `trait` 的关联类型 `Item` 定义。
+标准库中这个核心的 [Iterator] trait 有一个十分简单的接口：一个 [next] 方法用于生成 `Some` 元素，直到没法再继续生成（返回 `None`）。迭代过程中生成元素的类型通过 trait 的关联类型 `Item` 定义。
 
-那些允许用户对其中元素进行遍历的容器 —— 在其他语言中被称为可迭代对象  `iterable`）—— 实现了 [IntoIterator] `trait`；`trait` 中定义的 [into_iter] 方法会消耗掉 `Self` 并返回一个 `Iterator`。编译器会自动对以下形式的表达式自动应用这个 `trait`：
+那些允许用户对其中元素进行遍历的容器 —— 在其他语言中被称为可迭代对象  `iterable`）—— 实现了 [IntoIterator] trait；trait 中定义的 [into_iter] 方法会消耗掉 `Self` 并返回一个 `Iterator`。编译器会自动对以下形式的表达式自动应用这个 trait：
 
 ```rust
 for item in collection {
@@ -180,7 +180,7 @@ while let Some(item) = iter.next() {
 }
 ```
 
-在可以遍历可变引用的场景下 [^2]，`for item in &mut collection` 也有类似的模式：编译器寻找 `&mut Collection` 的 `IntoIterator` `trait`，此时关联类型 `Item` 是 `&mut Thing` 类型。
+在可以遍历可变引用的场景下 [^2]，`for item in &mut collection` 也有类似的模式：编译器寻找 `&mut Collection` 的 `IntoIterator` trait，此时关联类型 `Item` 是 `&mut Thing` 类型。
 
 按照惯例，标准库容器会提供一个 `iter()` 方法返回对底层元素的引用，以及如果可以的话，一个等效的 `iter_mut()` 方法，其行为与上面提到的相同。这些方法可以在 `for` 循环中使用，但在用作迭代器转换的场景下有更明显的好处：
 
@@ -196,7 +196,7 @@ let result: u64 = collection.iter().map(|thing| thing.0).sum();
 
 ## 迭代器转换
 
-[Iterator] `trait` 只有一个必须的 [next] 方法，但也提供了大量的在迭代器上执行转换计算的默认方法实现（[第 13 条]）。
+[Iterator] trait 只有一个必须的 [next] 方法，但也提供了大量的在迭代器上执行转换计算的默认方法实现（[第 13 条]）。
 
 其中一些转换会影响到整个迭代的过程：
 
@@ -205,7 +205,7 @@ let result: u64 = collection.iter().map(|thing| thing.0).sum();
 - [step_by(n)]：转换迭代器，让它每隔 `n` 个元素生成一个元素。
 - [chain(other)]：将两个迭代器粘合在一起构造一个组合迭代器，它会在遍历完第一个迭代器的内容后开始遍历第二个迭代器。
 - [cycle()]：将迭代器转换为一个永久循环的迭代器，当遍历到头后再次从头开始遍历。（迭代器需要实现 `Clone` 来支持这个方法。）
-- [rev()]：反转迭代器的方向。（迭代器需要实现 [DoubleEndedIterator] `trait`，这个 `trait` 有一个额外的 [next_back] 方法。）
+- [rev()]：反转迭代器的方向。（迭代器需要实现 [DoubleEndedIterator] trait，这个 trait 有一个额外的 [next_back] 方法。）
 
 其他的转换会影响到 `Iterator` 对应的 `Item` 的性质/属性：
 
@@ -284,9 +284,9 @@ values
 - [try_fold(f)]：行为类似于 `fold`，但闭包操作可能会返回失败。
 - [try_find(f)]：行为类似于 `find`，但闭包操作可能会返回失败。
 
-最后，还有一些方法可以把所有迭代的元素累积到新的集合中。当中最重要的就是 [collect()] 方法，它可以用于创建任意一种实现了 [FromIterator] `trait` 的集合类型。
+最后，还有一些方法可以把所有迭代的元素累积到新的集合中。当中最重要的就是 [collect()] 方法，它可以用于创建任意一种实现了 [FromIterator] trait 的集合类型。
 
-`FromIterator` `trait` 在所有的标准库集合类型上都有实现（[Vec]、[HashMap] 和 [BTreeSet] 等），但这种普遍性也意味着你总是要显式地指定集合的类型，否则编译器无法推断出你想要组装一个（比如说）`Vec<i32>` 还是 `HashSet<i32>`：
+`FromIterator` trait 在所有的标准库集合类型上都有实现（[Vec]、[HashMap] 和 [BTreeSet] 等），但这种普遍性也意味着你总是要显式地指定集合的类型，否则编译器无法推断出你想要组装一个（比如说）`Vec<i32>` 还是 `HashSet<i32>`：
 
 ```rust
 use std::collections::HashSet;

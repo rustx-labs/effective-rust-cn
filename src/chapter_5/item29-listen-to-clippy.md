@@ -62,7 +62,7 @@ Clippy 的警告信息在你学习 Rust 时特别重要，因为它们可以揭�
   * [Unnecessarily converting `Result` to `Option`]。
   * [Opportunities to use `unwrap_or_default`]。
 * [第 3 条]同样建议了应当将错误返回给调用方。Clippy [指出了应当返回的地方]。
-* [第 5 条]应当实现 `From` `trait` 而非 `Into` `trait`。
+* [第 5 条]应当实现 `From` trait 而非 `Into` trait。
 * [第 5 条]还描述了一些强制转换，而 Clippy 给出了如下的警告（对应的检查项默认是关掉的）：
   * [`as` casts that could be from instead]。
   * [`as` casts that might truncate]。

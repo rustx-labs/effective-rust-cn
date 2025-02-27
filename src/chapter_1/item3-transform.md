@@ -121,7 +121,7 @@ pub fn find_user(username: &str) -> Result<UserId, String> {
 }
 ```
 
-更好的是，甚至这可能也不必要 —— 如果外部错误类型可以通过实现标准的 `From` `trait`（[第 5 条]）从内部错误类型创建，那么编译器将自动执行转换，无需调用 `.map_err()`。
+更好的是，甚至这可能也不必要 —— 如果外部错误类型可以通过实现标准的 `From` trait（[第 5 条]）从内部错误类型创建，那么编译器将自动执行转换，无需调用 `.map_err()`。
 
 这类转换具有更广泛的通用性。问号运算符是一个强大的工具；使用 `Option` 和 `Result` 类型上的转换方法将它们调整到可以顺利处理的形态。
 
@@ -184,7 +184,7 @@ pub fn encrypted(&self) -> Vec<u8> {
 
 [^1]: 此图的 [在线版本] 可点击，每个框都会链接到相关文档。
 
-[^2]: 注意，这个方法与 `AsRef` `trait` 是独立的，尽管方法名称相同。
+[^2]: 注意，这个方法与 `AsRef` trait 是独立的，尽管方法名称相同。
 
 原文[点这里](https://www.lurklurk.org/effective-rust/transform.html)查看
 

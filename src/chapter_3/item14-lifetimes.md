@@ -684,7 +684,7 @@ pub fn find_one_item(items: &[Item]) -> ReferenceHolder<'_> {
 
 粗略地说，`'_` 标注要求编译器为我们生成一个唯一的生命周期名称，如果不需要在其他地方使用该名称，我们可以使用这种方式。
 
-这意味着对于其他生命周期省略场景也很有用。例如，`Debug` `trait` 的 `fmt` 方法，使用匿名生命周期来指示 `Formatter` 实例具有和 `&self` 不同的生命周期，但该生命周期是什么名称并不重要：
+这意味着对于其他生命周期省略场景也很有用。例如，`Debug` trait 的 `fmt` 方法，使用匿名生命周期来指示 `Formatter` 实例具有和 `&self` 不同的生命周期，但该生命周期是什么名称并不重要：
 
 ```rust
 pub trait Debug {

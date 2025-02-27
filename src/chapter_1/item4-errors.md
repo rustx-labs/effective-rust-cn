@@ -6,19 +6,19 @@
 
 ## Error Trait
 
-了解标准 `trait`（[第 10 条]）总是一个好主意，这里相关的 `trait` 是 `std::error::Error`。`Result` 的 `E` 类型参数不必是实现 `Error` 的类型，但这是一个常见的约定，它允许包装器表达适当的 `trait` 约束 —— 因此，最好为您的错误类型实现 `Error`。
+了解标准 trait（[第 10 条]）总是一个好主意，这里相关的 trait 是 `std::error::Error`。`Result` 的 `E` 类型参数不必是实现 `Error` 的类型，但这是一个常见的约定，它允许包装器表达适当的 trait 约束 —— 因此，最好为您的错误类型实现 `Error`。
 
-首先要注意的是，对于错误类型，唯一硬性要求是 `trait` 约束：实现 `Error` 的任何类型也必须实现以下 `trait`：
+首先要注意的是，对于错误类型，唯一硬性要求是 trait 约束：实现 `Error` 的任何类型也必须实现以下 trait：
 
-- `Display` `trait`，意味着可以使用 `{}` 进行格式化
+- `Display` trait，意味着可以使用 `{}` 进行格式化
 
-- `Debug` `trait`，意味着可以使用 `{:?}` 进行格式化
+- `Debug` trait，意味着可以使用 `{:?}` 进行格式化
 
 换句话说，应该能够将错误类型显示给用户和程序员。
 
-`trait` 中唯一的方法是 `source()`，[^1] 它允许错误类型公开一个内部的、嵌套的错误。此方法是可选的 —— 它带有一个返回 `None` 的默认实现（[第 13 条]），表示内部错误信息不可用。
+该 trait 中唯一的方法是 `source()`，[^1] 它允许错误类型公开一个内部的、嵌套的错误。此方法是可选的 —— 它带有一个返回 `None` 的默认实现（[第 13 条]），表示内部错误信息不可用。
 
-最后要注意的一点是：如果您正在为 `no_std` 环境（[第 33 条]）编写代码，可能无法实现 `Error` —— `Error` `trait` 目前在 `std` 中实现，而不是 `core`，因此不可用。[^2]
+最后要注意的一点是：如果您正在为 `no_std` 环境（[第 33 条]）编写代码，可能无法实现 `Error` —— `Error` trait 目前在 `std` 中实现，而不是 `core`，因此不可用。[^2]
 
 ## 最小错误（Minimal Errors）
 
@@ -32,7 +32,7 @@ pub fn find_user(username: &str) -> Result<UserId, String> {
 }
 ```
 
-`String` 类型并没有实现 `Error`，虽然我们希望是这样，以便代码的其他部分可以处理 `Errors`。为 `String` 实现 `Error` 是不可能的，因为 `trait` 和类型都不属于我们（所谓的孤儿规则）：
+`String` 类型并没有实现 `Error`，虽然我们希望是这样，以便代码的其他部分可以处理 `Errors`。为 `String` 实现 `Error` 是不可能的，因为 trait 和类型都不属于我们（所谓的孤儿规则）：
 
 ```rust
 impl std::error::Error for String {}
@@ -74,7 +74,7 @@ error[E0117]: only traits defined in the current crate can be implemented for
    = note: define and implement a trait or new type instead
 ```
 
-像往常一样，编译器错误消息为解决问题提供了一个线索。定义一个包装 `String` 类型的元组结构体（"newtype 模式"，[第 6 条]）允许实现 `Error` `trait`，前提是也实现了 `Debug` 和 `Display`：
+像往常一样，编译器错误消息为解决问题提供了一个线索。定义一个包装 `String` 类型的元组结构体（"newtype 模式"，[第 6 条]）允许实现 `Error` trait，前提是也实现了 `Debug` 和 `Display`：
 
 ```rust
 #[derive(Debug)]
@@ -96,7 +96,7 @@ pub fn find_user(username: &str) -> Result<UserId, MyError> {
 }
 ```
 
-为了方便起见，实现 `From<String>` `trait` 可能是有意义的，以便可以轻松地将字符串值转换为 `MyError` 实例（[第 5 条]）：
+为了方便起见，实现 `From<String>` trait 可能是有意义的，以便可以轻松地将字符串值转换为 `MyError` 实例（[第 5 条]）：
 
 ```rust
 impl From<String> for MyError {
@@ -106,7 +106,7 @@ impl From<String> for MyError {
 }
 ```
 
-当编译器遇到问号运算符（`?`）时，它会自动应用任何需要的 `From` `trait` 实现，以便达到目标错误返回类型。这样代码就更简洁了：
+当编译器遇到问号运算符（`?`）时，它会自动应用任何需要的 `From` trait 实现，以便达到目标错误返回类型。这样代码就更简洁了：
 
 ```rust
 pub fn find_user(username: &str) -> Result<UserId, MyError> {
@@ -141,7 +141,7 @@ pub enum MyError {
 }
 ```
 
-这个`枚举`定义包括了 `derive(Debug)`，但为了满足 `Error` `trait`，还需要一个 `Display` 的实现：
+这个`枚举`定义包括了 `derive(Debug)`，但为了满足 `Error` trait，还需要一个 `Display` 的实现：
 
 ```rust
 impl std::fmt::Display for MyError {
@@ -195,7 +195,7 @@ pub fn first_line(filename: &str) -> Result<String, MyError> {
 }
 ```
 
-为所有子错误类型实现 `From` `trait` 也是一个好主意（[第 5 条]）：
+为所有子错误类型实现 `From` trait 也是一个好主意（[第 5 条]）：
 
 ```rust
 impl From<std::io::Error> for MyError {
@@ -210,7 +210,7 @@ impl From<std::string::FromUtf8Error> for MyError {
 }
 ```
 
-这防止了库用户自己受到孤儿规则的影响：他们不允许在 `MyError` 上实现 `From`，因为 `trait` 和结构体对他们来说是外部的。
+这防止了库用户自己受到孤儿规则的影响：他们不允许在 `MyError` 上实现 `From`，因为 trait 和结构体对他们来说是外部的。
 
 更好的是，实现 `From` 能让代码更加简洁，因为[问号运算符]将自动执行任何必要的 `From` 转换，从而消除了 `.map_err()` 的需求：
 
@@ -236,7 +236,7 @@ pub fn first_line(filename: &str) -> Result<String, MyError> {
 
 编写一个完整的错误类型可能涉及相当多的样板代码，这使得它成为通过派生宏（[第 28 条]）自动化的好候选。然而，没有必要自己编写这样的宏：**考虑使用 `David Tolnay` 提供的 [thiserror] crate**，它提供了一个高质量、广泛使用的宏实现。`thiserror` 生成的代码也小心翼翼地避免在生成的 `API` 中使任何 `thiserror` 类型可见，这意味着与[第 24 条]相关的问题不适用。
 
-## `Trait` 对象（`Trait Objects`）
+## Trait 对象
 
 第一种处理嵌套错误的方法丢弃了所有子错误的细节，只保留了某些字符串输出（`format!("{:?}", err)`）。
 
@@ -244,7 +244,7 @@ pub fn first_line(filename: &str) -> Result<String, MyError> {
 
 这就引出了一个问题，这两种方法之间有没有中间地带，可以在不需要手动包含每个可能的错误类型的情况下保留子错误信息？
 
-将子错误信息编码为 [`trait` 对象][trait object]避免了为每种可能性都定义一个`枚举`变体的需要，但擦除了特定基础错误类型的细节。接收此类对象的调用者将能够访问 `Error` `trait` 及其 `trait` 约束的方法 —— `source()`、`Display::fmt()` 和 `Debug::fmt()`，依次类推 —— 但不会知道子错误原始的静态类型：
+将子错误信息编码为 [trait 对象][trait object]避免了为每种可能性都定义一个`枚举`变体的需要，但擦除了特定基础错误类型的细节。接收此类对象的调用者将能够访问 `Error` trait 及其 trait 约束的方法 —— `source()`、`Display::fmt()` 和 `Debug::fmt()`，依次类推 —— 但不会知道子错误原始的静态类型：
 
 <div class="ferris"><img src="../images/ferris/not_desired_behavior.svg" width="75" height="75" /></div>
 
@@ -265,11 +265,11 @@ impl std::fmt::Display for WrappedError {
 }
 ```
 
-结果是这是可能的，但出奇地微妙。部分困难来自于 `trait` 对象的对象安全约束（[第 12 条]），但 Rust 的一致性规则也发挥作用，它们（大致）指出一种类型对于一个 `trait` 最多只能有一个实现。
+结果是这是可能的，但出奇地微妙。部分困难来自于 trait 对象的对象安全约束（[第 12 条]），但 Rust 的一致性规则也发挥作用，它们（大致）指出一种类型对于一个 trait 最多只能有一个实现。
 
-一个假设的 `WrappedError` 类型可能会天真地预期同时实现以下两个 `trait`：
-- `Error` `trait`，因为它本身就是一个错误。
-- `From<Error>` `trait`，以便子错误可以被轻松包装。
+一个假设的 `WrappedError` 类型可能会天真地预期同时实现以下两个 trait：
+- `Error` trait，因为它本身就是一个错误。
+- `From<Error>` trait，以便子错误可以被轻松包装。
 
 这意味着可以从一个内部的 `WrappedError` 创建一个 `WrappedError`，因为 `WrappedError` 实现了 `Error`，但是这与 `From` 的通用自反实现（Blanket Reflective Implementation）冲突了：
 
@@ -310,7 +310,7 @@ error[E0119]: conflicting implementations of trait `From<WrappedError>` for
 
 ## 需要记住的事情
 
-- 标准 `Error` `trait` 对您的要求很少，因此最好为您的错误类型实现它。
+- 标准 `Error` trait 对您的要求很少，因此最好为您的错误类型实现它。
 - 在处理异构的基础错误类型时，决定是否需要保留这些类型。
     - 如果不是，考虑在应用程序代码中使用 `anyhow` 来包装子错误。
     - 如果是，将它们编码在一个`枚举`中并提供转换。考虑使用 `thiserror` 来帮助做到这一点。
