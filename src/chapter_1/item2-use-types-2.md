@@ -87,11 +87,7 @@ println!("op = {:p}", op);
 // Example output: "op = 0x101e9aeb0"
 ```
 
-<!-- <div class="ferris-border"> -->
-
-一个需要注意的技术细节：需要显式地将函数强制转换为 `fn` 类型，因为仅仅使用函数的名称并不能得到 `fn` 类型的值；
-
-这段代码无法编译！
+一个需要注意的技术细节：需要显式地将函数转换为 `fn` 类型，因为仅仅使用函数的名称并不能得到 `fn` 类型的值：
 
 <div class="ferris"><img src="../images/ferris/does_not_compile.svg" width="75" height="75" /></div>
 
@@ -103,30 +99,25 @@ let op2 = sum;
 assert!(op1 == op2);
 ````
 
-```rust
-error[E0369]: binary operation `==` cannot be applied to type `fn(i32, i32) -> i32 {main::sum}`
-   --> use-types-behaviour/src/main.rs:117:21
+```shell
+error[E0369]: binary operation `==` cannot be applied to type
+              `fn(i32, i32) -> i32 {main::sum}`
+   --> src/main.rs:102:17
     |
-117 |         assert!(op1 == op2);
-    |                 --- ^^ --- fn(i32, i32) -> i32 {main::sum}
-    |                 |
-    |                 fn(i32, i32) -> i32 {main::sum}
+102 |     assert!(op1 == op2);
+    |             --- ^^ --- fn(i32, i32) -> i32 {main::sum}
+    |             |
+    |             fn(i32, i32) -> i32 {main::sum}
     |
-help: you might have forgotten to call this function
+help: use parentheses to call these
     |
-117 |         assert!(op1( /* arguments */ ) == op2);
-    |                    +++++++++++++++++++
-help: you might have forgotten to call this function
-    |
-117 |         assert!(op1 == op2( /* arguments */ ));
-    |                           +++++++++++++++++++
-
+102 |     assert!(op1(/* i32 */, /* i32 */) == op2(/* i32 */, /* i32 */));
+    |                ++++++++++++++++++++++       ++++++++++++++++++++++
 ```
 
 相反，编译器错误表明该类型类似于 `fn(i32, i32) -> i32 {main::sum}`，一种完全内部于编译器的类型（即不能在用户代码中编写），它同时标识了特定的函数及其签名。
 
-换句话说，`sum` 的类型既编码了函数的签名又编码了其位置（出于优化原因）；这种类型可以自动强制转换为 `fn` 类型（[第 6 条]）。
-<!-- </div> -->
+换句话说，`sum` 的*类型*既编码了函数的签名又编码了其位置（[出于优化原因]）；这种类型可以自动转换为 `fn` 类型（[第 5 条]）。
 
 ### 闭包
 
@@ -429,4 +420,5 @@ note: for a trait to be "object safe" it needs to allow building a vtable to all
 [第 13 条]: ../chapter_2/item13-use-default-impl.md
 
 [函数指针]: https://doc.rust-lang.org/std/primitive.fn.html
+[出于优化原因]: https://doc.rust-lang.org/std/primitive.fn.html#creating-function-pointers
 [鸭子类型]: https://en.wikipedia.org/wiki/Duck_typing
