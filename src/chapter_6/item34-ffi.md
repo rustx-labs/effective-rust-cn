@@ -6,13 +6,13 @@
 
 Rust 的默认目标是可以与 C 程序互操作，许多其他提供跨语言互通的语言也是首先提供与 C 互通的能力。一部分原因是因为 C 的库普遍存在，另外也是因为 C 的简洁性：C 作为互操作性的“最小公分母”，它不依赖具备高级功能的工具链。如果与其他语言互通可能需要考虑更多高级功能（例如：Java 或 Go 中的垃圾收集、C++ 的异常处理和模板类、Java 和 C++ 的函数重载等）。
 
-但是，这并不是说 Rust 和 C 互操作就是非常简单的事情。由于引入了其他语言编写的代码，Rust 提供的安全保证和保护将不再使用，尤其是涉及到内存安全的部分。
+但是，这并不是说 Rust 和 C 互操作就是非常简单的事情。由于引入了其他语言编写的代码，Rust 提供的安全保证和保护将不再适用，尤其是涉及到内存安全的部分。
 
-所以，Rust 中的 FFI 代码都是 `unsafe` 的，[第 16 条]的建议将不再适用于此场景。本章节提供一些针对 FFI 的替代建议，[第 35 条]探讨了用来解决使用 FFI 时遇到的某些问题（但不是全部）的工具，《[Rustonomicon][Rustonomicon]》 中的 [FFI][FFI chapter] 一章也提供了很有帮助的建议和信息。
+所以，Rust 中的 FFI 代码都是 `unsafe` 的，[第 16 条]的建议将不再适用于此场景。本章节将提供一些针对 FFI 的替代建议，[第 35 条]探讨了用来解决使用 FFI 时遇到的某些问题（但不是全部）的工具，《[Rustonomicon]》 中的 [FFI][FFI chapter] 一章也提供了很有帮助的建议和信息。
 
 ## 从 Rust 调用 C 函数
 
-最简单的 FFI 交互就是从Rust 代码调用 C 函数，并且参数都是不涉及指针、引用或者内存地址的“直接”类型：
+最简单的 FFI 交互就是从 Rust 代码调用 C 函数，并且参数都是不涉及指针、引用或者内存地址的“直接”类型：
 
 ```c
 /* 文件：lib.c */
@@ -26,7 +26,7 @@ int add(int x, int y) {
 
 C 代码中*定义*了一个函数，通常还伴随一个头文件来*声明*这个函数以方便其他 C 代码使用它：
 
-```C
+```c
 /* 文件：lib.h */
 #ifndef LIB_H
 #define LIB_H
@@ -100,7 +100,7 @@ fn main() {
 let x = add(1, 1);
 ```
 
-```
+```shell
 error[E0133]: call to unsafe function is unsafe and requires unsafe function
               or block
    --> src/main.rs:176:13
@@ -112,12 +112,12 @@ error[E0133]: call to unsafe function is unsafe and requires unsafe function
             avoid undefined behavior
 ```
 
-另一个需要注意的问题是 C 的 `int` 类型，在 Rust 中对应的是 [`std::os::raw::c_int`][c_int ]。一个 `int` 是多大？*有可能*下面两个值是一样的：
+另一个需要注意的问题是 C 的 `int` 类型，在 Rust 中对应的是 [`std::os::raw::c_int`][c_int]。一个 `int` 是多大？下面两个值*有可能*是一样的：
 
 - 用来编译 C 代码的工具链中的 `int` 类型大小
-- Rust 工具链中的 `std::os::raw::c_int`  大小
+- Rust 工具链中的 `std::os::raw::c_int` 大小
 
-但是我们不能冒险假设此二者一定一样大。因此，尽量**在 FFI 边界选择已知大小的类型** —— 在 C 代码中，使用 `<stdint.h>` 中的类型，例如：`uint32_t`。然而，如果是一个已经使用了 `int` / `long` / `size_t` 类型的现有 C 代码库，那这个要求就难以满足了。
+但是我们不能冒险假设此二者一定一样大。因此，尽量*在 FFI 边界选择已知大小的类型* —— 在 C 代码中，使用 `<stdint.h>` 中的类型，例如：`uint32_t`。然而，如果是一个已经使用了 `int` / `long` / `size_t` 类型的现有 C 代码库，那这个要求就难以满足了。
 
 最后一个实际问题是，C 代码和 Rust 代码中的函数声明要完全匹配。更糟糕的是，如果它们不匹配，构建工具不会给出任何警告，而是默默的生成错误的代码。
 
@@ -146,11 +146,11 @@ int32_t add(int32_t a, int32_t b) { return a+b; }
 }
 ```
 
-为了解决这个问题，引入了*名称重整*机制：编译器将[重载函数的签名和类型信息编码][compiler encodes]到输出到目标文件中，链接器还是保持原来的处理方式：在占位符和定义之间一一匹配。
+为了解决这个问题，引入了*名称重整*机制：编译器将[重载函数的签名和类型信息编码][compiler encodes]输出到目标文件中，链接器还是保持原来的处理方式：在占位符和定义之间一一匹配。
 
 在类 Unix 系统上，可以使用 [`nm`][nm] 命令行工具查看目标文件：
 
-```
+```shell
 % nm ffi-lib.o | grep add  # C 链接器看到的
 0000000000000000 T _add
 
@@ -164,7 +164,7 @@ int32_t add(int32_t a, int32_t b) { return a+b; }
 
 [`c++filt`][c++filt] 工具可以将重整后的名称还原到代码中的名称：
 
-```
+```shell
 % nm ffi-cpp-lib.o | grep add | c++filt  # what the programmer sees
 0000000000000000 T ns1::add(int, int)
 0000000000000020 T ns1::add(long long, long long)
@@ -177,9 +177,9 @@ int32_t add(int32_t a, int32_t b) { return a+b; }
 
 ## 从 Rust 访问 C 的数据
 
-前面所示的 `add` 函数在 Rust 和 C 之间交换的都是简单的数据类型：一个可以存储到寄存器中的整数。即使如此，仍然有一些细节需要注意。所以，不难想象当处理负责数据结构时会有怎样的棘手问题。
+前面所示的 `add` 函数在 Rust 和 C 之间交换的都是简单的数据类型：一个可以存储到寄存器中的整数。即使如此，仍然有一些细节需要注意。所以，不难想象当处理更复杂的数据结构时会有怎样的棘手问题。
 
-C 和 Rust 都使用 `struct` 将一系列相关的数据合并到一个数据结构之内。但是，当在内存中表示一个 `struct` 时，这两种语言就会有区别了，它们会将字段放到不同的位置，甚至是按照不同的顺序来存放数据（即[*布局*][layout]）。位了防止不匹配问题，**对在 FFI 使用的 Rust 中的类型使用 `#[repr(C)]` 标记**，这种表示方式是专门为与 C 互操作设计的：
+C 和 Rust 都使用 `struct` 将一系列相关的数据合并到一个数据结构之内。但是，当在内存中表示一个 `struct` 时，这两种语言就会有区别了，它们会将字段放到不同的位置，甚至是按照不同的顺序来存放数据（即[*布局*][layout]）。为了防止不匹配问题，*对在 FFI 使用的 Rust 中的类型使用 `#[repr(C)]` 标记*，[这种表示方式是专门为与 C 互操作设计的][repr]：
 
 ```c
 /* C 结构体定义 */
@@ -205,15 +205,15 @@ pub struct FfiStruct {
 在 FFI 互操作场景中，要特别小心字符串类型。C 和 Rust 中默认的字符串类型是完全不同的：
 
 - Rust [`String`][String] 是已知长度的 UTF-8 编码的数据，可能包括值为 0 的字节。
-- C 字符串（`char *`）保存的是字节值（可能有符号的，也可能无符号），它的长度由数据中的第一个值为 0 （`\0`） 的字节决定。
+- C 字符串（`char *`）保存的是字节值（可能有符号，也可能无符号），它的长度由数据中的第一个值为 0 （`\0`） 的字节决定。
 
-幸运的是，鉴于 Rust 库的设计者已经完成了底层的繁重工作，我们可以在 Rust 中简单明了的使用 C 字符串。在和 C 的互操作过程中，如果需要拥有字符串值，可以**使用 [`CString`][CString] 类型**，如果需要借用字符串值，可以使用 [`CStr`][Cstr] 类型。当你需要向 FFI 函数传递 `const char*` 类型的字符串时，可以使用 `CStr` 的 [`as_ptr()`][as_ptr] 方法。注意，这里的 `const` 很重要，如果 FFI 函数需要修改字符串内容（`char *`），就不可以这样使用了。
+幸运的是，鉴于 Rust 库的设计者已经完成了底层的繁重工作，我们可以在 Rust 中简单明了的使用 C 字符串。在和 C 的互操作过程中，如果需要拥有字符串值，可以*使用 [`CString`][CString] 类型*，如果需要借用字符串值，可以使用 [`CStr`][Cstr] 类型。当你需要向 FFI 函数传递 `const char*` 类型的字符串时，可以使用 `CStr` 的 [`as_ptr()`][as_ptr] 方法。注意，这里的 `const` 很重要，如果 FFI 函数需要修改字符串内容（`char *`），就不可以这样使用了。
 
 ## 生命周期
 
 大部分的数据都比较大，以至于无法存储到寄存器，只能存储到内存中。也就是说，访问数据实际上访问的是内存地址。在 C 中对应的是*指针*：一个无任何其他附加语义信息的、代表内存地址的数值（见[第 8 条]）。
 
-在 Rust 中，表示内存地址的概念叫做*引用*，其数值可以提取为一个*裸指针*，方便传递给 FFI ：
+在 Rust 中，表示内存地址的概念叫做*引用*，其数值可以提取为一个*裸指针*，方便传递给 FFI：
 
 ```rust
 extern "C" {
@@ -236,13 +236,13 @@ let x = unsafe { use_struct(&v as *const FfiStruct) };
 因此，使用裸指针本质上是不安全的，`unsafe` 标记表明这里存在风险：FFI 边界另一侧的 C 代码可以做出一些破坏 Rust 内存安全性的操作：
 
 - C 代码可能保留指针的值，并在后续的代码中使用。当关联的内存已经从堆上释放，或者在栈上重用了，就会发生*使用已释放的内存*问题。
-- C 代码可能会抛弃传递给它的指针的 `const` 限定符，然后修改指针指向的数据，但是 Rust 一侧期望这段数据是不可变的。
-- C 代码不受限于 Rust 的 `Mutex` 保护，因此引发数据竞争（见[第 17 条]）问题。
+- C 代码可能会抛弃传递给它的指针的 `const` 限定符，然后修改指针指向的数据，但是 Rust 侧期望这段数据是不可变的。
+- C 代码不受限于 Rust 的 `Mutex` 保护，因此可能引发数据竞争（见[第 17 条]）问题。
 - C 代码可能错误地（例如，调用 `free()` 函数）将关联的堆内存地址返回给内存分配器，意味着 Rust 代码面临使用已释放内存的问题。
 
 这些风险是通过 FFI 机制重用现有代码以节约成本的时候不可避免的。优点是，你只需编写或者自动生成相应的声明就可以重用现有的、大概率可以正常工作的代码；缺点是你失去了使用 Rust 的最大优势 —— 内存保护。
 
-避免 FFI 中的内存问题的首要法则是：**在同一侧分配和释放内存**。例如，下面这段代码包含一对对称的函数：
+避免 FFI 中的内存问题的首要法则是：*在同一侧分配和释放内存*。例如，下面这段代码包含一对对称的函数：
 
 ```C
 /* C 函数。 */
@@ -265,10 +265,10 @@ extern "C" {
 
 ```
 
-为了确保分配内存的代码有对应的释放内存的代码，建议实现一个 RAII 包装来自动避免 C 一侧分配的内存泄漏问题（见[第 11 条]）。用作包装器的结构体持有 C 一侧分配的内存：
+为了确保分配内存的代码有对应的释放内存的代码，建议实现一个 RAII 包装来自动避免 C 侧分配的内存泄漏问题（见[第 11 条]）。用作包装器的结构体持有 C 侧分配的内存：
 
 ```rust
-/// 包装器结构体拥有 C 一侧分配的内存
+/// 包装器结构体拥有 C 侧分配的内存。
 struct FfiWrapper {
     // 不可变量: inner 是非空的。
     inner: *mut FfiStruct,
@@ -278,20 +278,20 @@ struct FfiWrapper {
 然后为这个结构体实现 `Drop` trait，将内存地址返回给 C 代码库来避免内存泄漏风险：
 
 ```rust
-/// 手动实现 [`Drop`]
-/// 以确保从 C 代码分配的内存能够正确释放
+/// 手动实现 [`Drop`]，
+/// 以确保从 C 代码分配的内存能够正确释放。
 impl Drop for FfiWrapper {
     fn drop(&mut self) {
-        // 安全的: `inner` 是非空的
-        // 同时，`free_struct()` 还处理了空指针的情况
+        // 安全: `inner` 是非空的，
+        // 同时，`free_struct()` 还处理了空指针的情况。
         unsafe { free_struct(self.inner) }
     }
 }
 ```
 
-**为 FFI 派生的资源实现 `Drop` trait 以实现 RAII** 这条法则同样适用于除内存之外的其他资源：打开的文件、数据库连接等（见[第 11 条]）。
+*为 FFI 派生的资源实现 `Drop` trait 以实现 RAII* 这条法则同样适用于除内存之外的其他资源：打开的文件、数据库连接等（见[第 11 条]）。
 
-将与 C 的互操作包装到一个结构体中，还可以捕获一些其他潜在的陷阱，例如：可以将原本不可见的失败转换成 `Result` ：
+将与 C 的互操作包装到一个结构体中，还可以捕获一些其他潜在的陷阱，例如：可以将原本不可见的失败转换成 `Result`：
 
 ```rust
 type Error = String;
@@ -314,14 +314,14 @@ impl FfiWrapper {
 ```rust
 impl FfiWrapper {
     pub fn set_byte(&mut self, b: u8) {
-        // 安全的：依赖于 `inner` 是非空的。
+        // 安全：依赖于 `inner` 是非空的。
         let r: &mut FfiStruct = unsafe { &mut *self.inner };
         r.byte = b;
     }
 }
 ```
 
-或者，如果底层的 C 数据结构有一个等价的 Rust 映射，并且可以安全的直接操作该数据，那么实现 `AsRef` 和 `AsMut` trait （见[第 8 条]）用起来更直接：
+或者，如果底层的 C 数据结构有一个等价的 Rust 映射，并且可以安全的直接操作该数据，那么实现 `AsRef` 和 `AsMut` trait（见[第 8 条]）用起来更直接：
 
 ```rust
 impl AsMut<FfiStruct> for FfiWrapper {
@@ -334,11 +334,11 @@ impl AsMut<FfiStruct> for FfiWrapper {
 
 ```rust
 let mut wrapper = FfiWrapper::new(42).expect("real code would check");
-// 直接修改在 C 一侧分配的数据
+// 直接修改在 C 侧分配的数据
 wrapper.as_mut().byte = 12;
 ```
 
-上面的示例展示了使用 FFI 时一条非常有帮助的法则：**将访问 `unsafe` FFI 库的代码封装到安全的 Rust 代码之内**。这可以使得其他代码遵循[第 16 条]的建议，避免编写 `unsafe` 代码。它还可以将危险的代码集中在一个地方，便于仔细研究和测试以发现问题，并在出现问题的时候将这些代码视为首要怀疑点来处理。
+上面的示例展示了使用 FFI 时一条非常有帮助的法则：*将访问 `unsafe` FFI 库的代码封装到安全的 Rust 代码之内*。这可以使得其他代码遵循[第 16 条]的建议，避免编写 `unsafe` 代码。它还可以将危险的代码集中在一个地方，便于仔细研究和测试以发现问题，并在出现问题的时候将这些代码视为首要怀疑点来处理。
 
 ## 从 C 调用 Rust
 
@@ -347,7 +347,7 @@ wrapper.as_mut().byte = 12;
 将 Rust 库导出给 C 的基本原理类似，只不过是相反方向的：
 
 - Rust 中导出的函数需要 `extern "C"` 标记来确保和 C 兼容。
-- 默认情况下，Rust 中的符号名称会被重整，类似 C++ 的行为 [^3]，所以，在函数定义上也需要 `#[no_mangle]` 属性来保持原始名字。但是这同样意味着函数名称作为全局命名空间的一部分，可能和其他程序中的其他符号冲突。所以，**建议在导出的名称前增加前缀**避免混淆，例如：`mylib_...`。
+- 默认情况下，Rust 中的符号名称会被重整，类似 C++ 的行为 [^3]，所以，在函数定义上也需要 `#[no_mangle]` 属性来保持原始名字。但是这同样意味着函数名称作为全局命名空间的一部分，可能和其他程序中的其他符号冲突。所以，*建议在导出的名称前增加前缀*避免混淆，例如：`mylib_...`。
 - 给需要导出的结构体增加 `#[repr(C)]` 标记来确保其内存布局和 C 数据类型相同。
 
 同样的，当处理指针、引用或者生命周期的时候，也会有一些潜在的问题。毕竟，C 指针和 Rust 的引用是有所不同的，如果忘记这一点，可能会引发严重问题。
@@ -357,8 +357,7 @@ wrapper.as_mut().byte = 12;
 ```rust
 #[no_mangle]
 pub extern "C" fn add_contents(p: *const FfiStruct) -> u32 {
-    // 将调用者传入的裸指针
-    // 转换成 Rust 的引用
+    // 将调用者传入的裸指针转换成 Rust 的引用。
     let s: &FfiStruct = unsafe { &*p }; // Ruh-roh
     s.integer + s.byte as u32
 }
@@ -376,7 +375,7 @@ uint32_t result = add_contents(NULL); // 出错啦！
 pub extern "C" fn add_contents_safer(p: *const FfiStruct) -> u32 {
     let s = match unsafe { p.as_ref() } {
         Some(r) => r,
-        None => return 0, // 如果 C 代码给我们空指针的时候
+        None => return 0, // 当 C 代码给我们空指针的时候。
     };
     s.integer + s.byte as u32
 }
@@ -398,7 +397,7 @@ impl FfiStruct {
     }
 }
 
-// 这里不会发生编译错误
+// 这里不会发生编译错误。
 #[no_mangle]
 pub extern "C" fn new_struct(v: u32) -> *mut FfiStruct {
     let mut s = FfiStruct::new(v);
@@ -406,12 +405,12 @@ pub extern "C" fn new_struct(v: u32) -> *mut FfiStruct {
 }
 ```
 
-任何从 Rust 返回给 C 一侧的指针都应该是指向堆内存的地址，而非栈地址。但是，尝试通过 `Box` 来把对象放到堆上是不能解决这个问题的：
+任何从 Rust 返回给 C 侧的指针都应该是指向堆内存的地址，而非栈地址。但是，尝试通过 `Box` 来把对象放到堆上是不能解决这个问题的：
 
 <div class="ferris"><img src="../images/ferris/not_desired_behavior.svg" width="75" height="75" /></div>
 
 ```rust
-// 这里不会发生编译错误
+// 这里也不会发生编译错误。
 #[no_mangle]
 pub extern "C" fn new_struct_heap(v: u32) -> *mut FfiStruct {
     let s = FfiStruct::new(v); // 在栈上创建 `FfiStruct`
@@ -430,12 +429,12 @@ pub extern "C" fn new_struct_raw(v: u32) -> *mut FfiStruct {
     let s = FfiStruct::new(v); // 在栈上创建 `FfiStruct`
     let b = Box::new(s); // 将 `FfiStruct` 移入堆中
 
-    // 消费 `Box`，并接管堆上内存
+    // 消费 `Box`，并接管堆上内存。
     Box::into_raw(b)
 }
 ```
 
-但是这样做引发了另外一个问题：堆上对象如何释放？之前我们建议在同一侧代码中申请和释放内存，那么就是说，Rust 一侧负责释放内存。对应的工具是 [`Box::from_raw`][box-from-raw]，它可以从裸指针构建一个 `Box`：
+但是这样做引发了另外一个问题：堆上对象如何释放？之前我们建议在同一侧代码中申请和释放内存，那么就是说，Rust 侧负责释放内存。对应的工具是 [`Box::from_raw`][box-from-raw]，它可以从裸指针构建一个 `Box`：
 
 ```rust
 #[no_mangle]
@@ -454,7 +453,7 @@ pub extern "C" fn free_struct_raw(p: *mut FfiStruct) {
 
 以上表明了本章的主题：使用 FFI 会让你面对标准 Rust 中不存在的风险。只要你能够意识到其中的风险和成本，那也是值得的。控制跨越 FFI 边界内容的细节有助于降低风险，但是无法完全消除它。
 
-当使用 C 代码调用 Rust 代码的时候，还有一点需要关注的：如果你的 Rust 代码忽略了[第 18 条]的建议，你应该**防止 `panic!` 跨越 FFI 边界**，因为这会导致未定义的、糟糕的行为 [^4]。
+当使用 C 代码调用 Rust 代码的时候，还有一点需要关注的：如果你的 Rust 代码忽略了[第 18 条]的建议，你应该*防止 `panic!` 跨越 FFI 边界*，因为这会导致未定义的、糟糕的行为 [^4]。
 
 ## 需要记住的事情
 
@@ -475,7 +474,7 @@ pub extern "C" fn free_struct_raw(p: *mut FfiStruct) {
 
 [^3]: Rust 中用来将重整后的名称变回阅读友好名称的工具叫做 [`rustfilt`][rustfilt]，这个工具基于 [`rustc-demangle`][rustc-demangle] 命令构建，类似于 `c++filt` 工具。
 
-[^4]: Rust 1.71 版本中包含 [C-unwind ABI][c-unwind]，可以实现跨语言的错误回退功能。
+[^4]: Rust 1.71 版本中包含 [C-unwind ABI][c-unwind]，可以实现跨语言的错误展开功能。
 
 原文[点这里](https://www.lurklurk.org/effective-rust/ffi.html)查看
 
