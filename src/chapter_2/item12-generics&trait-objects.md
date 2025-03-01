@@ -1,6 +1,6 @@
 # 第 12 条：理解泛型和 trait 对象之间的权衡
 
-[第 2 条]描述了如何使用 trait 来封装类型系统中的行为，作为相关方法的集合，并观察到有两种使用 trait 的方法：作为泛型的 trait 约束（`trait bound`）或 trait 对象（`trait object`）。本条款探讨了这两种可能性之间的权衡。
+[第 2 条]描述了如何使用 trait 来封装类型系统中的行为，作为相关方法的集合，并观察到有两种使用 trait 的方法：作为泛型的 trait 约束（*trait bound*）或 trait 对象（*trait object*）。本条款探讨了这两种可能性之间的权衡。
 
 下面是一个运行示例，请考虑一个涵盖显示图形对象的功能的 trait：
 
@@ -254,7 +254,7 @@ let shape: &dyn Shape = &square;
 
 ![图 2-2](../images/item12/traitbounds.svg)
 
-*图 2-2.具有 `Draw` 与 `Shape` 两种虚表的具有 trait 约束的 trait 对象*
+*图 2-2.具有 trait 约束的 trait 对象，`Draw` 与 `Shape` 有各自的虚表*
 
 在撰写本文时（截至Rust 1.70版本），没有办法从 `Shape` 向上转型到 `Draw`，因为无法在运行时恢复（纯净的）`Draw` 虚表；没有办法在相关的 trait 对象之间进行转换，这也就意味着没有[里氏替换原则（Liskov substitution）]。然而，这种情况很可能在 Rust 的后续版本中发生变化 —— 有关更多信息，请参见[第 19 条]。
 

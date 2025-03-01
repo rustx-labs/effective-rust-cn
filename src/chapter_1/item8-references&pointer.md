@@ -65,11 +65,11 @@ let ref_x = &x;
 let ref_pt = &pt;
 ```
 
-可能最终在栈上布局如图1-2所示。
+可能最终在栈上布局如图 1-2 所示。
 
-<img src="../images/item8/stack.svg" alt="img">
+![图 1-2](../images/item8/stack.svg)
 
-图1-2.带有指向局部变量的指针的栈布局
+*图 1-2. 带有指向局部变量的指针的栈布局*
 
 Rust 引用可以指向位于**栈**或**堆**上的项。Rust 默认情况下会在栈上分配内存，但是 `Box<T>` 指针类型（大致相当于 C++ 的 `std::unique_ptr<T>`）会强制分配到堆上，这意味着分配的项可以比当前代码块的作用域更长寿。本质上，`Box<T>` 也是一个简单的 8 字节指针值（64 位平台）：
 
@@ -77,11 +77,11 @@ Rust 引用可以指向位于**栈**或**堆**上的项。Rust 默认情况下�
 let box_pt = Box::new(Point { x: 10, y: 20 });
 ```
 
-这在图1-3中被描述。
+这在图 1-3 中被描述。
 
-<img src="../images/item8/heap.svg" alt="img">
+![图 1-3](../images/item8/heap.svg)
 
-图1-3.栈上的 `Box` 指针指向堆上的 `struct`
+*图 1-3. 栈上的 `Box` 指针指向堆上的 `struct`*
 
 ## 指针 trait
 
@@ -131,9 +131,9 @@ let array: [u64; 5] = [0, 1, 2, 3, 4];
 let slice = &array[1..3];
 ```
 
-![img](../images/item8/arrayslice.svg)
+![图 1-4](../images/item8/arrayslice.svg)
 
-图1-4.指向栈数组的栈切片
+*图 1-4. 指向栈数组的栈切片*
 
 连续值的另一种常见容器是 `Vec<T>`。这像数组一样持有连续的值集合，但与数组不同，`Vec` 中的值的数量可以增长（例如用 [`push(value)`] ）或缩小（例如用 [`pop()`] ）。
 
@@ -147,9 +147,9 @@ for i in 0..5 {
 let vslice = &vector[1..3];
 ```
 
-![img](../images/item8/vecslice.svg)
+![图 1-5](../images/item8/vecslice.svg)
 
-图1-5.指向堆上的Vec内容的栈切片
+*图 1-5. 指向堆上的Vec内容的栈切片*
 
 表达式 `&vector[1..3]` 的底层有很多细节，所以值得将其进行逐层的拆解：
 - `1..3` 部分是一个[范围表达式(range expression)]；编译器会将其转换为 [`Range<usize>`] 类型的实例，该类型包含下限（1）但不包含上限（3）。
@@ -199,9 +199,9 @@ assert_eq!(result, 1);
 
 相应的内存布局如图 1-6 所示。
 
-![img](../images/item8/traitobject.svg)
+![图 1-6](../images/item8/traitobject.svg)
 
-图1-6.指向具体项和 `vtable` 的 trait 对象
+*图 1-6. 指向具体项和 `vtable` 的 trait 对象*
 
 持有 trait 对象的代码可以通过 `vtable` 中的函数指针调用 trait 的方法，并将项指针作为 `&self` 参数传递；有关更多信息和建议，请参考[第 12 条]。
 
@@ -254,9 +254,9 @@ let rc2 = rc1.clone();
 let wk = Rc::downgrade(&rc1);
 ```
 
-![img](../images/item8/rc.svg)
+![图 1-7](../images/item8/rc.svg)
 
-图1-7. `Rc` 和 `Weak` 指针都指向堆上同一个项
+*图 1-7. `Rc` 和 `Weak` 指针都指向堆上同一个项*
 
 当强引用计数降至零时，底层数据将被释放，但只有弱引用计数也降至零时，才会释放登记计数的结构。
 
@@ -271,9 +271,9 @@ let b1 = rc.borrow();
 let b2 = rc.borrow(); 
 ```
 
-![img](../images/item8/refcell.svg)
+![图 1-8](../images/item8/refcell.svg)
 
-图1-8. 指向 `RefCell` 容器的 `Ref` 借用
+*图 1-8. 指向 `RefCell` 容器的 `Ref` 借用*
 
 这些运行时的借用检查意味着用户使用 `RefCell` 时，必须在两个不愉快的选项之间做出选择：
 

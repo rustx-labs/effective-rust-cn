@@ -681,9 +681,9 @@ Charlie is Some(RefCell { value: Guest { name: "Charlie",
 
 例如，打破树结构所有权单向流的一种模式是，有一个“所有者”指针从该数据指回这个数据的所有者，如图 3-3 所示。这些**所有者**链接对于在数据结构中上下移动很有用；例如，向**叶子**添加新的同级节点就需要找到该叶子所属的**树枝**。
 
-<img src="../images/item15/treedatastructure.svg" width="600" height="302">
+![图 3-3](../images/item15/treedatastructure.svg)
 
-_图 3-3. 树结构层级关系_
+*图 3-3. 树结构层级关系*
 
 在 Rust 中实现此模式可以利用 `Rc<T>` 的精明的伙伴 [`Weak<T>`]：
 
