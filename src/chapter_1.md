@@ -10,6 +10,12 @@
 
 请注意，涉及 Rust trait 的内容将在下一章中介绍，但因为 trait 描述了类型的行为，因此与本章的内容有一定的重叠。
 
+## 注释
+
+原文[点这里](https://www.lurklurk.org/effective-rust/types.html)查看
+
+<!-- 参考链接 -->
+
 [OCaml]: https://ocaml.org/
 [Haskell]: https://www.haskell.org/
 [代数数据类型]: https://en.wikipedia.org/wiki/Algebraic_data_type

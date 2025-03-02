@@ -13,6 +13,10 @@
 
 尝试将你的代码与这些概念的后果对齐是一个好主意。在 Rust 中重现（部分）`C/C++` 的行为是可能的，但如果你这样做，为什么还要麻烦使用 Rust 呢？
 
+## 注释
+
+原文[点这里](https://www.lurklurk.org/effective-rust/concepts.html)查看
+
 <!-- 参考链接 -->
 
 [第 16 条]: chapter_3/item16-unsafe.md

@@ -45,6 +45,7 @@
 * 术语翻译
   * Trait 无广为接受的翻译名称，保持原文
   * Cargo 里的 feature 不翻译，保持原文
+  * 语言及标准库提供的 Blanket Implementation，翻译为通用实现
 
 ## 环境准备
 
