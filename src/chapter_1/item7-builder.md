@@ -33,7 +33,7 @@ let dizzy = Details {
 
 这样的样板式代码也很脆弱，因为将来要向 `struct` 中添加一个新字段的时候需要更改所有创建这个结构体的地方。
 
-通过使用和实现 [Default] `trait` 可以显著地减少这种样板代码，如[第 10 条]中所述：
+通过使用和实现 [Default] trait 可以显著地减少这种样板代码，如[第 10 条]中所述：
 
 ```rust
 let dizzy = Details {
@@ -45,7 +45,7 @@ let dizzy = Details {
 
 使用 `Default` 还有助于减少结构体新增字段时候导致的修改，前提是新的字段本身的类型也实现了 `Default`。
 
-还有一个更普遍的问题：仅当所有的字段类型都实现了 `Default` `trait` 的时候，结构体才能使用自动派生的 `Default` 实现。如果有任何一个字段不满足，那么 `derive` 就会失败了：
+还有一个更普遍的问题：仅当所有的字段类型都实现了 `Default` trait 的时候，结构体才能使用自动派生的 `Default` 实现。如果有任何一个字段不满足，那么 `derive` 就会失败了：
 
 <div class="ferris"><img src="../images/ferris/does_not_compile.svg" width="75" height="75" /></div>
 

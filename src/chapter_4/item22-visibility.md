@@ -45,7 +45,7 @@ pub mod somemodule {
         VariantThree { name: String, value: String },
     }
 
-    // 标记为公开的 `trait`，它的方法都是对外可见的
+    // 标记为公开的 trait，它的方法都是对外可见的
     pub trait DoSomething {
         fn do_something(&self, arg: i32);
     }

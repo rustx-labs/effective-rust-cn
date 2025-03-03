@@ -8,7 +8,13 @@
 
 接下来还介绍了 Rust 标准库中提供的一些随处可见的数据类型：`Option`、`Result` 和 `Iterator`。熟练掌握这些标准工具可以帮助你写出简洁高效、符合 Rust 习惯的代码——尤其是问号操作符的使用，提供了非常简洁优雅且依然然类型安全的错误处理。
 
-请注意，涉及 Rust `trait` 的内容将在下一章中介绍，但因为 `trait` 描述了类型的行为，因此与本章的内容有一定的重叠。
+请注意，涉及 Rust trait 的内容将在下一章中介绍，但因为 trait 描述了类型的行为，因此与本章的内容有一定的重叠。
+
+## 注释
+
+原文[点这里](https://www.lurklurk.org/effective-rust/types.html)查看
+
+<!-- 参考链接 -->
 
 [OCaml]: https://ocaml.org/
 [Haskell]: https://www.haskell.org/
