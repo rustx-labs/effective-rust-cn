@@ -60,7 +60,7 @@ extern crate alloc;
 - 用相同的 `core::` 或 `alloc::` crate 替换 `std::` 类型（由于缺少 `std` prelude，还需要 `use` 完整的类型名称）
 - 将 `HashMap` / `HashSet` 迁移为 `BTreeMap` / `BTreeSet`
 
-但这些操作只有在依赖的所有 crate（[第 25 条]）也兼容 `no_std` 时才有意义 —— 如果使用您 crate 的用户被迫链接到任何 `std` 中，与 `no_std` 的兼容就会失去意义。
+但这些操作只有在依赖的所有 crate（[第 25 条]）也兼容 `no_std` 时才有意义 —— 如果使用你 crate 的用户被迫链接到任何 `std` 中，与 `no_std` 的兼容就会失去意义。
 
 这里还有一个问题：Rust 编译器并不会告诉你一个 `no_std` crate 中是否有引入使用了 `std` 的依赖。这意味着只要添加或更新一个使用了 `std` 的依赖，就能轻松破坏掉 `no_std` crate 的兼容性。
 
@@ -148,7 +148,7 @@ fn try_build_a_vec() -> Result<Vec<u8>, String> {
 ## 需要记住的事情
 
 - `std` crate 中的许多项目实际上来自 `core` 或 `alloc`。
-- 因此，使库代码兼容 `no_std` 可能比您想象的更简单。
+- 因此，使库代码兼容 `no_std` 可能比你想象的更简单。
 - 通过在 CI 中检查 `no_std` 代码来确认 `no_std` 代码保持 `no_std` 兼容。
 - 注意，当前支持在有限堆环境中工作的库十分有限。
 
