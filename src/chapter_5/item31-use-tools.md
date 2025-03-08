@@ -46,7 +46,7 @@ Rust 工具链的可扩展性不仅限于包的元数据，编译器的抽象语
 * [第 29 条]完全致力于使用 Clippy。
 * [Godbolt 编译器管理器]允许你探索与你的源代码对应的机器代码，如[第 30 条]所述。
 * [第 30 条]还提到了其他测试工具，例如用于模糊测试的 [`cargo-fuzz`] 和用于基准测试的 [`criterion`]。
-* [第 35 条]涵盖了使用 [bindgen] 从 C 代码自动生成 Rust FFI 的包装器。
+* [第 35 条]涵盖了使用 [`bindgen`] 从 C 代码自动生成 Rust FFI 的包装器。
 
 ## 注释
 
@@ -84,4 +84,4 @@ Rust 工具链的可扩展性不仅限于包的元数据，编译器的抽象语
 [Godbolt 编译器管理器]: https://rust.godbolt.org
 [`cargo-fuzz`]: https://github.com/rust-fuzz/cargo-fuzz
 [`criterion`]: https://crates.io/crates/criterion
-[bindgen]: https://rust-lang.github.io/rust-bindgen/
+[`bindgen`]: https://rust-lang.github.io/rust-bindgen/
