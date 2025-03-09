@@ -520,7 +520,7 @@ ledger.named_mut("Bob").unwrap().address = new_address.to_string();
 assert_eq!(ledger.named("Bob").unwrap().address, new_address);
 ```
 
-但是，如果来宾可以注销，则很容易无意中出现 bug：
+但是，如果来宾可以注销，则很容易无意中出现代码缺陷：
 
 <div class="ferris"><img src="../images/ferris/not_desired_behavior.svg" width="75" height="75" /></div>
 
@@ -580,9 +580,9 @@ Bob is Some(Guest { name: "Charlie", address: "345 Charlieland" })
 Charlie is None
 ```
 
-前面的示例展示了**注销**代码的 bug，但是即便修复了这个 Bug，也无法防止调用者使用该索引值，并传入 `nth()` —— 从而获得意外的或无效的结果。
+前面的示例展示了**注销**代码的缺陷，但是即便修复了这个代码缺陷，也无法防止调用者使用该索引值，并传入 `nth()` —— 从而获得意外的或无效的结果。
 
-核心问题是两个结构体需要保持同步。处理这种问题的更好方法是使用 Rust 的智能指针（[第 8 条]）。使用 `Rc` 和 `RefCell` 来避免使用索引作为无效指针的问题。更新后的示例 —— 但是保持该 Bug 不变 —— 如下所示：
+核心问题是两个结构体需要保持同步。处理这种问题的更好方法是使用 Rust 的智能指针（[第 8 条]）。使用 `Rc` 和 `RefCell` 来避免使用索引作为无效指针的问题。更新后的示例 —— 但是仍然存在缺陷 —— 如下所示：
 
 <div class="ferris"><img src="../images/ferris/not_desired_behavior.svg" width="75" height="75" /></div>
 
@@ -638,7 +638,7 @@ Charlie is Some(RefCell { value: Guest { name: "Charlie",
                                          address: "345 Charlieland" } })
 ```
 
-输出不再有不匹配的名称，但是 Alice 挥之不去的数据仍旧存在，直到我们确保两个集合保持同步，才能修复该 bug：
+输出不再有不匹配的名称，但是 Alice 挥之不去的数据仍旧存在，直到我们确保两个集合保持同步，才能修复该代码缺陷：
 
 ```rust
 pub fn deregister(&mut self, idx: usize) -> Result<(), Error> {

@@ -2,7 +2,8 @@
 
 [第 34 条]讨论了从 Rust 程序调用 C 代码的机制，描述了 C 结构和函数的声明需要有一个等效的 Rust 声明，以允许它们通过 FFI 使用。C 和 Rust 的声明需要保持同步，并且[第 34 条]还警告说工具链不会帮助解决这个问题 —— 不匹配将会被默默忽略，隐藏以后会出现的问题。
 
-让两件事情完全同步听起来像是自动化的好目标，Rust 项目为此提供了正确的工具：bindgen。bindgen 的主要功能是解析 C 头文件并生成相应的 Rust 声明。
+让两件事情完全同步听起来像是自动化的好目标，Rust 项目为此提供了正确的工具：[`bindgen`]。`bindgen` 的主要功能是解析 C 头文件并生成相应的 Rust 声明。
+
 以[第 34 条]中的一些 C 声明为例：
 
 ```c
@@ -20,7 +21,7 @@ uint32_t add32(uint32_t x, uint32_t y);
 
 `bindgen` 工具可以手动调用（或通过 `build.rs` [构建脚本]调用）以创建相应的 Rust 文件：
 
-```bash
+```shell
 % bindgen --no-layout-tests \
           --allowlist-function="add.*" \
           --allowlist-type=FfiStruct \
@@ -57,21 +58,21 @@ extern "C" {
 include!("generated.rs");
 ```
 
-对于任何非最简单的 FFI 声明，请使用 bindgen 为 C 代码生成 Rust 绑定 —— 在这个领域，机器制作的大规模生产代码绝对优于手工精制的声明。如果 C 函数定义发生变化，C 编译器会在 C 声明不再与 C 定义匹配时发出抱怨，但不会有东西抱怨手工编写的 Rust 声明不再与 C 声明匹配；从 C 声明自动生成 Rust 声明可以确保两者保持同步。
+对于任何非最简单的 FFI 声明，请使用 `bindgen` 为 C 代码生成 Rust 绑定 —— 在这个领域，机器制作的大规模生产代码绝对优于手工精制的声明。如果 C 函数定义发生变化，C 编译器会在 C 声明不再与 C 定义匹配时发出抱怨，但不会有东西抱怨手工编写的 Rust 声明不再与 C 声明匹配；从 C 声明自动生成 Rust 声明可以确保两者保持同步。
 
-这也意味着 bindgen 步骤是理想的候选者，可以包含在 CI 系统（[第 32 条]）中；如果生成的代码包含在源码控制中，CI 系统可以在新生成的文件与检入的版本不匹配时报错。
+这也意味着 `bindgen` 很适合被包含在 CI 系统（[第 32 条]）中，如果生成的代码包含在源码控制中，CI 系统可以在新生成的文件与提交的版本不匹配时报错。
 
-当您处理具有大量 API 的现有 C 代码库时，bindgen 工具才能真正发挥其作用。为一个庞大的 `lib_api.h` 头文件创建 Rust 等价物是手动且乏味的，因此容易出错 —— 并且如前所述，许多不匹配错误的类别不会被工具链检测到。bindgen 还拥有一系列选项，允许针对 API 的特定子集（比如，之前展示的 -- `allowlist-function` 和 `--allowlist-type` 选项）。[^1]
+当你处理具有大量 API 的现有 C 代码库时，`bindgen` 工具才能真正发挥其作用。为一个庞大的 `lib_api.h` 头文件创建 Rust 等价物是手动且乏味的，因此容易出错 —— 并且如前所述，许多不匹配错误的类别不会被工具链检测到。`bindgen` 还拥有一系列选项，允许针对 API 的特定子集（比如，之前展示的 `--allowlist-function` 和 `--allowlist-type` 选项）。[^1]
 
-这也允许采用分层方法在 Rust 中暴露现有的 C 库；包装某个 xyzzy 库的一个常见约定是拥有以下内容：
-* 一个仅包含 bindgen 生成的代码的 `xyzzy-sys crate` —— 其使用必然是不安全的。
-* 一个 `xyzzy crate`，它封装了不安全代码，并提供对底层功能的安全 Rust 访问。
+这也允许采用分层方法在 Rust 中暴露现有的 C 库；包装某个 `xyzzy` 库的一个常见约定是拥有以下内容：
+* 一个仅包含 `bindgen` 生成的代码的 `xyzzy-sys crate` —— 其使用必然是 `unsafe` 的。
+* 一个 `xyzzy crate`，它封装了 `unsafe` 代码，并提供对底层功能的安全 Rust 访问。
 
 这将在一个层中集中不安全代码，并允许程序的其他部分遵循[第 16 条]的建议。
 
 ## 超越C语言
 
-`bindgen` 工具能够处理一些 `C++` 结构，但只是有限的一部分，并且方式有限。为了更好的（尽管仍然有限）集成，可以考虑使用 `cxx crate` 进行 `C++/Rust` 交互操作。`cxx` 不是从 `C++` 声明生成 Rust 代码，而是采用从公共模式自动生成 Rust 和 `C++` 代码的方法，允许更紧密的集成。
+`bindgen` 工具能够[处理一些 C++ 结构]，但只是有限的一部分，并且方式有限。为了更好的（尽管仍然有限）集成，可以**考虑使用 `cxx` crate 进行 C++/Rust 交互操作**。`cxx` 不是从 C++ 声明生成 Rust 代码，而是采用从公共模式自动生成 Rust 和 C++ 代码的方法，允许更紧密的集成。
 
 ## 注释
 
@@ -85,5 +86,7 @@ include!("generated.rs");
 [第 32 条]: ../chapter_5/item32-ci.md
 [第 34 条]: ../chapter_6/item34-ffi.md
 
+[`bindgen`]: https://rust-lang.github.io/rust-bindgen/
 [构建脚本]: https://doc.rust-lang.org/cargo/reference/build-scripts.html
 [`include!` 宏]: https://doc.rust-lang.org/std/macro.include.html
+[处理一些 C++ 结构]: https://rust-lang.github.io/rust-bindgen/cpp.html

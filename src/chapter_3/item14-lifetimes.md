@@ -702,7 +702,7 @@ pub trait Debug {
 
 ## 注释
 
-[^1]: 例如，Chromium 项目估计 [70% 的安全 bug 都归咎于内存安全。](https://www.chromium.org/Home/chromium-security/memory-safety/)
+[^1]: 例如，Chromium 项目估计 [70% 的安全相关的代码缺陷都归咎于内存安全。](https://www.chromium.org/Home/chromium-security/memory-safety/)
 
 原文[点这里](https://www.lurklurk.org/effective-rust/lifetimes.html)查看
 
