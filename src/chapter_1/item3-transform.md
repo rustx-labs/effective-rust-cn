@@ -3,8 +3,8 @@
 [第 1 条]阐述了枚举（`enum`）的优点，并展示了 `match` 表达式如何强制程序员考虑所有可能性；这个方法探讨了在某些情况下，你应尽量避免使用 `match` 表达式 —— 至少是显式地。
 
 [第 1 条]s还介绍了 Rust 标准库提供的两个无处不在的枚举：
-- `Option<T>`，表示一个值（类型为 `T`）可能存在也可能不存在。
-- `Result<T, E>`，用于当尝试返回一个值（类型为 `T`）的操作可能失败，并可能返回一个错误（类型为 `E`）。
+- [`Option<T>`]，表示一个值（类型为 `T`）可能存在也可能不存在。
+- [`Result<T, E>`]，用于当尝试返回一个值（类型为 `T`）的操作可能失败，并可能返回一个错误（类型为 `E`）。
 
 对于这些特定的枚举，显式使用 `match` 通常会导致代码比实际需要的不够紧凑，而且不符合 Rust 的习惯用法。
 
@@ -42,7 +42,7 @@ let f = match result {
 };
 ```
 
-`Option` 和 `Result` 都提供了一对方法来提取它们的内部值并在值不存在时执行 `panic!`，它们分别是 [unwrap] 和 [expect]。后者允许个性化失败时的错误消息，并将错误处理委托给 `.unwrap()` 后缀，但无论哪种情况，生成的代码都更短、更简单：
+`Option` 和 `Result` 都提供了一对方法来提取它们的内部值并在值不存在时执行 `panic!`，它们分别是 [`unwrap`] 和 [`expect`]。后者允许个性化失败时的错误消息，并将错误处理委托给 `.unwrap()` 后缀，但无论哪种情况，生成的代码都更短、更简单：
 
 ```rust
 let f = std::fs::File::open("/etc/passwd").unwrap();
@@ -52,9 +52,9 @@ let f = std::fs::File::open("/etc/passwd").unwrap();
 
 然而，在许多情况下，正确的错误处理是将决策推迟给其他人。这在编写库时尤其如此，因为库的代码可能会在库作者无法预见的各种不同环境中使用。为了使库更易用，优先使用 `Result` 而不是 `Option` 来表示错误，即使这可能涉及不同错误类型之间的转换（[第 4 条]）。
 
-当然，这提出了一个问题：什么算作错误？在此示例中，无法打开文件肯定是一个错误，并且该错误的详细信息（没有此文件？权限被拒绝？）可以帮助用户决定下一步要做什么。另一方面，由于切片为空而未能检索切片的 [first()] 元素并不是真正的错误，因此它在标准库中表示为 `Option` 返回类型。在两种可能性之间进行选择需要判断，但如果可能通过错误传达任何有用的信息，则倾向于 `Result`。
+当然，这提出了一个问题：什么算作错误？在此示例中，无法打开文件肯定是一个错误，并且该错误的详细信息（没有此文件？权限被拒绝？）可以帮助用户决定下一步要做什么。另一方面，由于切片为空而未能检索切片的 [`first()`] 元素并不是真正的错误，因此它在标准库中表示为 `Option` 返回类型。在两种可能性之间进行选择需要判断，但如果可能通过错误传达任何有用的信息，则倾向于 `Result`。
 
-`Result` 也有一个 `[#must_use]` 属性，用来引导库用户朝着正确的方向前进 —— 如果使用返回的 `Result` 的代码忽略了它，编译器将生成一个警告：
+`Result` 也有一个 `[#must_use]` [属性]，用来引导库用户朝着正确的方向前进 —— 如果使用返回的 `Result` 的代码忽略了它，编译器将生成一个警告：
 
 ```rust
 warning: unused `Result` that must be used
@@ -68,7 +68,7 @@ warning: unused `Result` that must be used
 
 ```
 
-显式使用 `match` 可以让错误传播，但代价是增加了一些可见的样板代码（让人联想到 `Go 语言`）：
+显式使用 `match` 可以让错误传播，但代价是增加了一些可见的样板代码（让人联想到 [Go 语言]）：
 
 ```rust
 pub fn find_user(username: &str) -> Result<UserId, std::io::Error> {
@@ -80,7 +80,7 @@ pub fn find_user(username: &str) -> Result<UserId, std::io::Error> {
 }
 ```
 
-减少样板代码的关键是 Rust 的问号运算符 `?`。这个语法糖可以处理匹配 `Err` 分支和返回 `Err(...)` 表达式，只用一个字符就完成了：
+减少样板代码的关键是 Rust 的[问号运算符] `?`。这个语法糖可以处理匹配 `Err` 分支和返回 `Err(...)` 表达式，只用一个字符就完成了：
 
 ```rust
 pub fn find_user(username: &str) -> Result<UserId, std::io::Error> {
@@ -91,11 +91,11 @@ pub fn find_user(username: &str) -> Result<UserId, std::io::Error> {
 
 Rust 新手有时会对此感到困惑：问号运算符在一开始很难被注意到，导致人们怀疑这段代码怎么可能正常工作。然而，即使只有一个字符，类型系统仍然在起作用，确保覆盖了相关类型（[第 1 条]）表达的所有可能性——让程序员可以专注于主线代码路径，不受干扰。
 
-更重要的是，这些明显的方法调用通常没有额外的成本：它们都是标记为 `#[inline]` 的泛型函数，所以生成的代码通常会编译成与手动版本相同的机器代码。
+更重要的是，这些明显的方法调用通常没有额外的成本：它们都是标记为 [`#[inline]`][inline] 的泛型函数，所以生成的代码通常会编译成与手动版本相同的机器代码。
 
 这两个因素结合起来意味着你应该优先使用 `Option` 和 `Result` 转换，而不是显式的 `match` 表达式。
 
-在之前的例子中，错误类型是一致的：内部和外部方法都使用 `std::io::Error` 表达错误。然而，情况往往并非如此；一个函数可能从各种不同的子库中累积错误，每个子库都使用不同的错误类型。
+在之前的例子中，错误类型是一致的：内部和外部方法都使用 [`std::io::Error`] 表达错误。然而，情况往往并非如此；一个函数可能从各种不同的子库中累积错误，每个子库都使用不同的错误类型。
 
 关于错误映射的讨论一般见[第 4 条]；现在，只需知道一个手动映射：
 
@@ -111,7 +111,7 @@ pub fn find_user(username: &str) -> Result<UserId, String> {
 }
 ```
 
-可以使用更简洁、更符合 Rust 语法的 `.map_err()` 转换来表达：
+可以使用更简洁、更符合 Rust 语法的 [`.map_err()`] 转换来表达：
 
 ```rust
 pub fn find_user(username: &str) -> Result<UserId, String> {
@@ -164,7 +164,7 @@ help: consider borrowing the `Option`'s content
    |                                  +++++++++
 ```
 
-错误消息准确地描述了使代码工作所需的内容，即 `Option` 上的 `as_ref()` 方法[^2]。这个方法将一个对 `Option` 的引用转换为对引用的 `Option`：
+错误消息准确地描述了使代码工作所需的内容，即 `Option` 上的 [`as_ref()`] 方法[^2]。这个方法将一个对 `Option` 的引用转换为对引用的 `Option`：
 
 ```rust
 pub fn encrypted(&self) -> Vec<u8> {
@@ -195,8 +195,17 @@ pub fn encrypted(&self) -> Vec<u8> {
 [第 5 条]: item5-casts.md
 [第 18 条]: ../chapter_3/item18-panic.md
 
-[unwrap]: https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap
-[expect]: https://doc.rust-lang.org/std/result/enum.Result.html#method.expect
-[first()]: https://doc.rust-lang.org/std/primitive.slice.html#method.first
+[`Option<T>`]: https://doc.rust-lang.org/std/option/enum.Option.html
+[`Result<T, E>`]: https://doc.rust-lang.org/std/result/enum.Result.html
+[`unwrap`]: https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap
+[`expect`]: https://doc.rust-lang.org/std/result/enum.Result.html#method.expect
+[`first()`]: https://doc.rust-lang.org/std/primitive.slice.html#method.first
+[属性]: https://doc.rust-lang.org/reference/attributes/diagnostics.html#the-must_use-attribute
+[Go 语言]: https://blog.golang.org/errors-are-values
+[问号运算符]: https://doc.rust-lang.org/reference/expressions/operator-expr.html#the-question-mark-operator
+[inline]: https://doc.rust-lang.org/reference/attributes/codegen.html#the-inline-attribute
+[`std::io::Error`]: https://doc.rust-lang.org/std/io/struct.Error.html
+[`.map_err()`]: https://doc.rust-lang.org/std/result/enum.Result.html#method.map_err
+[`as_ref()`]: https://doc.rust-lang.org/std/option/enum.Option.html#method.as_ref
 
 [在线版本]: https://tinyurl.com/rust-transform
