@@ -6,7 +6,7 @@
 
 ## Error Trait
 
-了解标准 trait（[第 10 条]）总是一个好主意，这里相关的 trait 是 `std::error::Error`。`Result` 的 `E` 类型参数不必是实现 `Error` 的类型，但这是一个常见的约定，它允许包装器表达适当的 trait 约束 —— 因此，最好为你的错误类型实现 `Error`。
+了解标准 trait（[第 10 条]）总是一个好主意，这里相关的 trait 是 [`std::error::Error`]。`Result` 的 `E` 类型参数不必是实现 `Error` 的类型，但这是一个常见的约定，它允许包装器表达适当的 trait 约束 —— 因此，最好为你的错误类型实现 `Error`。
 
 首先要注意的是，对于错误类型，唯一硬性要求是 trait 约束：实现 `Error` 的任何类型也必须实现以下 trait：
 
@@ -16,7 +16,7 @@
 
 换句话说，应该能够将错误类型显示给用户和程序员。
 
-该 trait 中唯一的方法是 `source()`，[^1] 它允许错误类型公开一个内部的、嵌套的错误。此方法是可选的 —— 它带有一个返回 `None` 的默认实现（[第 13 条]），表示内部错误信息不可用。
+该 trait 中唯一的方法是 [`source()`]，[^1] 它允许错误类型公开一个内部的、嵌套的错误。此方法是可选的 —— 它带有一个返回 `None` 的默认实现（[第 13 条]），表示内部错误信息不可用。
 
 最后要注意的一点是：如果你正在为 `no_std` 环境（[第 33 条]）编写代码，可能无法实现 `Error` —— `Error` trait 目前在 `std` 中实现，而不是 `core`，因此不可用。[^2]
 
@@ -117,7 +117,7 @@ pub fn find_user(username: &str) -> Result<UserId, MyError> {
 ```
 
 这里的错误路径涵盖了以下步骤：
-- `File::open` 返回一个类型为 `std::io::Error` 的错误。
+- `File::open` 返回一个类型为 [`std::io::Error`] 的错误。
 - `format!` 使用 `std::io::Error` 的 `Debug` 实现将其转换为 `String`。
 - `?` 使编译器寻找并使用一个 `From` 实现，该实现可以将它从 `String` 转换为 `MyError`。
 
@@ -306,7 +306,7 @@ error[E0119]: conflicting implementations of trait `From<WrappedError>` for
 
 为库编写的代码无法预测代码使用的环境，因此最好发出具体、详细的错误信息，让调用者去弄清楚如何使用这些信息。这倾向于前面描述的枚举风格的嵌套错误（并且在库的公共 `API` 中避免了依赖 `anyhow`，参见[第 24 条]）。
 
-然而，应用程序代码通常需要更多地关注如何向用户呈现错误。它还可能不得不应对其依赖关系图中所有库发出的所有不同错误类型（[第 25 条]）。因此，一个更动态的错误类型（如 `anyhow::Error`）使得错误处理在应用程序中更简单、更一致。
+然而，应用程序代码通常需要更多地关注如何向用户呈现错误。它还可能不得不应对其依赖关系图中所有库发出的所有不同错误类型（[第 25 条]）。因此，一个更动态的错误类型（如 [`anyhow::Error`]）使得错误处理在应用程序中更简单、更一致。
 
 ## 需要记住的事情
 
@@ -324,7 +324,7 @@ error[E0119]: conflicting implementations of trait `From<WrappedError>` for
 
 [^2]: 在撰写本文时，`Error` 已经[被移动到 `core`](https://github.com/rust-lang/rust/issues/103765)，但在稳定版的 Rust 中尚不可用。
 
-[^3]: 本节灵感来源于 `Nick Groenen` 的文章[《Rust: 2020年在错误处理和结构化》](https://nick.groenen.me/posts/rust-error-handling/)。
+[^3]: 本节灵感来源于 [Nick Groenen 的文章《Rust：2020 年的错误结构化及处理》](https://nick.groenen.me/posts/rust-error-handling/)。
 
 原文[点这里](https://www.lurklurk.org/effective-rust/errors.html)查看
 
@@ -342,9 +342,13 @@ error[E0119]: conflicting implementations of trait `From<WrappedError>` for
 [第 28 条]: ../chapter_5/item28-use-macros-judiciously.md
 [第 33 条]: ../chapter_6/item33-no-std.md
 
+[`std::error::Error`]: https://doc.rust-lang.org/std/error/trait.Error.html
+[`source()`]: https://doc.rust-lang.org/std/error/trait.Error.html#method.source
+[类型别名]: https://doc.rust-lang.org/reference/items/type-aliases.html
+[`std::io::Error`]: https://doc.rust-lang.org/std/io/struct.Error.html
+[问号运算符]: https://doc.rust-lang.org/reference/expressions/operator-expr.html#the-question-mark-operator
+[thiserror]: https://docs.rs/thiserror
+[trait object]: https://doc.rust-lang.org/reference/types/trait-object.html
 [anyhow]: https://docs.rs/anyhow
 [使用 Box 来添加一个额外的间接层]: https://github.com/dtolnay/anyhow/issues/63#issuecomment-582079114
-[thiserror]: https://docs.rs/thiserror
-[类型别名]: https://doc.rust-lang.org/reference/items/type-aliases.html
-[问号运算符]: https://doc.rust-lang.org/reference/expressions/operator-expr.html#the-question-mark-operator
-[trait object]: https://doc.rust-lang.org/reference/types/trait-object.html
+[`anyhow::Error`]: https://docs.rs/anyhow/latest/anyhow/struct.Error.html
