@@ -36,10 +36,10 @@ help: you can convert a `u32` to a `u64`
 与语言的其他特性（[第 10 条]）一样，在不同用户自定义类型值之间执行转换的能力被封装为标准 trait —— 或者更确切地说，是一组相关的泛型 trait。
 
 表达类型值转换能力的四个相关 trait 如下：
-- `From<T>`：这种类型的项可以由类型 `T` 的项构建，并且转换总是成功。
-- `TryFrom<T>`：这种类型的项可以由类型 `T` 的项构建，但转换可能不会成功。
-- `Into<T>`：这种类型的项可以转换为类型 `T` 的项，并且转换总是成功。
-- `TryInto<T>`：这种类型的项可以转换为类型 `T` 的项，但转换可能不会成功。
+- [`From<T>`]：这种类型的项可以由类型 `T` 的项构建，并且转换总是成功。
+- [`TryFrom<T>`]：这种类型的项可以由类型 `T` 的项构建，但转换可能不会成功。
+- [`Into<T>`]：这种类型的项可以转换为类型 `T` 的项，并且转换总是成功。
+- [`TryInto<T>`]：这种类型的项可以转换为类型 `T` 的项，但转换可能不会成功。
 
 鉴于[第 1 条]中关于在类型系统中表达事物的讨论，不难发现 `Try...` 变体的区别在于，其唯一的 trait 方法所返回的是一个 `Result` 而不是一个确保存在的新项。`Try... trait` 定义还要求一个关联类型，它给出了失败情况下发出的错误 `E` 的类型。
 
@@ -70,7 +70,7 @@ where
 
 除了前面显示的 `Into` 版本的泛型 trait 实现之外，还有各种其他的通用 trait 实现，主要用于智能指针类型，允许智能指针从其持有的类型的实例自动构造。这意味着接受智能指针参数的泛型方法也可以用普通的旧项调用；更多内容将在后续介绍和[第 8 条]中展开。
 
-`TryFrom trait` 还有一个通用实现，适用于任何已经以相反方向实现 `Into trait` 的类型 —— 这自动包括了（如先前所示）以相同方向实现 `From` 的任何类型。换句话说，如果你可以无误地将 `T` 转换为 `U`，你也可以尝试从 `T` 获取 `U`；由于这种转换总是成功，所以与之关联的错误类型是 `Infallible`。[^2]
+`TryFrom trait` 还有一个通用实现，适用于任何已经以相反方向实现 `Into trait` 的类型 —— 这自动包括了（如先前所示）以相同方向实现 `From` 的任何类型。换句话说，如果你可以无误地将 `T` 转换为 `U`，你也可以尝试从 `T` 获取 `U`；由于这种转换总是成功，所以与之关联的错误类型是 [`Infallible`]。[^2]
 
 还有一个泛型的 `From` 实现方式值得注意，那就是自反实现：
 
@@ -169,7 +169,7 @@ if is_iana_reserved(42) {
 
 ## 显式类型转换（Casts）
 
-Rust 包含 `as` 关键字以在某些类型对之间执行显式转换。
+Rust 包含 `as` 关键字以在某些类型对之间执行显式[转换]。
 
 可以通过这种方式转换的类型对构成了一个相当有限的集合，并且它包括的唯一用户自定义类型是“类 `C`”的枚举（那些只有相关联的整数值的枚举）。尽管如此，它还是包括了常规整数转换，为 `into()` 提供了一个替代方案：
 
@@ -202,7 +202,7 @@ error[E0277]: the trait bound `u16: From<u32>` is not satisfied
     = note: required for `u32` to implement `Into<u16>`
 ```
 
-为了保持一致性和安全性，你应该**优先使用 `from/into` 转换而不是 `as` 显式类型转换**，除非你理解并需要精确的显式类型转换语义（例如，用于 `C` 语言互操作性）。这个建议可以通过 `Clippy`（[第 29 条]）得到加强，`Clippy` 包含了关于 `as` 转换的几个 `lint`；然而，这些 `lint` 默认是禁用的。
+为了保持一致性和安全性，你应该**优先使用 `from/into` 转换而不是 `as` 显式类型转换**，除非你理解并需要精确的显式[类型转换语义]（例如，用于 `C` 语言互操作性）。这个建议可以通过 `Clippy`（[第 29 条]）得到加强，`Clippy` 包含了关于 [`as` 转换]的几个检查项；然而，这些检查项默认是禁用的。
 
 ## 隐式类型转换（Coercion）
 
@@ -213,11 +213,11 @@ error[E0277]: the trait bound `u16: From<u32>` is not satisfied
 - 从可变引用到不可变引用（这样你就可以将 `&mut T` 作为接受 `&T` 的函数的参数）
 - 从引用到原始指针（这并不 `unsafe` —— 不安全性发生在你愚蠢地去解引用一个原始指针的时候）
 - 从恰好没有捕获任何变量的闭包到裸函数指针（[第 2 条]）
-- 从数组到切片
-- 从具体项到 trait 对象，对于该具体项所实现的 trait
+- 从[数组]到[切片]
+- 从具体项到 [trait 对象]，对于该具体项所实现的 trait
 - 从一个生命周期到“更短”的生命周期（[第 14 条]）[^4]
 
-只有两种隐式类型转换的行为可能受到用户自定义类型的影响。第一种情况是用户自定义的类型实现了 `Deref` 或 `DerefMut` trait。这些 trait 表明用户定义的类型正在充当某种智能指针（[第 8 条]），在这种情况下，编译器会将智能指针项的引用隐式转换为智能指针包含的类型项的引用（由其 `Target` 指示）。
+只有两种隐式类型转换的行为可能受到用户自定义类型的影响。第一种情况是用户自定义的类型实现了 [`Deref`] 或 [`DerefMut`] trait。这些 trait 表明用户定义的类型正在充当某种智能指针（[第 8 条]），在这种情况下，编译器会将智能指针项的引用隐式转换为智能指针包含的类型项的引用（由其 [`Target`] 指示）。
 
 用户自定义类型的第二种隐式类型转换发生在具体项转换为 trait 对象时。这个操作构建了一个指向项的胖指针；这个指针之所以胖，是因为它既包括了指向项在内存中位置的指针，也包括了指向具体类型的 trait 实现的 `vtable` 指针 —— 参见[第 8 条]。
 
@@ -226,11 +226,11 @@ error[E0277]: the trait bound `u16: From<u32>` is not satisfied
 
 [^1]: 更准确地称为 trait 一致性规则。
 
-[^2]: 暂时如此 —— 这可能会在未来的 Rust 版本中被 `!` "`never`" 类型所取代。
+[^2]: 暂时如此 —— 这可能会在未来的 Rust 版本中被 [`!` "never" 类型]所取代。
 
-[^3]: 在 Rust 中允许有损转换可能是个错误，已经有过尝试去除这种行为的讨论。
+[^3]: 在 Rust 中允许有损转换可能是个错误，已经有过尝试去除这种行为的[讨论]。
 
-[^4]: Rust 将这些转换称为“子类型化”，但它与面向对象语言中“子类型化”的定义大不相同。
+[^4]: Rust 将这些转换称为“[子类型化]”，但它与面向对象语言中“子类型化”的定义大不相同。
 
 原文[点这里](https://www.lurklurk.org/effective-rust/casts.html)查看
 
@@ -244,3 +244,21 @@ error[E0277]: the trait bound `u16: From<u32>` is not satisfied
 [第 10 条]: ../chapter_2/item10-std-traits.md
 [第 14 条]: ../chapter_3/item14-lifetimes.md
 [第 29 条]: ../chapter_5/item29-listen-to-clippy.md
+
+[`From<T>`]: https://doc.rust-lang.org/std/convert/trait.From.html
+[`TryFrom<T>`]: https://doc.rust-lang.org/std/convert/trait.TryFrom.html
+[`Into<T>`]: https://doc.rust-lang.org/std/convert/trait.Into.html
+[`TryInto<T>`]: https://doc.rust-lang.org/std/convert/trait.TryInto.html
+[`Infallible`]: https://doc.rust-lang.org/std/convert/enum.Infallible.html
+[转换]: https://doc.rust-lang.org/reference/expressions/operator-expr.html#type-cast-expressions
+[类型转换语义]: https://doc.rust-lang.org/reference/expressions/operator-expr.html#semantics
+[`as` 转换]: https://rust-lang.github.io/rust-clippy/stable/index.html#/as_conversions
+[数组]: https://doc.rust-lang.org/std/primitive.array.html
+[切片]: https://doc.rust-lang.org/std/primitive.slice.html
+[trait 对象]: https://doc.rust-lang.org/reference/types/trait-object.html
+[`Deref`]: https://doc.rust-lang.org/std/ops/trait.Deref.html
+[`DerefMut`]: https://doc.rust-lang.org/std/ops/trait.DerefMut.html
+[`Target`]: https://doc.rust-lang.org/std/ops/trait.Deref.html#associatedtype.Target
+[`!` "never" 类型]: https://doc.rust-lang.org/std/primitive.never.html
+[讨论]: https://internals.rust-lang.org/t/lets-deprecate-as-for-lossy-numeric-casts/16283
+[子类型化]: https://doc.rust-lang.org/reference/subtyping.html
