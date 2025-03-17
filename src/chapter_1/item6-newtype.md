@@ -229,11 +229,11 @@ impl fmt::Display for NewType {
 
 ## 注释
 
-[^1]: 具体来说，是火星气候轨道器。
+[^1]: 具体来说，是[火星气候轨道器](https://en.wikipedia.org/wiki/Mars_Climate_Orbiter)。
 
-[^2]: 参见维基百科上的“火星气候轨道器”[条目](https://en.wikipedia.org/wiki/Mars_Climate_Orbiter)，了解更多关于失败原因的信息。译者注:这句话 "Ruh-roh" 通常用来表达轻微的麻烦或问题即将出现。它起源于美国动画片《史酷比》(Scooby-Doo)，是其中角色 Shaggy Rogers 的口头禅，用来表达他们遇到了一些麻烦或即将面临挑战。
+[^2]: 参见维基百科上的“火星气候轨道器”[条目](https://en.wikipedia.org/wiki/Mars_Climate_Orbiter#Cause_of_failure)，了解更多关于失败原因的信息。译者注：这句话 "Ruh-roh" 通常用来表达轻微的麻烦或问题即将出现。它起源于美国动画片《史酷比》(Scooby-Doo)，是其中角色 Shaggy Rogers 的口头禅，用来表达他们遇到了一些麻烦或即将面临挑战。
 
-[^3]: 对于serde来说，这是一个足够常见的问题，因此它包含了一种帮助机制。
+[^3]: 对于 `serde` 来说，这是一个足够常见的问题，因此它包含了一种[帮助机制](https://serde.rs/remote-derive.html)。
 
 
 原文[点这里](https://www.lurklurk.org/effective-rust/newtype.html)查看
@@ -244,6 +244,6 @@ impl fmt::Display for NewType {
 [第 5 条]: item5-casts.md
 [第 25 条]: ../chapter_4/item25-dep-graph.md
 
-[常见]: https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#using-the-newtype-pattern-to-implement-external-traits-on-external-types
 [额外的语义]: https://doc.rust-lang.org/book/ch19-04-advanced-types.html#using-the-newtype-pattern-for-type-safety-and-abstraction
 [repr(transparent)]: https://doc.rust-lang.org/reference/type-layout.html#the-transparent-representation
+[常见]: https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#using-the-newtype-pattern-to-implement-external-traits-on-external-types
