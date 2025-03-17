@@ -152,15 +152,15 @@ let vslice = &vector[1..3];
 *图 1-5. 指向堆上的Vec内容的栈切片*
 
 表达式 `&vector[1..3]` 的底层有很多细节，所以值得将其进行逐层的拆解：
-- `1..3` 部分是一个[范围表达式(range expression)]；编译器会将其转换为 [`Range<usize>`] 类型的实例，该类型包含下限（1）但不包含上限（3）。
+- `1..3` 部分是一个[范围表达式]；编译器会将其转换为 [`Range<usize>`] 类型的实例，该类型包含下限（1）但不包含上限（3）。
 - `Range` 类型[实现了] [`SliceIndex<T>`] trait，该 trait 描述了对任意类型 `T` 的切片的索引操作（因此其 `Output` 类型为`[T]`）。
-- `vector[]` 部分是一个[索引表达式(indexing expression)]；编译器将其转换为在 `vector` 上调用 [`Index`] trait 的 [`index`] 方法，并附加一次解引用（即 `*vector.index()` ）。[^2]
+- `vector[]` 部分是一个[索引表达式]；编译器将其转换为在 `vector` 上调用 [`Index`] trait 的 [`index`] 方法，并附加一次解引用（即 `*vector.index()` ）。[^2]
 - `vector[1..3]` 会调用 `Vec<T>` 的 `Index<I>` [实现]，它要求 `I` 是 `SliceIndex<[u64]>` 的一个实例。这是因为 `Range<usize>` 对于任何 `T` 类型来说，包括 `u64`，都实现了 `SliceIndex<[T]>` trait。
 - `&vector[1..3]` 取消了解引用，最终得到的表达式类型为 `&[u64]`。
 
 ### Trait 对象
 
-第二种内置的胖指针类型是 trait 对象：它是一个实现了特定 trait 的项的引用。Trait 对象由一个指向该项的简单指针和一个指向类型 [`vtable`] 的内部指针共同构成，大小为 16 字节（在 64 位平台上）。类型的 `vtable` 存储了该类型所实现 trait 的方法实现的函数指针，从而允许在运行时进行动态分派（[第 12 条]）。[^3]
+第二种内置的胖指针类型是 trait 对象：它是一个实现了特定 trait 的项的引用。Trait 对象由一个指向该项的简单指针和一个指向类型 `vtable` 的内部指针共同构成，大小为 16 字节（在 64 位平台上）。类型的 [`vtable`] 存储了该类型所实现 trait 的方法实现的函数指针，从而允许在运行时进行动态分派（[第 12 条]）。[^3]
 
 例如，定义一个简单的 trait：
 
@@ -335,14 +335,14 @@ let b2 = rc.borrow();
 [`String`]: https://doc.rust-lang.org/std/string/struct.String.html
 [`push(value)`]: https://doc.rust-lang.org/std/vec/struct.Vec.html#method.push
 [`pop()`]: https://doc.rust-lang.org/std/vec/struct.Vec.html#method.pop
-[范围表达式(range expression)]: https://doc.rust-lang.org/reference/expressions/range-expr.html
+[范围表达式]: https://doc.rust-lang.org/reference/expressions/range-expr.html
 [`Range<usize>`]: https://doc.rust-lang.org/std/ops/struct.Range.html
 [实现了]: https://doc.rust-lang.org/std/ops/struct.Range.html#impl-SliceIndex%3C%5BT%5D%3E-for-Range%3Cusize%3E
 [`SliceIndex<T>`]: https://doc.rust-lang.org/std/slice/trait.SliceIndex.html
-[索引表达式(indexing expression)]: https://doc.rust-lang.org/reference/expressions/array-expr.html#array-and-slice-indexing-expressions
+[索引表达式]: https://doc.rust-lang.org/reference/expressions/array-expr.html#array-and-slice-indexing-expressions
 [`Index`]: https://doc.rust-lang.org/std/ops/trait.Index.html
 [`index`]: https://doc.rust-lang.org/std/ops/trait.Index.html#tymethod.index
-[`实现`]: https://doc.rust-lang.org/std/vec/struct.Vec.html#impl-Index%3CI%3E-for-Vec%3CT,+A%3E
+[实现]: https://doc.rust-lang.org/std/vec/struct.Vec.html#impl-Index%3CI%3E-for-Vec%3CT,+A%3E
 [`vtable`]: https://en.wikipedia.org/wiki/Virtual_method_table
 [`dyn`]: https://doc.rust-lang.org/std/keyword.dyn.html
 [`Pointer`]: https://doc.rust-lang.org/std/fmt/trait.Pointer.html
