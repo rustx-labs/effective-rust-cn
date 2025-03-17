@@ -244,9 +244,9 @@ where
 ```
 
 Rust 有三种不同的 `Fn*` trait，它们之间表达了关于环境捕获行为的一些区别。
-- `FnOnce` 描述了一个只能被调用一次的闭包。如果环境的某些部分被移动到闭包的上下文中，并且闭包的主体随后将其从闭包的上下文中移出，那么这种移动只能发生一次 —— 因为源项没有其他副本可以移动 —— 因此，闭包只能被调用一次。
-- `FnMut` 描述了一个可以被多次调用的闭包，它能够改变其环境，因为它会可变地借用环境。
-- `Fn` 描述了一个可以被多次调用的闭包，它只从环境中不可变地借用值。
+- [`FnOnce`] 描述了一个只能被调用一次的闭包。如果环境的某些部分被移动到闭包的上下文中，并且闭包的主体随后将其从闭包的上下文中移出，那么这种移动只能发生一次 —— 因为源项没有其他副本可以移动 —— 因此，闭包只能被调用一次。
+- [`FnMut`] 描述了一个可以被多次调用的闭包，它能够改变其环境，因为它会可变地借用环境。
+- [`Fn`] 描述了一个可以被多次调用的闭包，它只从环境中不可变地借用值。
 
 编译器会为代码中的任何 `lambda` 表达式自动实现这些 `Fn*` trait 的适当子集；不可能手动实现这些 trait 中的任何一个[^1]（与 `C++` 的 `operator()` 重载不同）。
 
@@ -397,16 +397,16 @@ note: for a trait to be "object safe" it needs to allow building a vtable to all
    = help: only type `Bar` implements the trait, consider using it directly instead
 ```
 
-这两个限制 —— 不能使用 `Self` 和不能有泛型方法 —— 结合成了对象安全的概念。只有对象安全的 trait 才能用作 trait 对象。
+这两个限制 —— 不能使用 `Self` 和不能有泛型方法 —— 结合成了[对象安全]的概念。只有对象安全的 trait 才能用作 trait 对象。
 
 
 ## 注释
 
-[^1]: 至少，在撰写本文时的稳定 Rust 中是这样。实验性功能 `unboxed_closures` 和 `fn_traits` 可能在未来改变这一点。
+[^1]: 至少，在撰写本文时的稳定 Rust 中是这样。实验性功能 [`unboxed_closures`](https://doc.rust-lang.org/nightly/unstable-book/language-features/unboxed-closures.html) 和 [`fn_traits`](https://doc.rust-lang.org/nightly/unstable-book/library-features/fn-traits.html) 可能在未来改变这一点。
 
-[^2]: 例如，Effective Java 第64条：通过它们的接口引用对象
+[^2]: 例如，[Effective Java](https://www.oreilly.com/library/view/effective-java/9780134686097/) 第 64 条：通过接口来引用对象。
 
-[^3]: C++20 中添加的概念允许对模板类型上的约束进行显式指定，但检查仍然只在模板实例化时执行，而不是在声明时执行。
+[^3]: C++20 中添加的[概念](https://en.cppreference.com/w/cpp/language/constraints)特性允许对模板类型上的约束进行显式指定，但检查仍然只在模板实例化时执行，而不是在声明时执行。
 
 原文[点这里](https://www.lurklurk.org/effective-rust/use-types-2.html)查看
 
@@ -414,6 +414,7 @@ note: for a trait to be "object safe" it needs to allow building a vtable to all
 
 [第 1 条]: item1-use-types.md
 [第 2 章]: ../chapter_2.md
+[第 5 条]: item5-casts.md
 [第 6 条]: item6-newtype.md
 [第 9 条]: item9-iterators.md
 [第 12 条]: ../chapter_2/item12-generics&trait-objects.md
@@ -421,4 +422,8 @@ note: for a trait to be "object safe" it needs to allow building a vtable to all
 
 [函数指针]: https://doc.rust-lang.org/std/primitive.fn.html
 [出于优化原因]: https://doc.rust-lang.org/std/primitive.fn.html#creating-function-pointers
+[`FnOnce`]: https://doc.rust-lang.org/std/ops/trait.FnOnce.html
+[`FnMut`]: https://doc.rust-lang.org/std/ops/trait.FnMut.html
+[`Fn`]: https://doc.rust-lang.org/std/ops/trait.Fn.html
 [鸭子类型]: https://en.wikipedia.org/wiki/Duck_typing
+[对象安全]: https://doc.rust-lang.org/reference/items/traits.html#object-safety

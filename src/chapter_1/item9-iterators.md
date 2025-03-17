@@ -1,6 +1,6 @@
 # 第 9 条：考虑使用迭代器转换代替显式循环
 
-编程语言中简陋朴素的循环经历了一段漫长的发展，逐步提高了使用的便利性和抽象性。B 语言（C 语言的前身）当时仅有 `while (condition) { ... }` 这种结构，但随着 C 语言的到来，`for` 循环的加入使通过数组下标进行遍历这种高频行为变得越来越方便：
+编程语言中简陋朴素的循环经历了一段漫长的发展，逐步提高了使用的便利性和抽象性。[B 语言]（C 语言的前身）当时仅有 `while (condition) { ... }` 这种结构，但随着 C 语言的到来，`for` 循环的加入使通过数组下标进行遍历这种高频行为变得越来越方便：
 
 ```c
 // C code
@@ -296,7 +296,7 @@ let myvec: Vec<i32> = (0..10).into_iter().filter(|x| x % 2 == 0).collect();
 let h: HashSet<i32> = (0..10).into_iter().filter(|x| x % 2 == 0).collect();
 ```
 
-这个例子也展示了如何使用范围表达式（[`range expressions`][range expressions]）来生成要迭代的初始数据。
+这个例子也展示了如何使用[范围表达式]来生成要迭代的初始数据。
 
 还有一些其他（更加晦涩）的集合生成方法：
 
@@ -457,7 +457,7 @@ let even_sum_squares: u64 = values
 
 - 如果循环体很大、或者功能很多，那么保留在一个显式的循环体里面会比把逻辑压缩到闭包中更合理。
 - 如果循环体包含很多会导致功能提前终止的错误条件，最好还是把它们保留在显式的循环体中 —— `try...()` 之类的方法也不会帮上很多忙。但是，`collect()` 能把一个值类型为 `Result` 的集合转换成一个持有集合类型的 `Result` 类型的能力，在配合 `?` 运算符的场景下还是可以进行错误条件的处理。
-- 如果性能至关重要，包含闭包的迭代器转换*理应*跟显式的代码[一样快][just as fast]。但如果代码中一个核心的循环很重要，*测量*不同的实现方法并进行适当的调优。
+- 如果性能至关重要，包含闭包的迭代器转换*理应*跟显式的代码[一样快]。但如果代码中一个核心的循环很重要，*测量*不同的实现方法并进行适当的调优。
 
   - 请确保你的测试能反映实际的性能 —— 编译器的优化可能会对测试数据给出过于乐观的结果（如[第 30 条]所述）。
   - [Godbolt compiler explorer] 是一个了不得的工具，你可以看到编译器都生成了什么。
@@ -467,7 +467,7 @@ let even_sum_squares: u64 = values
 
 ## 注释
 
-[^1]: 事实上，迭代器可以更通用——在直到结束之前不停地产生下一个元素，这种想法不必跟某种容器强关联。
+[^1]: 事实上，迭代器可以更通用 —— 在直到结束之前不停地产生下一个元素，这种想法不必跟某种容器强关联。
 
 [^2]: 如果对容器元素的修改可能会导致容器内部的一些约束被打破，那么这个方法就不能提供了。比如说：导致元素的 [Hash] 值发生变化的修改，就可能会导致 `HashMap` 内部数据结构的失效。
 
@@ -483,6 +483,7 @@ let even_sum_squares: u64 = values
 [第 15 条]: ../chapter_3/item15-borrows.md
 [第 30 条]: ../chapter_5/item30-write-more-than-unit-tests.md
 
+[B 语言]: https://web.archive.org/web/20150611114427/https://www.bell-labs.com/usr/dmr/www/kbman.pdf
 [Java 1.5]: https://docs.oracle.com/javase/1.5.0/docs/guide/language/foreach.html
 [Iterator]: https://doc.rust-lang.org/core/iter/trait.Iterator.html
 [next]: https://doc.rust-lang.org/core/iter/trait.Iterator.html#tymethod.next
@@ -530,12 +531,12 @@ let even_sum_squares: u64 = values
 [Vec]: https://doc.rust-lang.org/std/vec/struct.Vec.html#impl-FromIterator%3CT%3E
 [HashMap]: https://doc.rust-lang.org/std/collections/struct.HashMap.html#impl-FromIterator%3C(K%2C%20V)%3E
 [BTreeSet]: https://doc.rust-lang.org/std/collections/struct.BTreeSet.html#impl-FromIterator%3CT%3E
-[range expressions]: https://doc.rust-lang.org/reference/expressions/range-expr.html
+[范围表达式]: https://doc.rust-lang.org/reference/expressions/range-expr.html
 [unzip()]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.unzip
 [partition(p)]: https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.partition
 [iterator documentation]: https://doc.rust-lang.org/std/iter/trait.Iterator.html
 [O'Reilly]: https://learning.oreilly.com/library/view/programming-rust-2nd/9781492052586/ch15.html
 [2023 article]: https://shnatsel.medium.com/how-to-avoid-bounds-checks-in-rust-without-unsafe-f65e618b4c1e
-[just as fast]: https://doc.rust-lang.org/book/ch13-04-performance.html
+[一样快]: https://doc.rust-lang.org/book/ch13-04-performance.html
 [Godbolt compiler explorer]: https://rust.godbolt.org/
 [Hash]: https://doc.rust-lang.org/std/hash/trait.Hash.html

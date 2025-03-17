@@ -77,8 +77,8 @@ help: you can convert an `i32` to an `i64`
 
 当然，有一些辅助方法允许在这不同的类型之间进行转换，但它们的签名迫使你处理（或明确忽略）失败的可能性。例如，一个 `Unicode` 代码点 [^2] 总是可以用 32 位表示，所以 `'a' as u32` 是允许的，但反向转换就比较复杂了（因为 `u32` 值不一定是有效的 Unicode 代码点），例如：
 
-* [char::from_u32][char::from_u32] 返回一个 `Option<char>`，迫使调用者处理失败的情况。
-* [char::from_u32_unchecked][char::from_u32_unchecked] 假设有效性，但由于结果是未定义的，因此被标记为 `unsafe`，迫使调用者也使用 `unsafe`（[第 16 条]）。
+* [`char::from_u32`][char::from_u32] 返回一个 `Option<char>`，迫使调用者处理失败的情况。
+* [`char::from_u32_unchecked`][char::from_u32_unchecked] 假设有效性，但由于结果是未定义的，因此被标记为 `unsafe`，迫使调用者也使用 `unsafe`（[第 16 条]）。
 
 ## 聚合类型
 
@@ -274,7 +274,7 @@ struct DisplayProperties {
 
 [^1]: 如果涉及到文件系统，情况会更加复杂，因为在流行各种平台上，文件名介于任意字节和 UTF-8 序列之间：请参阅 [`std::ffi::OsString`][std::ffi::OsString] 文档。
 
-[^2]: 技术上，是一个 *Unicode 标量值*，而不是代码点。
+[^2]: 技术上，是一个 [*Unicode 标量值*][Unicode]，而不是代码点。
 
 [^3]: 这也意味着在库中为一个现有枚举添加一个新的变体是一个破坏性的更改（[第 21 条]）：库的用户需要更改他们的代码以适应新的变体。如果一个枚举实际上只是一个旧式的值列表，可以通过将其标记为 [`non_exhaustive`][non_exhaustive] 枚举来避免这种行为；请参阅[第 21 条]。
 
