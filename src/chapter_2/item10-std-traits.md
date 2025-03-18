@@ -43,7 +43,7 @@ enum MyBooleanOption {
 
 ### [Clone]
 
-`Clone` trait 表示可以通过调用 [clone()] 函数来创建一个对象的新副本。这跟 C++ 的拷贝函数大致相同，但是表意更加明确：编译器不会默默地调用这个函数（下一节会更详细地说明）。
+`Clone` trait 表示可以通过调用 [clone()][clone] 函数来创建一个对象的新副本。这跟 C++ 的拷贝函数大致相同，但是表意更加明确：编译器不会默默地调用这个函数（下一节会更详细地说明）。
 
 如果一个类型的所有字段都实现了 `Clone`，那么可以通过 `derive` 为这个类型自动派生 `Clone`。`derive` 派生获得的实现会对类型的每个成员依次执行克隆操作；再说一次，这跟 C++ 的构造函数大致相同。这个 trait 需要显式地启用（通过添加 `#[derive(Clone)]`），这与 C++ 中需要显式禁止（`MyType(const MyType&) = delete;`）恰恰相反。
 
@@ -141,7 +141,7 @@ warning: using `clone` on type `KeyId` which implements the `Copy` trait
 
 ### [Default]
 
-`Default` trait 通过 [default()] 方法定义了一个*默认构造函数*。如果用户定义类型的内含类型都有 `Default` 的实现，那么类型可以通过 `derive` 来实现这个 trait；如果内含类型并非都实现了 `Default`，那么用户需要手动为类型实现这个 trait。还是跟 C++ 做比较：在 Rust 中需要显式地定义默认构造函数 —— 编译器不会自动帮你创建。
+`Default` trait 通过 [default()][default] 方法定义了一个*默认构造函数*。如果用户定义类型的内含类型都有 `Default` 的实现，那么类型可以通过 `derive` 来实现这个 trait；如果内含类型并非都实现了 `Default`，那么用户需要手动为类型实现这个 trait。还是跟 C++ 做比较：在 Rust 中需要显式地定义默认构造函数 —— 编译器不会自动帮你创建。
 
 `enum` 类型也可以通过 `derive` 实现 `Default` trait，只要给编译器提供一个 `#[default]` 属性来提示编译器哪一个分支是默认值即可：
 
@@ -236,9 +236,9 @@ if x <= y {
 
 - `Debug` 可以通过 `derive` 自动派生 获得，而 `Display` 只能手动实现。
 - `Debug` 的输出格式在不同的 Rust 版本下可能会不一样。如果输出需要被其他的代码做解析，那么使用 `Display`。
-- `Debug` 是面向程序员的，`Display` 是面向用户的。一个有助于理解这个场景的思想实验是：如果程序被本地化到程序作者不懂的语言会发生什么 —— 如果显示的内容应该被翻译，那么使用 `Display` 是合适的，否则就应该使用 `Debug`。
+- `Debug` 是面向程序员的，`Display` 是面向用户的。一个有助于理解这个场景的思想实验是：如果程序[被本地化到][localized]程序作者不懂的语言会发生什么 —— 如果显示的内容应该被翻译，那么使用 `Display` 是合适的，否则就应该使用 `Debug`。
 
-通常来说，**给你的类型添加一个自动生成的 `Debug` 实现是个不错的选择**，除非类型里面包含一些敏感信息（个人详细信息、密码相关的内容等）。为了更容易遵守这个规则，Rust 编译器有一个 [missing_debug_implementations ] 提示可以指出没有实现 `Debug` 的类型。这个提示默认是禁用的，但可以通过以下任一方式在你的代码中启用：
+通常来说，**给你的类型添加一个自动生成的 `Debug` 实现是个不错的选择**，除非类型里面包含一些敏感信息（个人详细信息、密码相关的内容等）。为了更容易遵守这个规则，Rust 编译器有一个 [missing_debug_implementations] 提示可以指出没有实现 `Debug` 的类型。这个提示默认是禁用的，但可以通过以下任一方式在你的代码中启用：
 
 ```rust
 #![warn(missing_debug_implementations)]
@@ -411,13 +411,11 @@ if x <= y {
 [call_mut]: https://doc.rust-lang.org/std/ops/trait.FnMut.html#tymethod.call_mut
 [call_once]: https://doc.rust-lang.org/std/ops/trait.FnOnce.html#tymethod.call_once
 [call]: https://doc.rust-lang.org/std/ops/trait.Fn.html#tymethod.call
-[clone()]: https://doc.rust-lang.org/std/clone/trait.Clone.html#tymethod.clone
 [Clone]: https://doc.rust-lang.org/std/clone/trait.Clone.html
 [clone]: https://doc.rust-lang.org/std/clone/trait.Clone.html#tymethod.clone
 [cmp]: https://doc.rust-lang.org/std/cmp/trait.Ord.html#tymethod.cmp
 [Copy]: https://doc.rust-lang.org/std/marker/trait.Copy.html
 [Debug]: https://doc.rust-lang.org/std/fmt/trait.Debug.html
-[default()]: https://doc.rust-lang.org/std/default/trait.Default.html#tymethod.default
 [Default]: https://doc.rust-lang.org/std/default/trait.Default.html
 [default]: https://doc.rust-lang.org/std/default/trait.Default.html#tymethod.default
 [deref_mut]: https://doc.rust-lang.org/std/ops/trait.DerefMut.html#tymethod.deref_mut
@@ -444,7 +442,7 @@ if x <= y {
 [FromIterator]: https://doc.rust-lang.org/core/iter/trait.FromIterator.html
 [Hash]: https://doc.rust-lang.org/std/hash/trait.Hash.html
 [HashMap]: https://doc.rust-lang.org/std/collections/struct.HashMap.html
-[HashSet]: https://doc.rust-lang.org/std/collections/struct.HashMap.html
+[HashSet]: https://doc.rust-lang.org/std/collections/struct.HashSet.html
 [index_mut]: https://doc.rust-lang.org/std/ops/trait.IndexMut.html#tymethod.index_mut
 [Index]: https://doc.rust-lang.org/std/ops/trait.Index.html
 [index]: https://doc.rust-lang.org/std/ops/trait.Index.html#tymethod.index
@@ -455,6 +453,7 @@ if x <= y {
 [IntoIterator]: https://doc.rust-lang.org/core/iter/trait.IntoIterator.html
 [Iterator]: https://doc.rust-lang.org/core/iter/trait.Iterator.html
 [lattice structure]: https://en.wikipedia.org/wiki/Lattice_(order)
+[localized]: https://en.wikipedia.org/wiki/Internationalization_and_localization
 [missing_copy_implementations]: https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#missing-copy-implementations
 [missing_debug_implementations]: https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#missing-debug-implementations
 [mul_assign]: https://doc.rust-lang.org/std/ops/trait.MulAssign.html#tymethod.mul_assign
