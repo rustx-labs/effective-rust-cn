@@ -123,7 +123,7 @@ impl ThreadSafeInt {
 }
 ```
 
-在推崇了 RAII 模式的用法之后，有必要解释一下如何实现它。[`Drop`] trait 允许你在对象销毁时添加用户自定义的行为。这个 trait 只有一个方法，[`drop`]，编译器会在释放持有对象的内存之前运行这个方法：
+在推崇了 RAII 模式的用法之后，有必要解释一下如何实现它。[`Drop`][drop_trait] trait 允许你在对象销毁时添加用户自定义的行为。这个 trait 只有一个方法，[`drop`][drop_method]，编译器会在释放持有对象的内存之前运行这个方法：
 
 ```rust
 #[derive(Debug)]
@@ -185,6 +185,6 @@ error[E0040]: explicit use of destructor method
 [文件描述符]: https://en.wikipedia.org/wiki/File_descriptor
 [`Mutex::lock()`]: https://doc.rust-lang.org/std/sync/struct.Mutex.html#method.lock
 [`MutexGuard`]: https://doc.rust-lang.org/std/sync/struct.MutexGuard.html
-[`Drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html
-[`drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html#tymethod.drop
+[drop_trait]: https://doc.rust-lang.org/std/ops/trait.Drop.html
+[drop_method]: https://doc.rust-lang.org/std/ops/trait.Drop.html#tymethod.drop
 [`drop()`]: https://doc.rust-lang.org/std/mem/fn.drop.html

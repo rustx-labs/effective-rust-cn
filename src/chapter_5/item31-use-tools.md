@@ -80,7 +80,6 @@ Rust 工具链的可扩展性不仅限于包的元数据，编译器的抽象语
 [Miri]: https://github.com/rust-lang/miri
 [Dependabot]: https://docs.github.com/en/code-security/dependabot
 [`cargo-semver-checks`]: https://github.com/obi1kenobi/cargo-semver-checks
-[`cargo-expand`]: https://github.com/dtolnay/cargo-expand
 [Godbolt 编译器管理器]: https://rust.godbolt.org
 [`cargo-fuzz`]: https://github.com/rust-fuzz/cargo-fuzz
 [`criterion`]: https://crates.io/crates/criterion

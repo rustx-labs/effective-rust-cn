@@ -18,7 +18,7 @@
 
 Rust 不支持这种类型的反射，这使得*避免反射*的建议在这种层次上非常容易实现 —— 因为本来就是不可能的。对于来自完整支持反射的语言的程序员来说，乍一看，反射的缺席似乎是一个重大差距，但 Rust 的其他功能提供了许多解决相同问题的替代方法。
 
-C++ 有一种有限制的反射形式，称为*运行时类型识别*（*run-time type identification*，RTTI）。[`typeid`] 操作符为*多态类型*的对象（可粗略理解为有虚函数的类），返回每个类型的独一无二的标识符。
+C++ 有一种有限制的反射形式，称为*运行时类型识别*（*run-time type identification*，RTTI）。[`typeid`][cpp_typid] 操作符为*多态类型*的对象（可粗略理解为有虚函数的类），返回每个类型的独一无二的标识符。
 
 - `typeid`：可以通过基类引用来恢复对象的具体类
 - [`dynamic_cast<T>`]：在安全且正确的情况下，允许将基类转换为派生类
@@ -71,7 +71,7 @@ shape: &dyn reflection::Shape
 draw: &dyn reflection::Draw
 ```
 
-`type_name` 返回的字符串仅能用于诊断 —— 它显然是一个“尽力了”的助手，其内容可能改变并且可能不唯一 —— 所以*不要尝试解析 `type_name` 的结果*。如果你需要全局唯一的类型标识符，请使用 [`TypeId`] 代替：
+`type_name` 返回的字符串仅能用于诊断 —— 它显然是一个“尽力了”的助手，其内容可能改变并且可能不唯一 —— 所以*不要尝试解析 `type_name` 的结果*。如果你需要全局唯一的类型标识符，请使用 [`TypeId`][rust_typeid] 代替：
 
 ```rust
 use std::any::TypeId;
@@ -192,11 +192,11 @@ let shape: &dyn Shape = &square;
 [Python]: https://docs.python.org/3/library/types.html#module-types
 [Java]: https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/package-summary.html
 [Go]: https://golang.org/pkg/reflect/
-[`typeid`]: https://en.cppreference.com/w/cpp/language/typeid
+[cpp_typeid]: https://en.cppreference.com/w/cpp/language/typeid
 [`dynamic_cast<T>`]: https://en.cppreference.com/w/cpp/language/dynamic_cast
 [`std::any`]: https://doc.rust-lang.org/std/any/index.html
 [`std::any::type_name<T>`]: https://doc.rust-lang.org/std/any/fn.type_name.html
-[`TypeId`]: https://doc.rust-lang.org/std/any/struct.TypeId.html
+[rust_typeid]: https://doc.rust-lang.org/std/any/struct.TypeId.html
 [`std::any::Any`]: https://doc.rust-lang.org/std/any/trait.Any.html
 [`type_id()`]: https://doc.rust-lang.org/std/any/trait.Any.html
 [有意的限制]: https://github.com/rust-lang/rust/issues/41875
