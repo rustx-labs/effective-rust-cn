@@ -85,7 +85,7 @@ void add_with_modification(int delta) {
 - 访问同步资源。标准库已经包括内存同步原语，但其他资源（例如文件锁、数据库锁等）可能需要类似的封装。
 - 访问原始内存，对于处理低级内存管理的 `unsafe` 类型（例如，用于外部函数接口 [FFI] 功能）。
 
-Rust 标准库中最明显的 RAII 实例是由 [`Mutex::lock()`][Mutex::lock()] 操作返回的 [`MutexGuard`][MutexGuard]，它通常用于[第 17 条]中讨论的通过共享状态实现并行的程序。这大致类似于之前提到的 C++ 示例，但在 Rust 中，`MutexGuard` 不仅作为持有锁的 RAII 对象，还充当对互斥锁保护的数据的代理：
+Rust 标准库中最明显的 RAII 实例是由 [`Mutex::lock()`] 操作返回的 [`MutexGuard`]，它通常用于[第 17 条]中讨论的通过共享状态实现并行的程序。这大致类似于之前提到的 C++ 示例，但在 Rust 中，`MutexGuard` 不仅作为持有锁的 RAII 对象，还充当对互斥锁保护的数据的代理：
 
 ```rust
 use std::sync::Mutex;
@@ -123,7 +123,7 @@ impl ThreadSafeInt {
 }
 ```
 
-在推崇了 RAII 模式的用法之后，有必要解释一下如何实现它。[`Drop`][Drop] trait 允许你在对象销毁时添加用户自定义的行为。这个 trait 只有一个方法，[`drop`][drop]，编译器会在释放持有对象的内存之前运行这个方法：
+在推崇了 RAII 模式的用法之后，有必要解释一下如何实现它。[`Drop`] trait 允许你在对象销毁时添加用户自定义的行为。这个 trait 只有一个方法，[`drop`]，编译器会在释放持有对象的内存之前运行这个方法：
 
 ```rust
 #[derive(Debug)]
@@ -169,7 +169,7 @@ error[E0040]: explicit use of destructor method
 // Also, what would happen when `x` goes out of scope?
 ```
 
-编译器提供了一种简单的替代方案，即调用 [`drop()`][drop()] 函数手动销毁对象。该函数接收一个参数移动到函数内，其实 `drop(_item: T)` 函数的实现只是一个空的函数体 `{}` —— 所以当该作用域到右括号时，被移动的对象会就被销毁。
+编译器提供了一种简单的替代方案，即调用 [`drop()`] 函数手动销毁对象。该函数接收一个参数移动到函数内，其实 `drop(_item: T)` 函数的实现只是一个空的函数体 `{}` —— 所以当该作用域到右括号时，被移动的对象会就被销毁。
 
 另外，`drop(&mut self)` 方法的签名没有返回类型，这意味着它无法传递失败信息。如果释放资源可能会失败，那么你可能需要一个单独的 `release` 方法来返回一个 `Result`，以便用户检测详情。
 
@@ -183,8 +183,8 @@ error[E0040]: explicit use of destructor method
 [第 17 条]: ../chapter_3/item17-deadlock.md
 
 [文件描述符]: https://en.wikipedia.org/wiki/File_descriptor
-[Mutex::lock()]: https://doc.rust-lang.org/std/sync/struct.Mutex.html#method.lock
-[MutexGuard]: https://doc.rust-lang.org/std/sync/struct.MutexGuard.html
-[Drop]: https://doc.rust-lang.org/std/ops/trait.Drop.html
-[drop]: https://doc.rust-lang.org/std/ops/trait.Drop.html#tymethod.drop
-[drop()]: https://doc.rust-lang.org/std/mem/fn.drop.html
+[`Mutex::lock()`]: https://doc.rust-lang.org/std/sync/struct.Mutex.html#method.lock
+[`MutexGuard`]: https://doc.rust-lang.org/std/sync/struct.MutexGuard.html
+[`Drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html
+[`drop`]: https://doc.rust-lang.org/std/ops/trait.Drop.html#tymethod.drop
+[`drop()`]: https://doc.rust-lang.org/std/mem/fn.drop.html

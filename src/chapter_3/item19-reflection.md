@@ -196,6 +196,7 @@ let shape: &dyn Shape = &square;
 [`dynamic_cast<T>`]: https://en.cppreference.com/w/cpp/language/dynamic_cast
 [`std::any`]: https://doc.rust-lang.org/std/any/index.html
 [`std::any::type_name<T>`]: https://doc.rust-lang.org/std/any/fn.type_name.html
+[`TypeId`]: https://doc.rust-lang.org/std/any/struct.TypeId.html
 [`std::any::Any`]: https://doc.rust-lang.org/std/any/trait.Any.html
 [`type_id()`]: https://doc.rust-lang.org/std/any/trait.Any.html
 [有意的限制]: https://github.com/rust-lang/rust/issues/41875
