@@ -26,7 +26,7 @@ Rust 还支持为无法提供完整标准库的环境构建代码，如引导加
 
 但如果所在的 `no_std` 环境*的确*支持堆分配，则 `std` 中的许多标准数据结构仍然可用。这些数据结构以及其他使用分配功能的部分被分组到 Rust 的 [`alloc`] 库中。
 
-和 `core` 一样，这些 `alloc` 变体实际上在底层是相同的类型。例如 `std::vec::Vec` 的真实名称是 `alloc::vec::Vec`。
+和 `core` 一样，这些 `alloc` 变体实际上在底层是相同的类型。例如 [`std::vec::Vec`] 的真实名称是 [`alloc::vec::Vec`]。
 
 如果 `no_std` 的 crate 要使用 `alloc`，需要在 `src/lib.rs` 额外显式声明 `extern crate alloc;`[^3]：
 
@@ -52,7 +52,7 @@ extern crate alloc;
 
 但 `alloc` 提供的数据结构显然还缺少了两个集合 —— [`HashMap`] 和 [`HashSet`]，它们特定于 `std` 而不是 `alloc`。这是因为这些基于哈希的容器依靠随机种子来防止哈希碰撞攻击，但安全的随机数生成需要依赖操作系统的帮助，而 `alloc` 不能假设操作系统存在。
 
-另一个缺失的部分是同步功能，例如 [`std::sync::Mutex`]，这是多线程代码所必需的，但这些类型同样特定于 `std`，它们依赖操作系统的同步原语，如果没有操作系统，这些同步原语也将不可用。在 `no_std` 下编写多线程代码，第三方 crate 可能是唯一选择，例如 [`spin`]。
+另一个缺失的部分是同步功能，例如 [`std::sync::Mutex`]，这是多线程代码所必需的（[第 17 条]），但这些类型同样特定于 `std`，它们依赖操作系统的同步原语，如果没有操作系统，这些同步原语也将不可用。在 `no_std` 下编写多线程代码，第三方 crate 可能是唯一选择，例如 [`spin`]。
 
 ## 为 `no_std` 编写代码
 
@@ -121,7 +121,7 @@ v.push(4); // 可能会分配
 - [`Vec::try_reserve`] 作为 [`Vec::reserve`] 的替代品。
 - [`Box::try_new`] 作为 [`Box::new`] 的替代品（在每日构建的工具链中可用）。
 
-但这些允许可错分配的 API 功能也仅限于此。例如，（目前为止）还没有与 `Vec::push` 等效的可错分配版本，因此编写组装 vector 的代码时，可能需要进行精确计算，以确保不会发生内存分配错误。
+但这些允许可错分配的 API 功能也仅限于此。例如，（目前为止）还没有与 [`Vec::push`] 等效的可错分配版本，因此编写组装 vector 的代码时，可能需要进行精确计算，以确保不会发生内存分配错误。
 
 ```rust
 fn try_build_a_vec() -> Result<Vec<u8>, String> {
@@ -156,7 +156,7 @@ fn try_build_a_vec() -> Result<Vec<u8>, String> {
 
 [^1]: 有关创建 `no_std` 可执行文件所涉及的内容，请参阅 [The Embedonomicon] 或 Philipp Opperamann 的[早期博客文章]。
 
-[^2]: 注意，该方法不一定正确。例如在撰写本文时，`Error` trait 在 `[core::]` 中定义，但被标记为不稳定（unstable），只有 [`std::` 版本]是稳定的（stable）。
+[^2]: 注意，该方法不一定正确。例如在撰写本文时，`Error` trait 在 [`core::`] 中定义，但被标记为不稳定（unstable），只有 [`std::` 版本]是稳定的（stable）。
 
 [^3]: 在 Rust 2018 之前，`extern crate` 声明用来引入依赖项。现在这些依赖完全由 `Cargo.toml` 处理，但仍使用 `extern crate` 机制引入那些 `no_std` 环境中 Rust 标准库的可选部分（即 *[sysroot crates]*）。
 
@@ -167,6 +167,7 @@ fn try_build_a_vec() -> Result<Vec<u8>, String> {
 <!-- 参考链接 -->
 
 [第 14 条]: ../chapter_3/item14-lifetimes.md
+[第 17 条]: ../chapter_3/item17-deadlock.md
 [第 25 条]: ../chapter_4/item25-dep-graph.md
 [第 26 条]: ../chapter_4/item26-features.md
 [第 32 条]: ../chapter_5/item32-ci.md
@@ -176,12 +177,9 @@ fn try_build_a_vec() -> Result<Vec<u8>, String> {
 [`Result`]: https://doc.rust-lang.org/core/result/enum.Result.html
 [`Iterator`]: https://doc.rust-lang.org/core/iter/trait.Iterator.html
 [`doc.rust-lang.org`]: https://doc.rust-lang.org/std/index.html
-[The Embedonomicon]: https://docs.rust-embedded.org/embedonomicon/
-[早期博客文章]: https://os.phil-opp.com/freestanding-rust-binary/
-[core::]: https://doc.rust-lang.org/1.70.0/core/error/trait.Error.html
-[`std::` 版本]: https://doc.rust-lang.org/1.70.0/std/error/trait.Error.html
-[sysroot crates]: https://doc.rust-lang.org/edition-guide/rust-2018/path-changes.html#an-exception
 [`alloc`]: https://doc.rust-lang.org/alloc/
+[`std::vec::Vec`]: https://doc.rust-lang.org/std/vec/struct.Vec.html
+[`alloc::vec::Vec`]: https://doc.rust-lang.org/alloc/vec/struct.Vec.html
 [`alloc::boxed::Box<T>`]: https://doc.rust-lang.org/alloc/boxed/struct.Box.html
 [`alloc::rc::Rc<T>`]: https://doc.rust-lang.org/alloc/rc/struct.Rc.html
 [`alloc::sync::Arc<T>`]: https://doc.rust-lang.org/alloc/sync/struct.Arc.html
@@ -197,8 +195,6 @@ fn try_build_a_vec() -> Result<Vec<u8>, String> {
 [交叉编译]: https://www.reddit.com/r/rust/comments/ef8nd9/how_to_avoid_accidentally_breaking_no_std/fbyz6ix/
 [配置]: https://doc.rust-lang.org/std/alloc/fn.set_alloc_error_hook.html
 [`std::bad_alloc`]: https://en.cppreference.com/w/cpp/memory/new/bad_alloc
-[`std::nothrow`]: https://en.cppreference.com/w/cpp/memory/new/nothrow
-[`vector<T>::push_back`]: https://en.cppreference.com/w/cpp/container/vector/push_back
 [Linux 内核]: https://lkml.org/lkml/2021/4/14/1099
 [Curl 工具]: https://github.com/hyperium/hyper/issues/2265#issuecomment-693194229
 [添加“可错的集合分配”]: https://github.com/rust-lang/rfcs/pull/2116
@@ -206,4 +202,12 @@ fn try_build_a_vec() -> Result<Vec<u8>, String> {
 [`Vec::reserve`]: https://doc.rust-lang.org/std/vec/struct.Vec.html#method.reserve
 [`Box::try_new`]: https://doc.rust-lang.org/std/boxed/struct.Box.html#method.try_new
 [`Box::new`]: https://doc.rust-lang.org/std/boxed/struct.Box.html#method.new
+[`Vec::push`]: https://doc.rust-lang.org/std/vec/struct.Vec.html#method.push
 [`no_global_oom_handling`]: https://github.com/rust-lang/rust/pull/84266
+[The Embedonomicon]: https://docs.rust-embedded.org/embedonomicon/
+[早期博客文章]: https://os.phil-opp.com/freestanding-rust-binary/
+[`core::`]: https://doc.rust-lang.org/1.70.0/core/error/trait.Error.html
+[`std::` 版本]: https://doc.rust-lang.org/1.70.0/std/error/trait.Error.html
+[sysroot crates]: https://doc.rust-lang.org/edition-guide/rust-2018/path-changes.html#an-exception
+[`std::nothrow`]: https://en.cppreference.com/w/cpp/memory/new/nothrow
+[`vector<T>::push_back`]: https://en.cppreference.com/w/cpp/container/vector/push_back

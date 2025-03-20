@@ -564,7 +564,7 @@ struct GameServer {
 
 ## 建议
 
-为了避免共享状态并行性所出现的问题，最明显的建议就是避免共享状态的并行性。[Rust 程序设计语言]中引用了 [Go 语言文档]：“不要通过共享内存来进行通信；相反，应该通过通信来共享内存。”
+为了避免共享状态并行性所出现的问题，最明显的建议就是避免共享状态的并行性。[Rust book] 中引用了 [Go 语言文档]：“不要通过共享内存来进行通信；相反，应该通过通信来共享内存。”
 
 Go 语言[在语言里内置了]用于这种操作的*管道*；对 Rust 来说，相同的功能可以在标准库 [`std::sync::mpsc` 模块]中找到：函数 [`channel()`] 返回一个 `(Sender, Receiver)` 元组对，允许特定类型的值在线程之间进行通信。
 
@@ -615,7 +615,7 @@ Go 语言[在语言里内置了]用于这种操作的*管道*；对 Rust 来说�
 [`Cell<T>`]: https://doc.rust-lang.org/std/cell/struct.Cell.html
 [`RefCell<T>`]: https://doc.rust-lang.org/std/cell/struct.RefCell.html
 [`RwLock<T>`]: https://doc.rust-lang.org/std/sync/struct.RwLock.html
-[Rust 程序设计语言]: https://doc.rust-lang.org/book/ch16-02-message-passing.html
+[Rust book]: https://doc.rust-lang.org/book/ch16-02-message-passing.html
 [Go 语言文档]: https://golang.org/doc/effective_go.html#concurrency
 [在语言里内置了]: https://go.dev/ref/spec#Channel_types
 [`std::sync::mpsc` 模块]: https://doc.rust-lang.org/std/sync/mpsc/index.html

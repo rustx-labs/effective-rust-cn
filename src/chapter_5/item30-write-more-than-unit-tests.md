@@ -80,7 +80,7 @@ Rust 项目中另一种常用到的测试模式是*集成测试*，通常被放�
 
 [第 20 条]试图说明极致的代码性能优化并非总是必要的。尽管如此，性能有时肯定是很关键的，在这种情况下，测量以及追踪代码的性能变化是很好的实践。具备定期运行的*基准测试*（benchmarks）（比如，作为 CI 系统的一部分，[第 32 条]）允许你在代码或者工具链的变更影响到代码的性能时能及时察觉。
 
-`[cargo bench]` 命令可以重复运行执行某个操作的特殊测试用例，并且计算出这个操作的平均耗时。在撰写本文时，Rust 对基准测试的支持尚未稳定，所以基准测试相关的指令需要通过 `cargo +nightly bench` 的方式来执行。（关于 Rust 中的不稳定的特性，包括这里使用到的 [test] 特性，都描述在 Rust 官方的 [The Unstable Book] 中。）
+[`cargo bench`] 命令可以重复运行执行某个操作的特殊测试用例，并且计算出这个操作的平均耗时。在撰写本文时，Rust 对基准测试的支持尚未稳定，所以基准测试相关的指令需要通过 `cargo +nightly bench` 的方式来执行。（关于 Rust 中的不稳定的特性，包括这里使用到的 [`test`] 特性，都描述在 Rust 官方的 [The Unstable Book] 中。）
 
 然而，这里存在着因为编译器的优化导致结果异常的风险，尤其是当你将操作约束在真实代码的一个小的子集中时。考虑如下一个简单的算数函数：
 
@@ -116,7 +116,7 @@ test bench_factorial             ... bench:           0 ns/iter (+/- 0)
 
 由于在测试过程中使用了固定的输入以及较少的代码指令，编译器能够对迭代进行优化并且直接输出计算结果。这就导致了不符合实际情况的测试结果。
 
-使用 [std::hint::black_box] 可以帮助解决这个问题。这是一个恒等函数（identity function），[编译器将尽量]不对其进行优化。
+使用 [`std::hint::black_box`] 可以帮助解决这个问题。这是一个恒等函数（identity function），[编译器将尽量]不对其进行优化。
 
 将上述基准测试代码改为如下形式：
 
@@ -138,7 +138,7 @@ test blackboxed::bench_factorial ... bench:          16 ns/iter (+/- 3)
 
 [Godbolt 编译器管理器]也可以通过展示编译器实际输出的机器码的方式来帮助解决这个问题，这样就更容易看出来编译器是否进行了一些在真实场景下无法进行的优化。
 
-最后，如果你为 Rust 代码准备了基准测试，[criterion] 包可能提供了一个比标准库里的 [test::bench::Bencher] 使用起来更便捷（可以在稳定的 Rust 工具链上运行）、特性也更多（支持结果的数据统计及图表）的替代品。
+最后，如果你为 Rust 代码准备了基准测试，[`criterion`] 包可能提供了一个比标准库里的 [`test::bench::Bencher`] 使用起来更便捷（可以在稳定的 Rust 工具链上运行）、特性也更多（支持结果的数据统计及图表）的替代品。
 
 ## 模糊测试
 
@@ -148,9 +148,9 @@ test blackboxed::bench_factorial ... bench:          16 ns/iter (+/- 3)
 
 Rust 对其中的一些（但并非全部）内存安全问题免疫，尤其是未引入 `unsafe` 的代码时（[第 16 条]）。然而，Rust 并不能杜绝任意的代码缺陷，比如会触发 `panic!`（[第 18 条]）的代码就有可能引发拒绝服务（denial-of-service，DOS）攻击。
 
-最有效的模糊测试的形式是*以覆盖率来引导*：测试基础设施监控代码的哪些部分被执行，并更多针对新的代码路径进行随机的输入更改。“[American fuzzy lop]”（AFL）是其中的佼佼者。但是近些年来，类似的功能已经被引入了 LLVM 的工具链，比如 [libFuzzer]。
+最有效的模糊测试的形式是*以覆盖率来引导*：测试基础设施监控代码的哪些部分被执行，并更多针对新的代码路径进行随机的输入更改。“[American fuzzy lop]”（AFL）是其中的佼佼者。但是近些年来，类似的功能已经被引入了 LLVM 的工具链，比如 [`libFuzzer`]。
 
-Rust 编译器是在 LLVM 的基础上构建的，因此 [cargo-fuzz] 自然地为 Rust 引入了 `libFuzzer`（虽然仅在部分平台上可用）。
+Rust 编译器是在 LLVM 的基础上构建的，因此 [`cargo-fuzz`] 自然地为 Rust 引入了 `libFuzzer`（虽然仅在部分平台上可用）。
 
 模糊测试的首要要求是确定代码的入口点，该入口点可以（或者被适配成可以）将任意字节的数据作为输入：
 
@@ -264,19 +264,19 @@ stack backtrace:
 
 [@FearlessSon]: https://twitter.com/FearlessSon/status/1405742580952834051
 [编写测试]: https://doc.rust-lang.org/book/ch11-00-testing.html
-[cargo test]: https://doc.rust-lang.org/cargo/commands/cargo-bench.html
-[test]: https://doc.rust-lang.org/unstable-book/library-features/test.html
+[`cargo bench`]: https://doc.rust-lang.org/cargo/commands/cargo-bench.html
+[`test`]: https://doc.rust-lang.org/unstable-book/library-features/test.html
 [The Unstable Book]: https://doc.rust-lang.org/unstable-book/the-unstable-book.html
-[std::hint::black_box]: https://doc.rust-lang.org/std/hint/fn.black_box.html
+[`std::hint::black_box`]: https://doc.rust-lang.org/std/hint/fn.black_box.html
 [Godbolt 编译器管理器]: https://rust.godbolt.org/
 [编译器将尽量]: https://rust-lang.github.io/rfcs/2360-bench-black-box.html
-[criterion]: https://crates.io/crates/criterion
-[test::bench::Bencher]: https://doc.rust-lang.org/test/bench/struct.Bencher.html
+[`criterion`]: https://crates.io/crates/criterion
+[`test::bench::Bencher`]: https://doc.rust-lang.org/test/bench/struct.Bencher.html
 [AddressSanitizer]: https://clang.llvm.org/docs/AddressSanitizer.html
 [ThreadSanitizer]: https://clang.llvm.org/docs/ThreadSanitizer.html
 [American fuzzy lop]: https://lcamtuf.coredump.cx/afl/
-[libFuzzer]: https://llvm.org/docs/LibFuzzer.html
-[cargo-fuzz]: https://github.com/rust-fuzz/cargo-fuzz
+[`libFuzzer`]: https://llvm.org/docs/LibFuzzer.html
+[`cargo-fuzz`]: https://github.com/rust-fuzz/cargo-fuzz
 [Rust Fuzz Book]: https://rust-fuzz.github.io/book/
 [crates.io]: https://crates.io/
 [排除]: https://doc.rust-lang.org/cargo/reference/manifest.html#the-exclude-and-include-fields

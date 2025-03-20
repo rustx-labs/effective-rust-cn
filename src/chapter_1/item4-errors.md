@@ -234,7 +234,7 @@ pub fn first_line(filename: &str) -> Result<String, MyError> {
 }
 ```
 
-编写一个完整的错误类型可能涉及相当多的样板代码，这使得它成为通过派生宏（[第 28 条]）自动化的好候选。然而，没有必要自己编写这样的宏：**考虑使用 `David Tolnay` 提供的 [thiserror] crate**，它提供了一个高质量、广泛使用的宏实现。`thiserror` 生成的代码也小心翼翼地避免在生成的 `API` 中使任何 `thiserror` 类型可见，这意味着与[第 24 条]相关的问题不适用。
+编写一个完整的错误类型可能涉及相当多的样板代码，这使得它成为通过派生宏（[第 28 条]）自动化的好候选。然而，没有必要自己编写这样的宏：**考虑使用 `David Tolnay` 提供的 [`thiserror`] crate**，它提供了一个高质量、广泛使用的宏实现。`thiserror` 生成的代码也小心翼翼地避免在生成的 `API` 中使任何 `thiserror` 类型可见，这意味着与[第 24 条]相关的问题不适用。
 
 ## Trait 对象
 
@@ -298,7 +298,7 @@ error[E0119]: conflicting implementations of trait `From<WrappedError>` for
 
 ```
 
-`David Tolnay` 的 [anyhow] 是一个已经解决了这些问题（通过[使用 Box 来添加一个额外的间接层]）并增加了其他有用功能（如堆栈跟踪）的 `crate`。因此，它迅速成为了错误处理的推荐标准 —— 在这里也是一样：**考虑在应用程序中使用 `anyhow` crate 进行错误处理。**
+`David Tolnay` 的 [`anyhow`] 是一个已经解决了这些问题（通过[使用 Box 来添加一个额外的间接层]）并增加了其他有用功能（如堆栈跟踪）的 crate。因此，它迅速成为了错误处理的推荐标准 —— 在这里也是一样：**考虑在应用程序中使用 `anyhow` crate 进行错误处理。**
 
 ## 库与应用程序
 
@@ -347,8 +347,8 @@ error[E0119]: conflicting implementations of trait `From<WrappedError>` for
 [类型别名]: https://doc.rust-lang.org/reference/items/type-aliases.html
 [`std::io::Error`]: https://doc.rust-lang.org/std/io/struct.Error.html
 [问号运算符]: https://doc.rust-lang.org/reference/expressions/operator-expr.html#the-question-mark-operator
-[thiserror]: https://docs.rs/thiserror
+[`thiserror`]: https://docs.rs/thiserror
 [trait object]: https://doc.rust-lang.org/reference/types/trait-object.html
-[anyhow]: https://docs.rs/anyhow
+[`anyhow`]: https://docs.rs/anyhow
 [使用 Box 来添加一个额外的间接层]: https://github.com/dtolnay/anyhow/issues/63#issuecomment-582079114
 [`anyhow::Error`]: https://docs.rs/anyhow/latest/anyhow/struct.Error.html

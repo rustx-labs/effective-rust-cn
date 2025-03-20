@@ -33,7 +33,7 @@ let dizzy = Details {
 
 这样的样板式代码也很脆弱，因为将来要向 `struct` 中添加一个新字段的时候需要更改所有创建这个结构体的地方。
 
-通过使用和实现 [Default] trait 可以显著地减少这种样板代码，如[第 10 条]中所述：
+通过使用和实现 [`Default`] trait 可以显著地减少这种样板代码，如[第 10 条]中所述：
 
 ```rust
 let dizzy = Details {
@@ -349,7 +349,7 @@ pub fn build(&self) -> Details {
 
 不管是哪种构造器模式的实现，样板代码都集中在一个地方 —— 构造器本身 —— 而不是每个需要操作底层类型的地方。
 
-剩下的样板代码或许还可以通过宏（[第 28 条]）进一步减少，但如果你打算在这条路上走下去，你应该看看是否有现成的包（尤其是 [derive_builder]）已经提供了你需要的功能 —— 如果你愿意添加一个依赖的话（[第 25 条]）。
+剩下的样板代码或许还可以通过宏（[第 28 条]）进一步减少，但如果你打算在这条路上走下去，你应该看看是否有现成的包（尤其是 [`derive_builder`]）已经提供了你需要的功能 —— 如果你愿意添加一个依赖的话（[第 25 条]）。
 
 
 原文[点这里](https://www.lurklurk.org/effective-rust/builders.html)查看
@@ -360,5 +360,5 @@ pub fn build(&self) -> Details {
 [第 25 条]: ../chapter_4/item25-dep-graph.md
 [第 28 条]: ../chapter_5/item28-use-macros-judiciously.md
 
-[Default]: https://doc.rust-lang.org/std/default/trait.Default.html
-[derive_builder]: https://docs.rs/derive_builder/latest/derive_builder/
+[`Default`]: https://doc.rust-lang.org/std/default/trait.Default.html
+[`derive_builder`]: https://docs.rs/derive_builder/latest/derive_builder/

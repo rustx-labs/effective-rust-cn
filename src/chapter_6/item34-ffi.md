@@ -1,6 +1,6 @@
 # 第 34 条：控制跨越 FFI 边界的内容
 
-虽然 Rust 已经具备了能力丰富的[标准库][standard library]，并且还有迅速发展的[crate 生态系统][crate eco]，但现实中还是存在大量的非 Rust 的代码。
+虽然 Rust 已经具备了能力丰富的[标准库]，并且还有迅速发展的 [crate 生态系统]，但现实中还是存在大量的非 Rust 的代码。
 
 与其他较新的语言一样，Rust 提供了 *外部函数接口（foreign function interface, FFI）* 机制，该机制使得 Rust 可以与其他语言编写的代码以及数据结构进行互操作。虽然 FFI 的名字中带有“函数”，实际上这种互操作的能力并不局限于函数调用。这使得 Rust 程序可以使用其他语言编写的已有的库，无需“使用 Rust 重写”。
 
@@ -8,7 +8,7 @@ Rust 的默认目标是可以与 C 程序互操作，许多其他提供跨语言
 
 但是，这并不是说 Rust 和 C 互操作就是非常简单的事情。由于引入了其他语言编写的代码，Rust 提供的安全保证和保护将不再适用，尤其是涉及到内存安全的部分。
 
-所以，Rust 中的 FFI 代码都是 `unsafe` 的，[第 16 条]的建议将不再适用于此场景。本章节将提供一些针对 FFI 的替代建议，[第 35 条]探讨了用来解决使用 FFI 时遇到的某些问题（但不是全部）的工具，《[Rustonomicon]》 中的 [FFI][FFI chapter] 一章也提供了很有帮助的建议和信息。
+所以，Rust 中的 FFI 代码都是 `unsafe` 的，[第 16 条]的建议将不再适用于此场景。本章节将提供一些针对 FFI 的替代建议，[第 35 条]探讨了用来解决使用 FFI 时遇到的某些问题（但不是全部）的工具，《[Rustonomicon]》 中的 [FFI 章节]也提供了很有帮助的建议和信息。
 
 ## 从 Rust 调用 C 函数
 
@@ -52,9 +52,9 @@ extern "C" {
 
 ### 链接过程
 
-C 工具链是如何生成外部库以及该库的格式，和平台环境相关，这些细节超出了本书范畴。然而，在类 Unix 系统上，*静态库*文件是常见的简单形态。静态库文件可以使用 [`ar`][ar] 工具生成，文件名通常是 *lib&lt;something&gt;.a* 的格式，例如：*libcffi.a*。
+C 工具链是如何生成外部库以及该库的格式，和平台环境相关，这些细节超出了本书范畴。然而，在类 Unix 系统上，*静态库*文件是常见的简单形态。静态库文件可以使用 [`ar`] 工具生成，文件名通常是 *lib&lt;something&gt;.a* 的格式，例如：*libcffi.a*。
 
-Rust 的构建系统需要知道对于所声明的外部函数，在哪个库文件中包含其对应代码。可以通过在代码中使用 [`link` 属性][link]指明对应的库文件：
+Rust 的构建系统需要知道对于所声明的外部函数，在哪个库文件中包含其对应代码。可以通过在代码中使用 [`link` 属性]指明对应的库文件：
 
 ```rust
 #[link(name = "cffi")] // 需要名为 `libcffi.a` 的外部库文件
@@ -63,7 +63,7 @@ extern "C" {
 }
 ```
 
-或者，可以使用[构建脚本][build script]向 `cargo` 发起 [`cargo:rustc-link-lib`][rustc-link-lib] 指令 [^2]：
+或者，可以使用[构建脚本]向 `cargo` 发起 [`cargo:rustc-link-lib`] 指令 [^2]：
 
 ```rust
 // 文件： build.rs
@@ -75,7 +75,7 @@ fn main() {
 
 后者更加灵活，因为构建脚本可以检查所处的环境，然后根据所找到的内容采取不同的行为。
 
-无论是哪种方案，如果所需的 C 的库不在系统的库路径中，Rust 构建系统都要有一种能够找到这个库文件的机制。可以在构建脚本中向 `cargo` 发起 [`cargo:rustc-link-search`][rustc-link-search] 指令，其中包含了库文件所在的路径：
+无论是哪种方案，如果所需的 C 的库不在系统的库路径中，Rust 构建系统都要有一种能够找到这个库文件的机制。可以在构建脚本中向 `cargo` 发起 [`cargo:rustc-link-search`] 指令，其中包含了库文件所在的路径：
 
 ```rust
 // 文件：build.rs
@@ -112,7 +112,7 @@ error[E0133]: call to unsafe function is unsafe and requires unsafe function
             avoid undefined behavior
 ```
 
-另一个需要注意的问题是 C 的 `int` 类型，在 Rust 中对应的是 [`std::os::raw::c_int`][c_int]。一个 `int` 是多大？下面两个值*有可能*是一样的：
+另一个需要注意的问题是 C 的 `int` 类型，在 Rust 中对应的是 [`std::os::raw::c_int`]。一个 `int` 是多大？下面两个值*有可能*是一样的：
 
 - 用来编译 C 代码的工具链中的 `int` 类型大小
 - Rust 工具链中的 `std::os::raw::c_int` 大小
@@ -127,7 +127,7 @@ error[E0133]: call to unsafe function is unsafe and requires unsafe function
 
 编译型语言通常支持*独立编译*：先将程序的不同部分分别转换成机器代码块（目标文件），最后再由*链接器*将其整合成一个完整的程序。这就意味着，如果只改动了一小部分代码，仅需重新编译对应的目标文件即可，然后由链接器将变动过的和未变动过的目标文件合并起来重建程序。
 
-粗略来讲，[链接步骤就像“按点连线”游戏][join the dots]那样，一部分目标文件提供函数或者变量的定义，另一些目标文件中包含占位符，表示期望在其他目标文件中找到在编译期间尚未提供的对应定义，链接器会将二者合并起来，确保每个占位符都会被对应的具体定义替换。
+粗略来讲，[链接步骤就像“按点连线”游戏]那样，一部分目标文件提供函数或者变量的定义，另一些目标文件中包含占位符，表示期望在其他目标文件中找到在编译期间尚未提供的对应定义，链接器会将二者合并起来，确保每个占位符都会被对应的具体定义替换。
 
 链接器通过简单的名称匹配机制来查找占位符和定义之间的关系，这就意味着所有的关联关系都存在于一个全局命名空间中。
 
@@ -146,9 +146,9 @@ int32_t add(int32_t a, int32_t b) { return a+b; }
 }
 ```
 
-为了解决这个问题，引入了*名称重整*机制：编译器将[重载函数的签名和类型信息编码][compiler encodes]输出到目标文件中，链接器还是保持原来的处理方式：在占位符和定义之间一一匹配。
+为了解决这个问题，引入了*名称重整*机制：编译器将[重载函数的签名和类型信息编码]输出到目标文件中，链接器还是保持原来的处理方式：在占位符和定义之间一一匹配。
 
-在类 Unix 系统上，可以使用 [`nm`][nm] 命令行工具查看目标文件：
+在类 Unix 系统上，可以使用 [`nm`] 命令行工具查看目标文件：
 
 ```shell
 % nm ffi-lib.o | grep add  # C 链接器看到的
@@ -162,7 +162,7 @@ int32_t add(int32_t a, int32_t b) { return a+b; }
 
 在本例中，有 3 个经过重整的符号，都指向其对应的代码。（`T` 表示二进制输出文件中的*文本段*，也就是代码所在的区域）。
 
-[`c++filt`][c++filt] 工具可以将重整后的名称还原到代码中的名称：
+[`c++filt`] 工具可以将重整后的名称还原到代码中的名称：
 
 ```shell
 % nm ffi-cpp-lib.o | grep add | c++filt  # what the programmer sees
@@ -179,7 +179,7 @@ int32_t add(int32_t a, int32_t b) { return a+b; }
 
 前面所示的 `add` 函数在 Rust 和 C 之间交换的都是简单的数据类型：一个可以存储到寄存器中的整数。即使如此，仍然有一些细节需要注意。所以，不难想象当处理更复杂的数据结构时会有怎样的棘手问题。
 
-C 和 Rust 都使用 `struct` 将一系列相关的数据合并到一个数据结构之内。但是，当在内存中表示一个 `struct` 时，这两种语言就会有区别了，它们会将字段放到不同的位置，甚至是按照不同的顺序来存放数据（即[*布局*][layout]）。为了防止不匹配问题，*对在 FFI 使用的 Rust 中的类型使用 `#[repr(C)]` 标记*，[这种表示方式是专门为与 C 互操作设计的][repr]：
+C 和 Rust 都使用 `struct` 将一系列相关的数据合并到一个数据结构之内。但是，当在内存中表示一个 `struct` 时，这两种语言就会有区别了，它们会将字段放到不同的位置，甚至是按照不同的顺序来存放数据（即[*布局*]）。为了防止不匹配问题，*对在 FFI 使用的 Rust 中的类型使用 `#[repr(C)]` 标记*，[这种表示方式是专门为与 C 互操作设计的]：
 
 ```c
 /* C 结构体定义 */
@@ -204,10 +204,10 @@ pub struct FfiStruct {
 
 在 FFI 互操作场景中，要特别小心字符串类型。C 和 Rust 中默认的字符串类型是完全不同的：
 
-- Rust [`String`][String] 是已知长度的 UTF-8 编码的数据，可能包括值为 0 的字节。
+- Rust [`String`] 是已知长度的 UTF-8 编码的数据，可能包括值为 0 的字节。
 - C 字符串（`char *`）保存的是字节值（可能有符号，也可能无符号），它的长度由数据中的第一个值为 0 （`\0`） 的字节决定。
 
-幸运的是，鉴于 Rust 库的设计者已经完成了底层的繁重工作，我们可以在 Rust 中简单明了的使用 C 字符串。在和 C 的互操作过程中，如果需要拥有字符串值，可以*使用 [`CString`][CString] 类型*，如果需要借用字符串值，可以使用 [`CStr`][Cstr] 类型。当你需要向 FFI 函数传递 `const char*` 类型的字符串时，可以使用 `CStr` 的 [`as_ptr()`][as_ptr] 方法。注意，这里的 `const` 很重要，如果 FFI 函数需要修改字符串内容（`char *`），就不可以这样使用了。
+幸运的是，鉴于 Rust 库的设计者已经完成了底层的繁重工作，我们可以在 Rust 中简单明了的使用 C 字符串。在和 C 的互操作过程中，如果需要拥有字符串值，可以*使用 [`CString`] 类型*，如果需要借用字符串值，可以使用 [`CStr`] 类型。当你需要向 FFI 函数传递 `const char*` 类型的字符串时，可以使用 `CStr` 的 [`as_ptr()`] 方法。注意，这里的 `const` 很重要，如果 FFI 函数需要修改字符串内容（`char *`），就不可以这样使用了。
 
 ## 生命周期
 
@@ -421,7 +421,7 @@ pub extern "C" fn new_struct_heap(v: u32) -> *mut FfiStruct {
 
 拥有这个值的 `Box` 是在栈上的，所以当它超出作用范围，将会被释放，同时，堆上对象也将被释放，此时返回了无效的指针。
 
-[`Box::into_raw`][box-into-raw] 可以解决这个问题，它放弃了对堆上对象的拥有责任，“忘记”了它：
+[`Box::into_raw`] 可以解决这个问题，它放弃了对堆上对象的拥有责任，“忘记”了它：
 
 ```rust
 #[no_mangle]
@@ -434,7 +434,7 @@ pub extern "C" fn new_struct_raw(v: u32) -> *mut FfiStruct {
 }
 ```
 
-但是这样做引发了另外一个问题：堆上对象如何释放？之前我们建议在同一侧代码中申请和释放内存，那么就是说，Rust 侧负责释放内存。对应的工具是 [`Box::from_raw`][box-from-raw]，它可以从裸指针构建一个 `Box`：
+但是这样做引发了另外一个问题：堆上对象如何释放？之前我们建议在同一侧代码中申请和释放内存，那么就是说，Rust 侧负责释放内存。对应的工具是 [`Box::from_raw`]，它可以从裸指针构建一个 `Box`：
 
 ```rust
 #[no_mangle]
@@ -453,7 +453,7 @@ pub extern "C" fn free_struct_raw(p: *mut FfiStruct) {
 
 以上表明了本章的主题：使用 FFI 会让你面对标准 Rust 中不存在的风险。只要你能够意识到其中的风险和成本，那也是值得的。控制跨越 FFI 边界内容的细节有助于降低风险，但是无法完全消除它。
 
-当使用 C 代码调用 Rust 代码的时候，还有一点需要关注的：如果你的 Rust 代码忽略了[第 18 条]的建议，你应该*防止 `panic!` 跨越 FFI 边界*，因为这会导致未定义的、糟糕的行为 [^4]。
+当使用 C 代码调用 Rust 代码的时候，还有一点需要关注的：如果你的 Rust 代码忽略了[第 18 条]的建议，你应该*防止 `panic!` 跨越 FFI 边界*，因为这会导致未定义的、[糟糕的]行为 [^4]。
 
 ## 需要记住的事情
 
@@ -468,13 +468,13 @@ pub extern "C" fn free_struct_raw(p: *mut FfiStruct) {
 
 ## 注释
 
-[^1]: 如果所用的 FFI 函数来自 C 标准库，[`libc`][libc] crate 已经具备这些声明了，无需重复编写。
+[^1]: 如果所用的 FFI 函数来自 C 标准库，[`libc`] crate 已经具备这些声明了，无需重复编写。
 
-[^2]: 在 *Cargo.toml* 中使用 [`links`][links] 键可以让这个依赖对 Cargo 可见。
+[^2]: 在 *Cargo.toml* 中使用 [`links`] 键可以让这个依赖对 Cargo 可见。
 
-[^3]: Rust 中用来将重整后的名称变回阅读友好名称的工具叫做 [`rustfilt`][rustfilt]，这个工具基于 [`rustc-demangle`][rustc-demangle] 命令构建，类似于 `c++filt` 工具。
+[^3]: Rust 中用来将重整后的名称变回阅读友好名称的工具叫做 [`rustfilt`]，这个工具基于 [`rustc-demangle`] 命令构建，类似于 `c++filt` 工具。
 
-[^4]: Rust 1.71 版本中包含 [C-unwind ABI][c-unwind]，可以实现跨语言的错误展开功能。
+[^4]: Rust 1.71 版本中包含 [C-unwind ABI]，可以实现跨语言的错误展开功能。
 
 原文[点这里](https://www.lurklurk.org/effective-rust/ffi.html)查看
 
@@ -487,32 +487,32 @@ pub extern "C" fn free_struct_raw(p: *mut FfiStruct) {
 [第 17 条]: ../chapter_3/item17-deadlock.md
 [第 35 条]: item35-bindgen.md
 
-[standard library]: https://doc.rust-lang.org/std/index.html
-[crate eco]: https://crates.io/
+[标准库]: https://doc.rust-lang.org/std/index.html
+[crate 生态系统]: https://crates.io/
 [Rustonomicon]: https://doc.rust-lang.org/nomicon/
-[FFI chapter]: https://doc.rust-lang.org/nomicon/ffi.html
-[libc]: https://docs.rs/libc
+[FFI 章节]: https://doc.rust-lang.org/nomicon/ffi.html
 [no_mangle]: https://doc.rust-lang.org/reference/abi.html?highlight=no_mangle#the-no_mangle-attribute
-[ar]: https://man7.org/linux/man-pages/man1/ar.1.html
-[link]: https://doc.rust-lang.org/reference/items/external-blocks.html#the-link-attribute
-[build script]: https://doc.rust-lang.org/cargo/reference/build-scripts.html
-[rustc-link-lib]: https://doc.rust-lang.org/cargo/reference/build-scripts.html#rustc-link-lib
-[rustc-link-search]: https://doc.rust-lang.org/cargo/reference/build-scripts.html#rustc-link-search
-[c_int]: https://doc.rust-lang.org/std/os/raw/type.c_int.html
-[join the dots]: https://lurklurk.org/linkers/linkers.html
-[compiler encodes]: https://lurklurk.org/linkers/linkers.html#namemangling
-[nm]: https://en.wikipedia.org/wiki/Nm_%28Unix%29
-[c++filt]: https://man7.org/linux/man-pages/man1/c%2b%2bfilt.1.html
-[layout]: https://doc.rust-lang.org/reference/type-layout.html
-[repr]: https://doc.rust-lang.org/reference/type-layout.html#the-c-representation
-[String]: https://doc.rust-lang.org/alloc/string/struct.String.html
-[CString]: https://doc.rust-lang.org/alloc/ffi/struct.CString.html
-[CStr]: https://doc.rust-lang.org/core/ffi/struct.CStr.html
-[as_ptr]: https://doc.rust-lang.org/core/ffi/struct.CStr.html#method.as_ptr
-[box-into-raw]: https://doc.rust-lang.org/std/boxed/struct.Box.html#method.into_raw
-[box-from-raw]: https://doc.rust-lang.org/std/boxed/struct.Box.html#method.from_raw
-[bad]: https://doc.rust-lang.org/nomicon/unwinding.html
-[links]: https://doc.rust-lang.org/cargo/reference/build-scripts.html#the-links-manifest-key
-[rustfilt]: https://crates.io/crates/rustfilt
-[rust-demangle]: https://github.com/rust-lang/rustc-demangle
-[c-unwind]: https://github.com/rust-lang/rfcs/pull/2945
+[`ar`]: https://man7.org/linux/man-pages/man1/ar.1.html
+[`link` 属性]: https://doc.rust-lang.org/reference/items/external-blocks.html#the-link-attribute
+[构建脚本]: https://doc.rust-lang.org/cargo/reference/build-scripts.html
+[`cargo:rustc-link-lib`]: https://doc.rust-lang.org/cargo/reference/build-scripts.html#rustc-link-lib
+[`cargo:rustc-link-search`]: https://doc.rust-lang.org/cargo/reference/build-scripts.html#rustc-link-search
+[`std::os::raw::c_int`]: https://doc.rust-lang.org/std/os/raw/type.c_int.html
+[链接步骤就像“按点连线”游戏]: https://lurklurk.org/linkers/linkers.html
+[重载函数的签名和类型信息编码]: https://lurklurk.org/linkers/linkers.html#namemangling
+[`nm`]: https://en.wikipedia.org/wiki/Nm_%28Unix%29
+[`c++filt`]: https://man7.org/linux/man-pages/man1/c%2b%2bfilt.1.html
+[*布局*]: https://doc.rust-lang.org/reference/type-layout.html
+[这种表示方式是专门为与 C 互操作设计的]: https://doc.rust-lang.org/reference/type-layout.html#the-c-representation
+[`String`]: https://doc.rust-lang.org/alloc/string/struct.String.html
+[`CString`]: https://doc.rust-lang.org/alloc/ffi/struct.CString.html
+[`CStr`]: https://doc.rust-lang.org/core/ffi/struct.CStr.html
+[`as_ptr()`]: https://doc.rust-lang.org/core/ffi/struct.CStr.html#method.as_ptr
+[`Box::into_raw`]: https://doc.rust-lang.org/std/boxed/struct.Box.html#method.into_raw
+[`Box::from_raw`]: https://doc.rust-lang.org/std/boxed/struct.Box.html#method.from_raw
+[糟糕的]: https://doc.rust-lang.org/nomicon/unwinding.html
+[`libc`]: https://docs.rs/libc
+[`links`]: https://doc.rust-lang.org/cargo/reference/build-scripts.html#the-links-manifest-key
+[`rustfilt`]: https://crates.io/crates/rustfilt
+[`rustc-demangle`]: https://github.com/rust-lang/rustc-demangle
+[C-unwind ABI]: https://github.com/rust-lang/rfcs/pull/2945

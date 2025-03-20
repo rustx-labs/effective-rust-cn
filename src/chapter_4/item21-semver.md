@@ -80,7 +80,7 @@ Cargo 在选择依赖项的版本时，会在符合条件的版本中选择最�
   - 即使没有采用通配符导入的方式，给[已有 trait 增加包含默认实现的方法]（见[第 13 条]），或者[增加内部方法]也可能导致与已经存在的名称冲突。
 - 由于 Rust 要求涵盖所有的可能性，所以变更可能性的集合也会导致不兼容。
   - 针对 `enum`  做 `match` 要求代码涵盖所有的可能性，所以如果 [crate 中的 `enum` 增加了一个值]，会导致不兼容（除非 `enum` 标记为 [`non_exhaustive`]，但是增加 `non_exhaustive` 标记本身也是一种不兼容变更）。
-  - 显式创建一个 `struct` 实例时，要求提供该 `struct` 所有字段的初始值，所以，[给 `struct` 增加公有初始化字段]的变更，也是不兼容的，私有字段则不存在这个问题。我们可以通过将 `struct` 标记 `non_exhaustive` 来阻止外部用户显式创建实例。
+  - 显式创建一个 `struct` 实例时，要求提供该 `struct` 所有字段的初始值，所以，[给结构体增加公有初始化字段]的变更也是不兼容的，私有字段则不存在这个问题。我们可以通过将 `struct` 标记 `non_exhaustive` 来阻止外部用户显式创建实例。
 - 将一个 trait 从对象安全的变更为[非*对象安全*]的（见[第 12 条]），属于不兼容变更。那些将这个 trait 当作 trait 对象来使用的代码将无法编译。
 - 给 trait 增加通用实现（blanket implementation）也是不兼容变更。如果用户已经在自己代码中给这个 trait 增加实现了，就会存在两个相互冲突的实现。
 - 修改开源 crate 的*许可证*是不兼容变更。其他用户可能由于许可证的变更而无法继续使用。**许可证应作为 API 的一部分来看待**。
@@ -98,7 +98,7 @@ Cargo 在选择依赖项的版本时，会在符合条件的版本中选择最�
 
 这里还有一层隐含的意思：**要让不兼容的变更确实是不兼容的**。如果变更对于现有用户是不兼容的，但是又*可以*重用相同的 API，那就不要这样做。强制更改类型（并进行主版本升级）以确保用户不会无意中错误地使用新版本。
 
-对于 API 中不太明确的部分（例如 MSRV 或许可证）可以考虑设置一个持续集成（CI）检查（见[第 32 条]）来检测这些变化，并根据需要使用例如 `cargo-deny` 这样的工具（见[第 25 条]）。
+对于 API 中不太明确的部分（例如 [MSRV] 或许可证）可以考虑设置一个持续集成（CI）检查（见[第 32 条]）来检测这些变化，并根据需要使用例如 `cargo-deny` 这样的工具（见[第 25 条]）。
 
 最后，不要因为担心承诺 API 固定下来就害怕发布 1.0.0 版本，许多 crate 由于这个原因陷入了永远停留在 0.x 版本的尴尬境地。因为这会将语义化版本本就有限的表达能力从三个类别（主版本/次版本/补丁版本）减少到两个（有效主版本/有效次版本）。
 
@@ -157,10 +157,11 @@ Cargo 在选择依赖项的版本时，会在符合条件的版本中选择最�
 [增加内部方法]: https://doc.rust-lang.org/cargo/reference/semver.html#possibly-breaking-change-adding-any-inherent-items
 [crate 中的 `enum` 增加了一个值]: https://doc.rust-lang.org/cargo/reference/semver.html#major-adding-new-enum-variants-without-non_exhaustive
 [`non_exhaustive`]: https://doc.rust-lang.org/reference/attributes/type_system.html#the-non_exhaustive-attribute
-[给 `struct` 增加公有初始化字段的变更]: https://doc.rust-lang.org/cargo/reference/semver.html#major-adding-a-public-field-when-no-private-field-exists
+[给结构体增加公有初始化字段]: https://doc.rust-lang.org/cargo/reference/semver.html#major-adding-a-public-field-when-no-private-field-exists
 [非*对象安全*]: https://doc.rust-lang.org/cargo/reference/semver.html#trait-object-safety
 [兼容变更]: https://github.com/rust-lang/api-guidelines/discussions/231
 [`deprecated`]: https://doc.rust-lang.org/reference/attributes/diagnostics.html#the-deprecated-attribute
+[MSRV]: https://doc.rust-lang.org/cargo/reference/manifest.html#the-rust-version-field
 [拒绝]: https://doc.rust-lang.org/cargo/faq.html#can-libraries-use--as-a-version-for-their-dependencies
 [Dependabot]: https://docs.github.com/en/code-security/dependabot
 [Google 高度测试的庞大内部单体库]: https://dl.acm.org/doi/pdf/10.1145/2854146

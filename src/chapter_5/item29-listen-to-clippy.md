@@ -82,15 +82,16 @@ Clippy 的警告信息在你学习 Rust 时特别有帮助，因为它们可以�
   * [`Hash` and `Eq` must be consistent]。
   * [`Clone` for `Copy` types should match]。
 * [第 18 条]建议了减少 [`panic!`] 的使用以及相关的一些方法比如 [`expect`]，Clippy 也会检查这些。
-* [第 21 条]表述了引入通配符版本的 crate 是不明智的。Clippy 同样对此[进行了检查]。
-* [第 23 条]及[第 25 条]提到同一个 crate 的多个不同版本可以出现在同一个项目的依赖中。Clippy 可以通过配置[在出现这种情况时给出警告]。
+* [第 21 条]表述了引入通配符版本的 crate 是不明智的。Clippy 也[同意这一点]。
+* [第 23 条]建议避免通配符导入，[与 Clippy 一致]。
+* [第 24 条]及[第 25 条]提到同一个 crate 的多个不同版本可以出现在同一个项目的依赖中。Clippy 可以通过配置[在出现这种情况时给出警告]。
 * [第 26 条]解释了 Cargo feature 的可累加性，而 Clippy 会警告[与此原则相违背的 feature 名称]（比如 `no_std`）。
 * [第 26 条]同样解释了一个包的可选依赖项是其 feature 集的一部分。如果存在可以用这种方式来替代的[显式的 feature 名称（比如 "use-crate-x"）]时，Clippy 将给出警告。
 * [第 27 条]描述了文档注释的惯例，并且 Clippy 会指出如下问题：
   * [Missing descriptions of `panic!`s]。
   * [Missing descriptions] of [`unsafe` concerns]。
 
-上述的信息无疑说明了**阅读 [Clippy 的警告信息]列表**也是一种有意义的学习方式 —— 包括那些默认禁用的检查的禁用原因，是由于它们太严苛了还是由于它们会产生误报？尽管你可能并不想在你的代码里启用这些检查，但是了解这些检查规则出现的原因将会提升你对 Rust 及其惯用法的理解。
+上述的信息无疑说明了**阅读 [Clippy 的警告信息列表]**也是一种有意义的学习方式 —— 包括那些默认禁用的检查的禁用原因，是由于它们太严苛了还是由于它们会产生误报？尽管你可能并不想在你的代码里启用这些检查，但是了解这些检查规则出现的原因将会提升你对 Rust 及其惯用法的理解。
 
 ## 注释
 
@@ -157,11 +158,12 @@ Clippy 的警告信息在你学习 Rust 时特别有帮助，因为它们可以�
 [`Clone` for `Copy` types should match]: https://rust-lang.github.io/rust-clippy/stable/index.html#/expl_impl_clone_on_copy
 [`panic!`]: https://rust-lang.github.io/rust-clippy/stable/index.html#/panic
 [`expect`]: https://rust-lang.github.io/rust-clippy/stable/index.html#/expect_used
-[进行了检查]: https://rust-lang.github.io/rust-clippy/stable/index.html#/wildcard_dependencies
+[同意这一点]: https://rust-lang.github.io/rust-clippy/stable/index.html#/wildcard_dependencies
+[与 Clippy 一致]: https://rust-lang.github.io/rust-clippy/stable/index.html#wildcard_imports
 [在出现这种情况时给出警告]: https://rust-lang.github.io/rust-clippy/stable/index.html#/multiple_crate_versions
 [与此原则相违背的 feature 名称]: https://rust-lang.github.io/rust-clippy/stable/index.html#/negative_feature_names
 [显式的 feature 名称（比如 "use-crate-x"）]: https://rust-lang.github.io/rust-clippy/stable/index.html#/redundant_feature_names
 [Missing descriptions of `panic!`s]: https://rust-lang.github.io/rust-clippy/stable/index.html#/missing_panics_doc
 [Missing descriptions]: https://rust-lang.github.io/rust-clippy/stable/index.html#/missing_safety_doc
 [`unsafe` concerns]: https://rust-lang.github.io/rust-clippy/stable/index.html#/undocumented_unsafe_blocks
-[Clippy 的警告信息]: https://rust-lang.github.io/rust-clippy/stable/index.html
+[Clippy 的警告信息列表]: https://rust-lang.github.io/rust-clippy/stable/index.html
