@@ -582,7 +582,7 @@ Charlie is None
 
 前面的示例展示了**注销**代码的缺陷，但是即便修复了这个代码缺陷，也无法防止调用者使用该索引值，并传入 `nth()` —— 从而获得意外的或无效的结果。
 
-核心问题是两个结构体需要保持同步。处理这种问题的更好方法是使用 Rust 的智能指针（[第 8 条]）。使用 `Rc` 和 `RefCell` 来避免使用索引作为无效指针的问题。更新后的示例 —— 但是仍然存在缺陷 —— 如下所示：
+核心问题是两个结构体需要保持同步。处理这种问题的更好方法是使用 Rust 的智能指针（[第 8 条]）。使用 [`Rc`] 和 [`RefCell`] 来避免使用索引作为无效指针的问题。更新后的示例 —— 但是仍然存在缺陷 —— 如下所示：
 
 <div class="ferris"><img src="../images/ferris/not_desired_behavior.svg" width="75" height="75" /></div>
 
@@ -677,7 +677,7 @@ Charlie is Some(RefCell { value: Guest { name: "Charlie",
 
 对于从 C++ 转向 Rust 并适应了的程序员来说，最常用的就是 `Rc<T>`（和它的线程安全版本 `Arc<T>`），并通常结合 `RefCell`（或者线程安全的替代 `Mutex`）使用。将共享指针（甚至是 [`std::shared_ptr`]）简单地转换为 `Rc<RefCell<T>>` 实例通常在 Rust 中工作良好，而且借用检查器不会有太多抱怨。
 
-然而，使用该方法意味着你会得不到 Rust 提供的一些保护。特别是，如果一个引用已经存在，对同一个数据进行可变借用（通过 `borrow_mut()`）会导致运行时 `panic!`，而不是编译期错误。
+然而，使用该方法意味着你会得不到 Rust 提供的一些保护。特别是，如果一个引用已经存在，对同一个数据进行可变借用（通过 [`borrow_mut()`]）会导致运行时 `panic!`，而不是编译期错误。
 
 例如，打破树结构所有权单向流的一种模式是，有一个“所有者”指针从该数据指回这个数据的所有者，如图 3-3 所示。这些**所有者**链接对于在数据结构中上下移动很有用；例如，向**叶子**添加新的同级节点就需要找到该叶子所属的**树枝**。
 
@@ -819,6 +819,7 @@ struct SelfRefIdx {
 [`Rc`]: https://doc.rust-lang.org/std/rc/struct.Rc.html
 [`RefCell`]: https://doc.rust-lang.org/std/cell/struct.RefCell.html
 [`std::shared_ptr`]: https://en.cppreference.com/w/cpp/memory/shared_ptr
+[`borrow_mut()`]: https://doc.rust-lang.org/std/cell/struct.RefCell.html#method.borrow_mut
 [`Weak<T>`]: https://doc.rust-lang.org/std/rc/struct.Weak.html
 [`std::borrow::Cow`]: https://doc.rust-lang.org/std/borrow/enum.Cow.html
 [`Pin`]: https://doc.rust-lang.org/std/pin/struct.Pin.html

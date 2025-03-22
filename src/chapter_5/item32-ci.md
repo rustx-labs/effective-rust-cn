@@ -35,7 +35,7 @@ CI 应该干净、快速且确定性的运行每个步骤，并且不能产生�
 
 你也可以在 CI 系统中包含一些用来测量代码某些切面的步骤：
 
-- 使用 [`cargo-tarpaulin`][cargo-tarpaulin] 生成代码覆盖统计数据，可以显示测试用例对代码的覆盖率。
+- 使用 [`cargo-tarpaulin`] 生成代码覆盖统计数据，可以显示测试用例对代码的覆盖率。
 - 执行基准测试（比如，可以使用 `cargo bench`，见[第 30 条]）以检测在某些关键场景下的代码性能。但是，很多 CI 系统是运行在共享环境中的，外部因素可能会影响到测试结果。如果希望得到更加可靠的基准测试数据，那就需要更加专用的 CI 环境。
 
 由于测量结果只有在和之前的结果对比来看才有意义，所以在 CI 系统中搭建用于测量的步骤略显复杂。理想情况下，当代码发生变动，CI 系统需要检测测试用例是否完全覆盖了这些变动以及这些变动是否对性能存在负面影响，这通常涉及到外部跟踪系统的集成。
@@ -43,13 +43,13 @@ CI 应该干净、快速且确定性的运行每个步骤，并且不能产生�
 下面是一些关于 CI 中步骤的建议，不一定适用于你的代码库，但是不妨了解一下：
 
 - 如果是一个库项目，请记住（见[第 25 条]）项目中所包含的 *Cargo.lock* 文件会被使用这个库的用户忽略。理论上，*Cargo.toml* 中语义化版本号（见[第 21 条]）约束应该可以让使用库的项目正常工作。实际上，应该在 CI 系统中包含不依赖 *Cargo.lock* 构建项目的步骤，以检测所用依赖的当前版本（根据语义化版本规则拉取到最新的符合要求的依赖）是否可以正常工作。
-- 如果项目中包含机器生成的资源，并且这些资源也被提交到版本控制系统（例如使用 [`prost`][prost] 命令生成的 protocol buffer 消息），那么，建议在 CI 系统中包含重新生成这些资源的步骤，并和版本控制系统中的版本进行比较以确保其一致性。
+- 如果项目中包含机器生成的资源，并且这些资源也被提交到版本控制系统（例如使用 [`prost`] 命令生成的 protocol buffer 消息），那么，建议在 CI 系统中包含重新生成这些资源的步骤，并和版本控制系统中的版本进行比较以确保其一致性。
 - 如果你的代码库包含平台特有（例如：`#[cfg(target_arch = "arm")]`）的代码，应该在 CI 系统中包含相应的步骤，确保针对特有平台可以成功构建且（最好）可以正常工作。由于 Rust 的工具链具有交叉编译的能力，所以前者比后者更简单。
-- 如果你的项目需要处理诸如访问令牌或加密密钥等保密信息，考虑在 CI 系统中引入检查代码库中是否包含无意中提交的秘密信息的步骤。如果你的项目是公开的，这一点尤为重要（在这种情况下，建议将该检查从 CI 阶段前置到[版本控制预提交检查阶段][version-control presubmit check]）。
+- 如果你的项目需要处理诸如访问令牌或加密密钥等保密信息，考虑在 CI 系统中引入检查代码库中是否包含无意中提交的秘密信息的步骤。如果你的项目是公开的，这一点尤为重要（在这种情况下，建议将该检查从 CI 阶段前置到[版本控制预提交检查阶段]）。
 
 CI 系统中不是所有的步骤都需要和 Cargo 或者其他 Rust 工具链集成，有时，一个简单的 shell 脚本文件即可获得很好的效果，特别是在代码库中包含了一些并非普遍遵循的特有约定时。比如某个代码库可能包含这样的惯例：任何会引入 panic 的方法调用（[第 18 条]）都需要有特殊标记的注释，或者每个 `TODO:` 注释都要有所有者，可以指向某个人，也可以是一个跟踪 ID，这种情况下，shell 脚本文件是可以满足需求的理想工具。
 
-最后，可以通过研究公开的 Rust 项目所用的 CI 系统，来获取一些适用于你自己项目的额外 CI 步骤。例如，Cargo 项目就有包含很多步骤的 [CI 系统][CI System]，希望可以给你一些启发。
+最后，可以通过研究公开的 Rust 项目所用的 CI 系统，来获取一些适用于你自己项目的额外 CI 步骤。例如，Cargo 项目就有包含很多步骤的 [CI 系统]，希望可以给你一些启发。
 
 ## CI 基本原则
 
@@ -87,7 +87,7 @@ CI 系统中不是所有的步骤都需要和 Cargo 或者其他 Rust 工具链�
 
 其次，对于开源项目，值得牢记的是，你的 CI 系统可以作为代码库搭建所要求的先决条件的指南。对于纯 Rust crate 而言不是问题，但是如果你的代码库需要额外的依赖项 —— 例如数据库、用于 FFI 代码的替代工具链、自定义的配置等 —— 那么 CI 脚本就是如何让这个项目在一个全新环境上成功运行的有力佐证。把这些步骤编码到可重用的安装脚本中，可以让人们以及自动化机器人轻松获得一个可正常运行的系统。
 
-最后，对于公共可见的 crate，坏消息就是存在被滥用或被攻击的可能性。可能包括：利用你的 CI 系统挖矿、[窃取代码库令牌][theft]、供应链攻击等。为了降低这些风险，请考虑以下指南：
+最后，对于公共可见的 crate，坏消息就是存在被滥用或被攻击的可能性。可能包括：利用你的 CI 系统挖矿、[窃取代码库令牌]、供应链攻击等。为了降低这些风险，请考虑以下指南：
 
 - 限制访问。确保 CI 脚本仅对已知的协作者（collaborators）自动运行，对于新加入的贡献者（contributors）则需要手动执行。
 - 所使用的任何外部脚本，都固定到可信的版本，或者，更优的做法是固定到已知的脚本哈希值。
@@ -112,9 +112,9 @@ CI 系统中不是所有的步骤都需要和 Cargo 或者其他 Rust 工具链�
 [第 33 条]: ../chapter_6/item33-no-std.md
 
 [rust-toolchain.toml]: https://rust-lang.github.io/rustup/overrides.html#the-toolchain-file
-[cargo-tarpaulin]: https://docs.rs/cargo-tarpaulin
-[prost]: https://docs.rs/prost
-[version-control presubmit check]: https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks
-[CI System]: https://github.com/rust-lang/cargo/blob/master/.github/workflows/main.yml
+[`cargo-tarpaulin`]: https://docs.rs/cargo-tarpaulin
+[`prost`]: https://docs.rs/prost
+[版本控制预提交检查阶段]: https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks
+[CI 系统]: https://github.com/rust-lang/cargo/blob/master/.github/workflows/main.yml
 [GitHub Actions]: https://docs.github.com/en/actions
-[theft]: https://web.archive.org/web/20220315064116/https://about.codecov.io/security-update/
+[窃取代码库令牌]: https://web.archive.org/web/20220315064116/https://about.codecov.io/security-update/

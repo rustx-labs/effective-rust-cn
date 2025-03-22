@@ -62,7 +62,7 @@ include!("generated.rs");
 
 这也意味着 `bindgen` 很适合被包含在 CI 系统（[第 32 条]）中，如果生成的代码包含在源码控制中，CI 系统可以在新生成的文件与提交的版本不匹配时报错。
 
-当你处理具有大量 API 的现有 C 代码库时，`bindgen` 工具才能真正发挥其作用。为一个庞大的 `lib_api.h` 头文件创建 Rust 等价物是手动且乏味的，因此容易出错 —— 并且如前所述，许多不匹配错误的类别不会被工具链检测到。`bindgen` 还拥有一系列选项，允许针对 API 的特定子集（比如，之前展示的 `--allowlist-function` 和 `--allowlist-type` 选项）。[^1]
+当你处理具有大量 API 的现有 C 代码库时，`bindgen` 工具才能真正发挥其作用。为一个庞大的 `lib_api.h` 头文件创建 Rust 等价物是手动且乏味的，因此容易出错 —— 并且如前所述，许多不匹配错误的类别不会被工具链检测到。`bindgen` 还拥有[一系列]的[选项]，允许针对 API 的特定子集进行代码生成（比如，之前展示的 `--allowlist-function` 和 `--allowlist-type` 选项）。[^1]
 
 这也允许采用分层方法在 Rust 中暴露现有的 C 库；包装某个 `xyzzy` 库的一个常见约定是拥有以下内容：
 * 一个仅包含 `bindgen` 生成的代码的 `xyzzy-sys crate` —— 其使用必然是 `unsafe` 的。
@@ -89,4 +89,6 @@ include!("generated.rs");
 [`bindgen`]: https://rust-lang.github.io/rust-bindgen/
 [构建脚本]: https://doc.rust-lang.org/cargo/reference/build-scripts.html
 [`include!` 宏]: https://doc.rust-lang.org/std/macro.include.html
+[一系列]: https://rust-lang.github.io/rust-bindgen/allowlisting.html
+[选项]: https://rust-lang.github.io/rust-bindgen/blocklisting.html
 [处理一些 C++ 结构]: https://rust-lang.github.io/rust-bindgen/cpp.html

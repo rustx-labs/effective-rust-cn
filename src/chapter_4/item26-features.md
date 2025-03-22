@@ -4,7 +4,7 @@
 
 ## 条件编译
 
-通过使用 [`cfg`][cfg] 或者 [`cfg_attr`][cfg_attr]，Rust 支持[条件编译][conditional compilation]，可以让你决定函数、代码行、代码块等内容是否包含在编译后的文件中（相对而言，C/C++ 是基于代码行的预处理器）。这里的“条件”可以是一个像 `test` 这种单纯的名字，也可以是类似 `panic = "abort"` 这种名值对的形式。
+通过使用 [`cfg`] 或者 [`cfg_attr`]，Rust 支持[条件编译]，可以让你决定函数、代码行、代码块等内容是否包含在编译后的文件中（相对而言，C/C++ 是基于代码行的预处理器）。这里的“条件”可以是一个像 `test` 这种单纯的名字，也可以是类似 `panic = "abort"` 这种名值对的形式。
 
 注意，名值对的形式下，一个名字的值可以有多个：
 
@@ -22,9 +22,9 @@ cfg(myname = 'a') is set
 cfg(myname = 'b') is set
 ```
 
-除了前述这种显式指定 **feature** 值之外，更常用的配置项是由工具链自动引入的构建时的目标环境，包括：目标操作系统（[`target_os`][target_os]）、CPU 架构（[`target_arch`][target_arch]）、指针位宽（[`target_pointer_width`][target_pointer_width]）、字节序（[`target_endian`][target_endian]）等，通过构建时的目标平台启用对应的 feature 来实现代码的可移植性。
+除了前述这种显式指定 **feature** 值之外，更常用的配置项是由工具链自动引入的构建时的目标环境，包括：目标操作系统（[`target_os`]）、CPU 架构（[`target_arch`]）、指针位宽（[`target_pointer_width`]）、字节序（[`target_endian`]）等，通过构建时的目标平台启用对应的 feature 来实现代码的可移植性。
 
-另外，标准选项 [`target_has_atomic`][target_has_atomic] 是支持多值的，如果目标平台同时支持 32 位和 64 位架构，则 `[cfg(target_has_atomic = "32")]` 和 `[cfg(target_has_atomic = "64")]` 同时生效。（关于原子性的更多信息，请参考 O'Reilly 出版的由 Mara Bos 所著的 《[Rust Atomics and Locks]》一书的第二章。）
+另外，标准选项 [`target_has_atomic`] 是支持多值的，如果目标平台同时支持 32 位和 64 位架构，则 `[cfg(target_has_atomic = "32")]` 和 `[cfg(target_has_atomic = "64")]` 同时生效。（关于原子性的更多信息，请参考 O'Reilly 出版的由 Mara Bos 所著的 《[Rust Atomics and Locks]》一书的第二章。）
 
 ## Features
 
@@ -80,7 +80,7 @@ pub fn pick_a_number() -> u8 {
 }
 ```
 
-Crate 名字是全局的（通常由 `crates.io` 管理），而 feature 名字是 crate 本地的，但事实上 *crate 和 feature 共享命名空间*。因此，**谨慎选择 feature 名字**，以避免和可能依赖的 crate 名字冲突。虽然 Cargo 支持通过修改 `package` 键[重命名所引入的 crate][rename] 来避免潜在的冲突问题，但是提前避免冲突总比重命名来的好。
+Crate 名字是全局的（通常由 `crates.io` 管理），而 feature 名字是 crate 本地的，但事实上 *crate 和 feature 共享命名空间*。因此，**谨慎选择 feature 名字**，以避免和可能依赖的 crate 名字冲突。虽然 Cargo 支持通过修改 `package` 键[重命名所引入的 crate] 来避免潜在的冲突问题，但是提前避免冲突总比重命名来的好。
 
 所以你除了要检查 *Cargo.toml* 中**依赖的 crate 的 `[features]`**，还要检查 **`[dependencies]` 中标注为 `optional` 的 crate**  来确认当前 crate 的全部 feature 名字。如果要启用依赖项的一个 feature，需要在 `[dependencies]` 小节增加 `features` 属性：
 
@@ -191,18 +191,18 @@ Feature 联合也意味着，如果你的 crate 包含了 *N* 个 feature [^3]�
 [第 32 条]: ../chapter_5/item32-ci.md
 [第 33 条]: ../chapter_6/item33-no-std.md
 
-[dep-crate-doc]: https://doc.rust-lang.org/cargo/reference/features.html#optional-dependencies
-[conditional compilation]: https://doc.rust-lang.org/reference/conditional-compilation.html
-[cfg]: https://doc.rust-lang.org/reference/conditional-compilation.html#the-cfg-attribute
-[cfg_attr]: https://doc.rust-lang.org/reference/conditional-compilation.html#the-cfg_attr-attribute
-[target_os]: https://doc.rust-lang.org/reference/conditional-compilation.html#target_os
-[target_arch]: https://doc.rust-lang.org/reference/conditional-compilation.html#target_arch
-[target_pointer_width]: https://doc.rust-lang.org/reference/conditional-compilation.html#target_pointer_width
-[target_endian]: https://doc.rust-lang.org/reference/conditional-compilation.html#target_endian
-[target_has_atomic]: https://doc.rust-lang.org/reference/conditional-compilation.html#target_has_atomic
+[`cfg`]: https://doc.rust-lang.org/reference/conditional-compilation.html#the-cfg-attribute
+[`cfg_attr`]: https://doc.rust-lang.org/reference/conditional-compilation.html#the-cfg_attr-attribute
+[条件编译]: https://doc.rust-lang.org/reference/conditional-compilation.html
+[`target_os`]: https://doc.rust-lang.org/reference/conditional-compilation.html#target_os
+[`target_arch`]: https://doc.rust-lang.org/reference/conditional-compilation.html#target_arch
+[`target_pointer_width`]: https://doc.rust-lang.org/reference/conditional-compilation.html#target_pointer_width
+[`target_endian`]: https://doc.rust-lang.org/reference/conditional-compilation.html#target_endian
+[`target_has_atomic`]: https://doc.rust-lang.org/reference/conditional-compilation.html#target_has_atomic
 [Rust Atomics and Locks]: https://marabos.nl/atomics/
 [Cargo]: https://doc.rust-lang.org/cargo/index.html
 [features]: https://doc.rust-lang.org/cargo/reference/features.html
 [Cargo.toml]: https://doc.rust-lang.org/cargo/reference/manifest.html
-[rename]: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#renaming-dependencies-in-cargotoml
+[重命名所引入的 crate]: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#renaming-dependencies-in-cargotoml
 [feature unification]: https://doc.rust-lang.org/cargo/reference/features.html#feature-unification
+[dep-crate-doc]: https://doc.rust-lang.org/cargo/reference/features.html#optional-dependencies

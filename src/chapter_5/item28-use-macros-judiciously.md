@@ -159,7 +159,7 @@ println!("x is {x:?}");
 x is Item { contents: 43 }
 ```
 
-如果我们还记得宏只是在调用它的地方进行展开的话，上述示例就会变得清楚了 —— 在这个示例中，调用宏的地方只相当于添加了一行增加 `x.contents` 值的代码。借助 [cargo-expand] 工具可以很清晰地看到编译器将宏进行展开后的代码：
+如果我们还记得宏只是在调用它的地方进行展开的话，上述示例就会变得清楚了 —— 在这个示例中，调用宏的地方只相当于添加了一行增加 `x.contents` 值的代码。借助 [`cargo-expand`] 工具可以很清晰地看到编译器将宏进行展开后的代码：
 
 ```rust
 let mut x = Item { contents: 42 };
@@ -252,9 +252,9 @@ macro_rules! square_once {
 
 ### 格式化参数
 
-声明宏的一种常见的使用模式将当前代码状态里的多个值汇聚成一个消息。比如，标准库中的 `format!` 用来拼接一个字符串，`println!` 用来输出到标准输出，`eprintln!` 用来输出到标准错误输出。[fmt 文档]中阐述了 `format!` 的语法，和 `C` 中的 `printf` 使用大致是等同的。当然，Rust 中的 `format!` 参数是类型安全并且会在编译时进行检查的，并且 `format!` 宏在实现时使用了[第 10 条]描述的 `Display` 以及 `Debug` trait 来格式化个体的值。[^2]
+声明宏的一种常见的使用模式将当前代码状态里的多个值汇聚成一个消息。比如，标准库中的 [`format!`] 用来拼接一个字符串，[`println!`] 用来输出到标准输出，[`eprintln!`] 用来输出到标准错误输出。[`fmt` 文档]中阐述了 `format!` 的语法，和 `C` 中的 `printf` 使用大致是等同的。当然，Rust 中的 `format!` 参数是类型安全并且会在编译时进行检查的，并且 `format!` 宏在实现时使用了[第 10 条]描述的 `Display` 以及 `Debug` trait 来格式化个体的值。[^2]
 
-你可以（也应该）在项目中的宏中使用相同的格式化语法。比如，`log` crate 中的 `logging` 宏就使用了和 `format!` 相同的语法。要做到这个，*应使用 `format_args!` 来实现参数的格式化*而不是重复造轮子。
+你可以（也应该）在项目中的宏中使用相同的格式化语法。比如，`log` crate 中的 `logging` 宏就使用了和 `format!` 相同的语法。要做到这个，*应使用 [`format_args!`] 来实现参数的格式化*而不是重复造轮子。
 
 ```rust
 /// Log an error including code location, with `format!`-like arguments.
@@ -284,7 +284,7 @@ src/main.rs:331: x = 0x0a
 
 Rust 也支持了*过程宏*，也被称为 `proc macros`。和声明宏类似，[过程宏]能够任意的 Rust 代码插入到程序的源代码中。不同的是，过程宏的输入不再仅限制在特定的传入参数。过程宏可以访问一些源代码中的解析符号（parsed tokens）。这就让过程宏一定程度上具备了类似动态语言（比如 Lisp）的表达能力 —— 但是仍然会在编译时进行检查。这也帮助缓解了 Rust 中反射的局限，如在[第 19 条]中所讨论过的。
 
-过程宏需要和其被使用的代码定义在不同的 crate 中（crate 类型需要被声明为 `proc_macro`），并且 crate 往往需要引入对 [proc-macro]（官方工具链中提供）或者 [proc-macro2]（由 David Tolnay 提供）的依赖，这两个依赖支持宏对输入的符号进行操作。
+过程宏需要和其被使用的代码定义在不同的 crate 中（crate 类型需要被声明为 `proc_macro`），并且 crate 往往需要引入对 [`proc-macro`]（官方工具链中提供）或者 [`proc-macro2`]（由 David Tolnay 提供）的依赖，这两个依赖支持宏对输入的符号进行操作。
 
 实际上，有三种不同的过程宏：
 * 类函数宏（Function-like macros）：通过传入的参数调用。
@@ -336,7 +336,7 @@ Input TokenStream is:
   Ident { ident: "PI", span: #0 bytes(11000..11002) }
 ```
 
-输入流的低层级本质意味着宏的实现需要能够解析传入的参数。例如，通过查找用来表示分隔参数的逗号的 `TokenTree::Punct` 符号来将输入给宏的不同的参数区分开来。David Tolnay开发的 [syn 包]提供了一个解析的库来辅助这些事情，如[派生宏](#派生宏)章节所述。
+输入流的低层级本质意味着宏的实现需要能够解析传入的参数。例如，通过查找用来表示分隔参数的逗号的 `TokenTree::Punct` 符号来将输入给宏的不同的参数区分开来。David Tolnay开发的 [`syn` 包]提供了一个解析的库来辅助这些事情，如[派生宏](#派生宏)章节所述。
 
 正因为这些解析的工作，使用声明宏往往比类函数的过程宏要简单，因为在声明宏里对宏的输入的预期结构可以用匹配的模式来表示。
 
@@ -377,7 +377,7 @@ add_three(2) = 5
 
 首先，派生宏会附加到输入的符号中，而非将其替换。这就意味着原始的数据结构的定义会被保留，而派生宏将在原始数据结构的基础上附加代码。
 
-其次，派生宏可以用来声明一些辅助属性。当数据需要用作一些特殊的处理时，可以使用派生宏来标注。比如，[serde 库]的 [Deserialize] 派生宏有一个辅助属性 `serde` 可以提供元信息来引导反序列化的过程：
+其次，派生宏可以用来声明一些辅助属性。当数据需要用作一些特殊的处理时，可以使用派生宏来标注。比如，[`serde` 库]的 [`Deserialize`] 派生宏有一个辅助属性 `serde` 可以提供元信息来引导反序列化的过程：
 
 ```rust
 fn generate_value() -> String {
@@ -393,7 +393,7 @@ struct MyData {
 }
 ```
 
-关于派生宏的最后一点是，[syn 包]可以完成将输入符号解析到相应的语法树结点的工作。[syn::parse\_macro\_input!] 宏可以将符号转换成 [syn::DeriveInput] 数据结构，该数据结构描述了被修饰对象的内容，并且 `DeriveInput` 操作起来远比原始的符号流要好处理。
+关于派生宏的最后一点是，[`syn` 包]可以完成将输入符号解析到相应的语法树结点的工作。[`syn::parse_macro_input!`] 宏可以将符号转换成 [`syn::DeriveInput`] 数据结构，该数据结构描述了被修饰对象的内容，并且 `DeriveInput` 操作起来远比原始的符号流要好处理。
 
 实际上，派生宏是所有过程宏中最常使用的宏 —— 这种逐字段（对于结构体）或逐变体（对于枚举）操作的能力能够让程序员轻易地实现许多的功能 —— 比如，仅通过添加一行类似 `#[derive(Debug, Clone, PartialEq, Eq)]` 的代码，即可实现相应的功能。
 
@@ -529,7 +529,7 @@ ImATeapot => (418, ClientError, "I'm a teapot"),
 
 如果不使用宏的话，就需要对四部分代码分别进行手工的更新。编译器可能会有一些提示信息（`match` 表达式需要覆盖所有的场景），但也不是所有的地方 —— `TryFrom<i32` 就很容易被遗忘。
 
-由于宏可以在调用的地方对代码进行展开，所以它们也可以用来自动生成一些诊断信息 —— 尤其是，在使用了标准库中的 [file!()] 以及 [line!()] 宏之后，可以生成代码的位置信息：
+由于宏可以在调用的地方对代码进行展开，所以它们也可以用来自动生成一些诊断信息 —— 尤其是，在使用了标准库中的 [`file!()`] 以及 [`line!()`] 宏之后，可以生成代码的位置信息：
 
 ```rust
 macro_rules! log_failure {
@@ -575,7 +575,7 @@ let y = log_failure!(std::str::from_utf8(b"\xc3\x28")); // invalid UTF-8
 
 另一个例子是已经提到的 `http_codes!` 宏，领域特定语言直接使用了 `Group` 枚举的变体名称，比如 `Informational`，而没有使用 `Group::` 前缀或 `use` 语句。这一点会让一些代码导航工具感到困惑。
 
-甚至编译器本身也无法提供更多的帮助：编译器提供的报错信息没有完全跟随宏的定义及使用链。当然，还是有一些工具（参照[第 31 条]）可以辅助宏的使用，比如早先使用的 David Tolnay 的 [cargo-expand]。
+甚至编译器本身也无法提供更多的帮助：编译器提供的报错信息没有完全跟随宏的定义及使用链。当然，还是有一些工具（参照[第 31 条]）可以辅助宏的使用，比如早先使用的 David Tolnay 的 [`cargo-expand`]。
 
 另一个使用宏的缺点是可能会导致代码的膨胀 —— 一个简单的宏调用就可能引入数百行的生成代码，并且在进行代码分析时是无法直观看到的。这在代码第一次编写时可能不会成为问题，因为彼时这些代码是需要的，并且帮助开发者节约了大量的代码编写时间。但是，如果这些代码随后不再需要了，仅从数行的宏调用中可能并不能看到将其删除的必要性。
 
@@ -591,13 +591,13 @@ let y = log_failure!(std::str::from_utf8(b"\xc3\x28")); // invalid UTF-8
 
 这种倾向于类似常规 Rust 代码的可读性偏好有时会影响对声明宏或者过程宏的选择。如果你需要给一个结构体的每一个字段或者枚举的每一个枚举值都生成代码，*应该使用派生宏而不是会生成新类型的过程宏来处理*（暂时忽略在[什么时候使用宏](#什么时候使用宏)中的例子） —— 这样会更加符合语言习惯并且读起来更加简单。
 
-然而，如果要添加的派生宏并非是项目中所独有的功能，可以检查下外部的库中是否已经提供了所需要的宏（参照[第 25 条]）。比如，类似将数值类型转换为合适的 C 风格的枚举值的需求：在[enumn::N]、[num_enum::TryFromPrimitive]、[num_derive::FromPrimitive] 以及 [strum::FromRepr] 中都一定程度的实现了这个需求。
+然而，如果要添加的派生宏并非是项目中所独有的功能，可以检查下外部的库中是否已经提供了所需要的宏（参照[第 25 条]）。比如，类似将数值类型转换为合适的 C 风格的枚举值的需求：在[`enumn::N`]、[`num_enum::TryFromPrimitive`]、[`num_derive::FromPrimitive`] 以及 [`strum::FromRepr`] 中都一定程度的实现了这个需求。
 
 ## 注释
 
 [^1]: 眼神好的读者可能已经注意到了 `format_arg!` 仍然像是一个宏的调用，尽管它在 `println!` 宏的展开代码里。这是因为它是编译器的内建宏。
 
-[^2]: 在 [std::fmt 模块]中也包含了很多其他展示特定格式数据时会使用的 trait。比如，当需要一个 `x` 格式的特殊说明符来输出小写的十六进制输出时，就会使用 [LowerHex] trait。
+[^2]: 在 [`std::fmt` 模块]中也包含了很多其他展示特定格式数据时会使用的 trait。比如，当需要一个 `x` 格式的特殊说明符来输出小写的十六进制输出时，就会使用 [`LowerHex`] trait。
 
 
 原文[点这里](https://www.lurklurk.org/effective-rust/macros.html)查看。
@@ -612,23 +612,27 @@ let y = log_failure!(std::str::from_utf8(b"\xc3\x28")); // invalid UTF-8
 [On Lisp (Prentice Hall)]: https://www.paulgraham.com/onlisp.html
 [卫生的]: https://en.wikipedia.org/wiki/Hygienic_macro
 [声明宏]: https://doc.rust-lang.org/reference/macros-by-example.html
-[cargo-expand]: https://github.com/dtolnay/cargo-expand
+[`cargo-expand`]: https://github.com/dtolnay/cargo-expand
 [最小惊讶原则]: https://en.wikipedia.org/wiki/Principle_of_least_astonishment
 [`expr`]: https://doc.rust-lang.org/reference/macros-by-example.html#metavariables
-[fmt 文档]: https://doc.rust-lang.org/std/fmt/index.html
+[`format!`]: https://doc.rust-lang.org/std/macro.format.html
+[`println!`]: https://doc.rust-lang.org/std/macro.println.html
+[`eprintln!`]: https://doc.rust-lang.org/std/macro.eprintln.html
+[`fmt` 文档]: https://doc.rust-lang.org/std/fmt/index.html
+[`format_args!`]: https://doc.rust-lang.org/std/macro.format_args.html
 [过程宏]: https://doc.rust-lang.org/reference/procedural-macros.html
-[proc-macro]: https://doc.rust-lang.org/proc_macro/index.html
-[proc-macro2]: https://docs.rs/proc-macro2
-[serd 库]: https://docs.rs/serde/latest/serde/
-[Deserialize]: https://docs.rs/serde/latest/serde/derive.Deserialize.html
-[syn 包]: https://docs.rs/syn/latest/syn/
-[syn::parse\_macro\_input!]: https://docs.rs/syn/latest/syn/macro.parse_macro_input.html
-[syn::DeriveInput]: https://docs.rs/syn/latest/syn/struct.DeriveInput.html
-[file!()]: https://doc.rust-lang.org/std/macro.file.html
-[line!()]: https://doc.rust-lang.org/std/macro.line.html
-[enumn::N]: https://docs.rs/enumn/latest/enumn/derive.N.html
-[num_enum::TryFromPrimitive]: https://docs.rs/enumn/latest/enumn/derive.N.html
-[num_derive::FromPrimitive]: https://docs.rs/num-derive/latest/num_derive/derive.FromPrimitive.html
-[strum::FromRepr]: https://docs.rs/strum/latest/strum/derive.FromRepr.html
-[std::fmt 模块]: https://doc.rust-lang.org/std/fmt/index.html
-[LowerHex]: https://doc.rust-lang.org/std/fmt/trait.LowerHex.html
+[`proc-macro`]: https://doc.rust-lang.org/proc_macro/index.html
+[`proc-macro2`]: https://docs.rs/proc-macro2
+[`syn` 包]: https://docs.rs/syn/latest/syn/
+[`serd` 库]: https://docs.rs/serde/latest/serde/
+[`Deserialize`]: https://docs.rs/serde/latest/serde/derive.Deserialize.html
+[`syn::parse_macro_input!`]: https://docs.rs/syn/latest/syn/macro.parse_macro_input.html
+[`syn::DeriveInput`]: https://docs.rs/syn/latest/syn/struct.DeriveInput.html
+[`file!()`]: https://doc.rust-lang.org/std/macro.file.html
+[`line!()`]: https://doc.rust-lang.org/std/macro.line.html
+[`enumn::N`]: https://docs.rs/enumn/latest/enumn/derive.N.html
+[`num_enum::TryFromPrimitive`]: https://docs.rs/enumn/latest/enumn/derive.N.html
+[`num_derive::FromPrimitive`]: https://docs.rs/num-derive/latest/num_derive/derive.FromPrimitive.html
+[`strum::FromRepr`]: https://docs.rs/strum/latest/strum/derive.FromRepr.html
+[`std::fmt` 模块]: https://doc.rust-lang.org/std/fmt/index.html
+[`LowerHex`]: https://doc.rust-lang.org/std/fmt/trait.LowerHex.html

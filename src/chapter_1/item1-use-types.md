@@ -8,9 +8,9 @@
 
 ## 基础类型
 
-对于熟悉其他静态类型编程语言（如 C++、Go 或 Java）的人来说，Rust 类型系统的基本概念应该不太陌生。它包括一系列具有特定大小的整数类型，包括有符号（[`i8`][i8]，[`i16`][i16]，[`i32`][i32]，[`i64`][i64]，[`i128`][i128]）和无符号（[`u8`][u8]，[`u16`][u16]，[`u32`][u32]，[`u64`][u64]，[`u128`][u128]）类型。
+对于熟悉其他静态类型编程语言（如 C++、Go 或 Java）的人来说，Rust 类型系统的基本概念应该不太陌生。它包括一系列具有特定大小的整数类型，包括有符号（[`i8`]，[`i16`]，[`i32`]，[`i64`]，[`i128`]）和无符号（[`u8`]，[`u16`]，[`u32`]，[`u64`]，[`u128`]）类型。
 
-还有两种整数类型：有符号（[`isize`][isize]）和无符号（[`usize`][usize]），其大小与目标系统上的指针大小一致。实际上，在 Rust 中，并不会在指针和整数之间进行大量的转换，所以大小是否相等并不重要。但是，标准集合是用 `usize`（来自 `.len()` 方法）类型来返回它们的大小，所以在处理集合索引的时候，`usize` 非常常见 —— 从容量的角度来看，这显然是没问题的，因为内存中集合的项数不可能比系统内存的寻址范围更大。
+还有两种整数类型：有符号（[`isize`]）和无符号（[`usize`]），其大小与目标系统上的指针大小一致。实际上，在 Rust 中，并不会在指针和整数之间进行大量的转换，所以大小是否相等并不重要。但是，标准集合是用 `usize`（来自 `.len()` 方法）类型来返回它们的大小，所以在处理集合索引的时候，`usize` 非常常见 —— 从容量的角度来看，这显然是没问题的，因为内存中集合的项数不可能比系统内存的寻址范围更大。
 
 整数类型让我们第一次意识到 Rust 是一个比 C++ 更严格的世界 —— 在 Rust 中，尝试将一个更大范围的整数类型（`i32`）的值赋给较小范围的整数类型（`i16`）会在编译时产生错误。
 
@@ -69,16 +69,16 @@ help: you can convert an `i32` to an `i64`
 
 在这里，转换并不会有引发错误的担忧，但转换仍然需要是显式的。我们将在后面章节更详细地讨论类型转换（[第 5 条]）。
 
-现在继续探讨其他原始类型，Rust 有布尔类型（[`bool`][bool]）、浮点类型（[`f32`][f32]，[`f64`][f64]）和[单元类型][unit type] [`()`][unit]（类似于 `C` 的 `void`）。
+现在继续探讨其他原始类型，Rust 有布尔类型（[`bool`]）、浮点类型（[`f32`]，[`f64`]）和[单元类型][unit type] [`()`][unit]（类似于 `C` 的 `void`）。
 
-更有趣的是 [`char`][char] 字符类型，它持有一个 [`Unicode` 值][Unicode]（类似于 Go 的 [`rune` 类型][rune]）。尽管它在内部以 4 字节存储，但与 32 位整数仍然不支持静默转换。
+更有趣的是 [`char`] 字符类型，它持有一个 [`Unicode` 值][Unicode]（类似于 Go 的 [`rune` 类型][rune]）。尽管它在内部以 4 字节存储，但与 32 位整数仍然不支持静默转换。
 
 类型系统的这种精确性迫使你明确地表达你想要表达的内容 —— `u32` 值与 `char` 不同，后者又与序列 UTF-8 字节不同，这又与任意字节序列不同，最终取决于你的准确意图 [^1]。[Joel Spolsky 的著名博客]文章可以帮助理解具体需要哪种数据类型。
 
 当然，有一些辅助方法允许在这不同的类型之间进行转换，但它们的签名迫使你处理（或明确忽略）失败的可能性。例如，一个 `Unicode` 代码点 [^2] 总是可以用 32 位表示，所以 `'a' as u32` 是允许的，但反向转换就比较复杂了（因为 `u32` 值不一定是有效的 Unicode 代码点），例如：
 
-* [`char::from_u32`][char::from_u32] 返回一个 `Option<char>`，迫使调用者处理失败的情况。
-* [`char::from_u32_unchecked`][char::from_u32_unchecked] 假设有效性，但由于结果是未定义的，因此被标记为 `unsafe`，迫使调用者也使用 `unsafe`（[第 16 条]）。
+* [`char::from_u32`] 返回一个 `Option<char>`，迫使调用者处理失败的情况。
+* [`char::from_u32_unchecked`] 假设有效性，但由于结果是未定义的，因此被标记为 `unsafe`，迫使调用者也使用 `unsafe`（[第 16 条]）。
 
 ## 聚合类型
 
@@ -253,7 +253,7 @@ struct DisplayProperties {
 
 ### `Option<T>`
 
-第一个是 [`Option`][Option] ：要么存在特定类型的值（`Some(T)`），要么不存在（`None`）。**始终为可能缺失的值使用 `Option`**，永远不要退回到使用哨兵值（`-1`，`nullptr`，……）来表达值的缺失。
+第一个是 [`Option`]：要么存在特定类型的值（`Some(T)`），要么不存在（`None`）。**始终为可能缺失的值使用 `Option`**，永远不要退回到使用哨兵值（`-1`，`nullptr`，……）来表达值的缺失。
 
 然而，有一个微妙的点需要考虑。当你在处理一个包含多个事物的**集合**时，你需要考虑一个情况：集合中没有任何事物（即事物的数量为零）是否等同于没有这个集合。在大多数情况下，这两种情况并无不同，你可以继续使用 `Vec<Thing>`：0 长度的集合表示元素的缺失。
 
@@ -272,11 +272,11 @@ struct DisplayProperties {
 
 ## 注释
 
-[^1]: 如果涉及到文件系统，情况会更加复杂，因为在流行各种平台上，文件名介于任意字节和 UTF-8 序列之间：请参阅 [`std::ffi::OsString`][std::ffi::OsString] 文档。
+[^1]: 如果涉及到文件系统，情况会更加复杂，因为在流行各种平台上，文件名介于任意字节和 UTF-8 序列之间：请参阅 [`std::ffi::OsString`] 文档。
 
 [^2]: 技术上，是一个 [*Unicode 标量值*][Unicode]，而不是代码点。
 
-[^3]: 这也意味着在库中为一个现有枚举添加一个新的变体是一个破坏性的更改（[第 21 条]）：库的用户需要更改他们的代码以适应新的变体。如果一个枚举实际上只是一个旧式的值列表，可以通过将其标记为 [`non_exhaustive`][non_exhaustive] 枚举来避免这种行为；请参阅[第 21 条]。
+[^3]: 这也意味着在库中为一个现有枚举添加一个新的变体是一个破坏性的更改（[第 21 条]）：库的用户需要更改他们的代码以适应新的变体。如果一个枚举实际上只是一个旧式的值列表，可以通过将其标记为 [`non_exhaustive`] 枚举来避免这种行为；请参阅[第 21 条]。
 
 
 原文[点这里](https://www.lurklurk.org/effective-rust/use-types.html)查看
@@ -292,26 +292,26 @@ struct DisplayProperties {
 [第 18 条]: ../chapter_3/item18-panic.md
 [第 21 条]: ../chapter_4/item21-semver.md
 
-[i8]: https://doc.rust-lang.org/std/primitive.i8.html
-[i16]: https://doc.rust-lang.org/std/primitive.i16.html
-[i32]: https://doc.rust-lang.org/std/primitive.i32.html
-[i64]: https://doc.rust-lang.org/std/primitive.i64.html
-[i128]: https://doc.rust-lang.org/std/primitive.i128.html
-[u8]: https://doc.rust-lang.org/std/primitive.u8.html
-[u16]: https://doc.rust-lang.org/std/primitive.u16.html
-[u32]: https://doc.rust-lang.org/std/primitive.u32.html
-[u64]: https://doc.rust-lang.org/std/primitive.u64.html
-[u128]: https://doc.rust-lang.org/std/primitive.u128.html
-[isize]: https://doc.rust-lang.org/std/primitive.isize.html
-[usize]: https://doc.rust-lang.org/std/primitive.usize.html
-[bool]: https://doc.rust-lang.org/std/primitive.bool.html
-[f32]: https://doc.rust-lang.org/std/primitive.f32.html
-[f64]: https://doc.rust-lang.org/std/primitive.f64.html
+[`i8`]: https://doc.rust-lang.org/std/primitive.i8.html
+[`i16`]: https://doc.rust-lang.org/std/primitive.i16.html
+[`i32`]: https://doc.rust-lang.org/std/primitive.i32.html
+[`i64`]: https://doc.rust-lang.org/std/primitive.i64.html
+[`i128`]: https://doc.rust-lang.org/std/primitive.i128.html
+[`u8`]: https://doc.rust-lang.org/std/primitive.u8.html
+[`u16`]: https://doc.rust-lang.org/std/primitive.u16.html
+[`u32`]: https://doc.rust-lang.org/std/primitive.u32.html
+[`u64`]: https://doc.rust-lang.org/std/primitive.u64.html
+[`u128`]: https://doc.rust-lang.org/std/primitive.u128.html
+[`isize`]: https://doc.rust-lang.org/std/primitive.isize.html
+[`usize`]: https://doc.rust-lang.org/std/primitive.usize.html
+[`bool`]: https://doc.rust-lang.org/std/primitive.bool.html
+[`f32`]: https://doc.rust-lang.org/std/primitive.f32.html
+[`f64`]: https://doc.rust-lang.org/std/primitive.f64.html
 [unit type]: https://en.wikipedia.org/wiki/Unit_type
 [unit]: https://doc.rust-lang.org/std/primitive.unit.html
-[char]: https://doc.rust-lang.org/std/primitive.char.html
-[char::from_u32]: https://doc.rust-lang.org/std/primitive.char.html#method.from_u32
-[char::from_u32_unchecked]: https://doc.rust-lang.org/std/primitive.char.html#method.from_u32_unchecked
+[`char`]: https://doc.rust-lang.org/std/primitive.char.html
+[`char::from_u32`]: https://doc.rust-lang.org/std/primitive.char.html#method.from_u32
+[`char::from_u32_unchecked`]: https://doc.rust-lang.org/std/primitive.char.html#method.from_u32_unchecked
 [Joel Spolsky 的著名博客]: https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/
 [Unicode]: http://www.unicode.org/glossary/#unicode_scalar_value
 [rune]: https://golang.org/doc/go1#rune
@@ -319,9 +319,9 @@ struct DisplayProperties {
 [Tuple]: https://doc.rust-lang.org/std/primitive.tuple.html
 [Struct]: https://doc.rust-lang.org/std/keyword.struct.html
 [代数数据类型]: https://en.wikipedia.org/wiki/Algebraic_data_type
-[Option]: https://doc.rust-lang.org/std/option/enum.Option.html
+[`Option`]: https://doc.rust-lang.org/std/option/enum.Option.html
 [Result]: https://doc.rust-lang.org/std/result/enum.Result.html
 [payload]: https://tools.ietf.org/html/rfc8152#section-4.1
 [null marker]: https://en.wikipedia.org/wiki/Null_(SQL)
-[std::ffi::OsString]: https://doc.rust-lang.org/std/ffi/struct.OsString.html
-[non_exhaustive]: https://doc.rust-lang.org/reference/attributes/type_system.html#the-non_exhaustive-attribute
+[`std::ffi::OsString`]: https://doc.rust-lang.org/std/ffi/struct.OsString.html
+[`non_exhaustive`]: https://doc.rust-lang.org/reference/attributes/type_system.html#the-non_exhaustive-attribute

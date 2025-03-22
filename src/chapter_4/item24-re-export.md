@@ -21,7 +21,7 @@ let max: usize = rng.gen_range(5..10);
 let choice = dep_lib::pick_number(max);
 ```
 
-上面的代码中最后一行，使用了一个假想的 crate `dep-lib`，它可能来自 `crates.io`，也可能是通过 [path 机制][path mechanism]引入的本地 crate。
+上面的代码中最后一行，使用了一个假想的 crate `dep-lib`，它可能来自 `crates.io`，也可能是通过 [path 机制]引入的本地 crate。
 
  `dep-lib` 自己使用了 0.7 版本的 `rand` crate：
 
@@ -45,12 +45,12 @@ pub fn pick_number(n: usize) -> usize {
 
 细心的读者可能会注意到这两段示例代码之间的区别：
 
-- `dep-lib` 所使用的 0.7 版本的 `rand` 中的 [`rand::gen_range()`][rand-gen-range-0.7] 方法有 `low` 和 `high` 2 个参数。
-- 在示例的二进制项目中所用的 0.8 版本的 `rand` 中的 [`rand::gen_range()`][rand-gen-range-0.8] 方法只有 `range` 1 个参数。
+- `dep-lib` 所使用的 0.7.x 版本的 `rand` 中的 [`rand::gen_range()`][rand-gen-range-0.7] 方法有 `low` 和 `high` 2 个参数。
+- 在示例的二进制项目中所用的 0.8.x 版本的 `rand` 中的 [`rand::gen_range()`][rand-gen-range-0.8] 方法只有 `range` 1 个参数。
 
 这种差异属于不兼容的变更，所以根据语义化版本控制的指导原则，`rand` 升级了最左非零版本号（见[第 21 条]）。虽然如此，基于 `cargo` 强大的能力，它仍然能让这两个不兼容的版本合并到最终输出的二进制可执行文件中。
 
-如果 `dep-lib` 的公共 API 中暴露了它所使用的依赖项中的类型的话，情况就会变得糟糕了，因为这会导致 `rand` 成为[*公共依赖项*][public dependency]。
+如果 `dep-lib` 的公共 API 中暴露了它所使用的依赖项中的类型的话，情况就会变得糟糕了，因为这会导致 `rand` 成为[*公共依赖项*]。
 
 举例说明，假设 `dep-lib` crate 暴露出来的函数中使用了来自 `rand` 0.7 版本的 `Rng` 项：
 
@@ -73,7 +73,7 @@ let max: usize = rng.gen_range(5..10);
 let choice = dep_lib::pick_number_with(&mut rng, max);
 ```
 
-将会无法通过编译，并且 Rust 编译器给出的错误消息也[没什么实质的帮助][very helpful]：
+将会无法通过编译，并且 Rust 编译器给出的错误消息也[没什么实质的帮助]：
 
 ```shell
 error[E0277]: the trait bound `ThreadRng: rand_core::RngCore` is not satisfied
@@ -96,7 +96,7 @@ error[E0277]: the trait bound `ThreadRng: rand_core::RngCore` is not satisfied
 
 从二进制 crate 作者的角度来看，可以增加一个中间包装 crate，该 crate 独立于二进制的 crate，可以直接使用来自 `rand` v0.7 的类型，而二进制 crate 仍然使用 `rand` v0.8。
 
-虽然可以解决这个问题，但是这种方案实在是不太方便。更好的一个解决方案是让 crate 库的作者显式地[重新导出][re-exporting]下列内容之一：
+虽然可以解决这个问题，但是这种方案实在是不太方便。更好的一个解决方案是让 crate 库的作者显式地[重新导出]下列内容之一：
 
 - 库中 API 所用的来自其他依赖项的类型
 - 或者，完整的依赖项
@@ -121,7 +121,7 @@ let choice = dep_lib::pick_number_with(&mut prev_rng, max);
 
 [^1]: 本示例（包含其中所用的类型）及其解决方法受了 [RustCrypto crates] 的启发。
 
-[^2]: 还有一些场景也可能引发类似的错误：在项目的依赖图中，针对一个 crate 的*同一个版本*有多个不同的替代项时，以及使用 [path] 而不是 `crates.io` 来导入依赖项时。
+[^2]: 还有一些场景也可能引发类似的错误：在项目的依赖图中，针对一个 crate 的*同一个版本*有多个不同的替代项时，以及使用 [`path`] 而不是 `crates.io` 来导入依赖项时。
 
 原文[点这里](https://www.lurklurk.org/effective-rust/re-export.html)查看
 
@@ -130,11 +130,11 @@ let choice = dep_lib::pick_number_with(&mut prev_rng, max);
 [第 21 条]: item21-semver.md
 [第 25 条]: item25-dep-graph.md
 
-[RustCrypto crates]: https://docs.rs/signature/1.3.0/signature/index.html#reexports
-[path mechanism]: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-path-dependencies
+[path 机制]: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-path-dependencies
 [rand-gen-range-0.7]: https://docs.rs/rand/0.7.3/rand/trait.Rng.html#method.gen_range
 [rand-gen-range-0.8]: https://docs.rs/rand/0.8.5/rand/trait.Rng.html#method.gen_range
-[public dependency]: https://rust-lang.github.io/api-guidelines/necessities.html#public-dependencies-of-a-stable-crate-are-stable-c-stable
-[very helpful]: https://github.com/rust-lang/rust/issues/22750
-[path]: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-path-dependencies
-[re-exporting]: https://doc.rust-lang.org/reference/items/use-declarations.html#use-visibility
+[*公共依赖项*]: https://rust-lang.github.io/api-guidelines/necessities.html#public-dependencies-of-a-stable-crate-are-stable-c-stable
+[没什么实质的帮助]: https://github.com/rust-lang/rust/issues/22750
+[重新导出]: https://doc.rust-lang.org/reference/items/use-declarations.html#use-visibility
+[RustCrypto crates]: https://docs.rs/signature/1.3.0/signature/index.html#reexports
+[`path`]: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-path-dependencies

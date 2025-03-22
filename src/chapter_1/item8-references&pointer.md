@@ -154,7 +154,7 @@ let vslice = &vector[1..3];
 表达式 `&vector[1..3]` 的底层有很多细节，所以值得将其进行逐层的拆解：
 - `1..3` 部分是一个[范围表达式]；编译器会将其转换为 [`Range<usize>`] 类型的实例，该类型包含下限（1）但不包含上限（3）。
 - `Range` 类型[实现了] [`SliceIndex<T>`] trait，该 trait 描述了对任意类型 `T` 的切片的索引操作（因此其 `Output` 类型为`[T]`）。
-- `vector[]` 部分是一个[索引表达式]；编译器将其转换为在 `vector` 上调用 [`Index`] trait 的 [`index`] 方法，并附加一次解引用（即 `*vector.index()` ）。[^2]
+- `vector[]` 部分是一个[索引表达式]；编译器将其转换为在 `vector` 上调用 [`Index`][index_trait] trait 的 [`index`][index_method] 方法，并附加一次解引用（即 `*vector.index()` ）。[^2]
 - `vector[1..3]` 会调用 `Vec<T>` 的 `Index<I>` [实现]，它要求 `I` 是 `SliceIndex<[u64]>` 的一个实例。这是因为 `Range<usize>` 对于任何 `T` 类型来说，包括 `u64`，都实现了 `SliceIndex<[T]>` trait。
 - `&vector[1..3]` 取消了解引用，最终得到的表达式类型为 `&[u64]`。
 
@@ -211,7 +211,7 @@ assert_eq!(result, 1);
 
 其中最简单的是 [`Pointer`] trait，它用于格式化指针值以供输出。这对于底层开发调试很有帮助，编译器在遇到 `{:p}` 格式说明符时会自动使用这个 trait。
 
-更有趣的是 [`Borrow`] 和 [`BorrowMut`] trait，它们各自只有一个方法（分别为 [`borrow`] 和 [`borrow_mut`]）。这些方法的签名与相应的 `AsRef`/`AsMut` trait 方法相同。
+更有趣的是 [`Borrow`][borrow_trait] 和 [`BorrowMut`] trait，它们各自只有一个方法（分别为 [`borrow`][borrow_method] 和 [`borrow_mut`]）。这些方法的签名与相应的 `AsRef`/`AsMut` trait 方法相同。
 
 通过标准库提供的通用实现，可以看到这些 trait 之间的主要意图差异。给定任意 Rust 引用 `&T`，标准库都提供了 `AsRef` 和 `Borrow` 的通用实现；同样地，对于可变引用 `&mut T`，也提供了 `AsMut` 和 `BorrowMut` 的通用实现。
 
@@ -340,15 +340,15 @@ let b2 = rc.borrow();
 [实现了]: https://doc.rust-lang.org/std/ops/struct.Range.html#impl-SliceIndex%3C%5BT%5D%3E-for-Range%3Cusize%3E
 [`SliceIndex<T>`]: https://doc.rust-lang.org/std/slice/trait.SliceIndex.html
 [索引表达式]: https://doc.rust-lang.org/reference/expressions/array-expr.html#array-and-slice-indexing-expressions
-[`Index`]: https://doc.rust-lang.org/std/ops/trait.Index.html
-[`index`]: https://doc.rust-lang.org/std/ops/trait.Index.html#tymethod.index
+[index_trait]: https://doc.rust-lang.org/std/ops/trait.Index.html
+[index_method]: https://doc.rust-lang.org/std/ops/trait.Index.html#tymethod.index
 [实现]: https://doc.rust-lang.org/std/vec/struct.Vec.html#impl-Index%3CI%3E-for-Vec%3CT,+A%3E
 [`vtable`]: https://en.wikipedia.org/wiki/Virtual_method_table
 [`dyn`]: https://doc.rust-lang.org/std/keyword.dyn.html
 [`Pointer`]: https://doc.rust-lang.org/std/fmt/trait.Pointer.html
-[`Borrow`]: https://doc.rust-lang.org/std/borrow/trait.Borrow.html
+[borrow_trait]: https://doc.rust-lang.org/std/borrow/trait.Borrow.html
 [`BorrowMut`]: https://doc.rust-lang.org/std/borrow/trait.BorrowMut.html
-[`borrow`]: https://doc.rust-lang.org/std/borrow/trait.Borrow.html#tymethod.borrow
+[borrow_method]: https://doc.rust-lang.org/std/borrow/trait.Borrow.html#tymethod.borrow
 [`borrow_mut`]: https://doc.rust-lang.org/std/borrow/trait.BorrowMut.html#tymethod.borrow_mut
 [`HashMap::get`]: https://doc.rust-lang.org/std/collections/struct.HashMap.html#method.get
 [`ToOwned`]: https://doc.rust-lang.org/std/borrow/trait.ToOwned.html
