@@ -41,7 +41,7 @@
     - [第 30 条：不仅仅是单元测试](./chapter_5/item30-write-more-than-unit-tests.md)
     - [第 31 条：使用生态系统工具](./chapter_5/item31-use-tools.md)
     - [第 32 条：搭建持续集成（CI）系统](./chapter_5/item32-ci.md)
-- [超出 Rust 标准](./chapter_6.md)
+- [超出标准 Rust](./chapter_6.md)
     - [第 33 条：考虑使库代码与 no_std 兼容](./chapter_6/item33-no-std.md)
     - [第 34 条：控制跨越 FFI 边界的内容](./chapter_6/item34-ffi.md)
     - [第 35 条：优先使用 bindgen 而不是手动 FFI 映射](./chapter_6/item35-bindgen.md)
