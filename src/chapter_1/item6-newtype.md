@@ -152,8 +152,8 @@ print_page(DoubleSided(true), ColorOutput(false));
 
 另一个[常见]但更巧妙的需要 newtype 模式的场景，是 Rust 的孤儿规则。这个规则意味着，在一个包里，以下条件之一满足时，才能为某个类型实现 trait：
 
-• 包定义了该 trait
-• 包定义了该类型
+- 包定义了该 trait
+- 包定义了该类型
 
 我们来尝试为一个外部类型实现一个外部 trait：
 
